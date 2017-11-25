@@ -82,18 +82,21 @@ public abstract class Joueur {
     }
 
 
-    // -------------------------------------------- POSER SUR LE TALON ------------------------------------------
+    // -------------------------------------------- JOUER UNE CARTE ------------------------------------------
 
-    public
+    public void JouerCarte(Carte carte) {
+        Talon.recevoirCarte(carte) ;
+    }
 
 
-
+/**
     //  On pose la 1ère carte du deck sur la défausse
     Carte carte = this.liste.getFirst();
     // On supprime la carte du paquet de cartes du joueur
         this.liste.remove(carte);
     // On renvoie la valeur de la carte jouée
         return carte;
+*/
 
     // Création de la classe JoueurReel
     public class JoueurReel extends Joueur {
