@@ -13,8 +13,16 @@ public class Talon {
     // --------------------------------------------- RECEVOIR CARTE ------------------------------------------------
 
     public void recevoirCarte(Carte carte){
-        talon.add(carte);
-
+        talon.add(carte) ;
     }
 
+    // --------------------------------------------- GETTER ET SETTER  ---------------------------------------------
+
+    public LinkedList<Carte> getTalon() {
+        return talon;
+    }
+
+    public void setTalon(LinkedList<Carte> talon) {
+        this.talon = talon;
+    }
 }

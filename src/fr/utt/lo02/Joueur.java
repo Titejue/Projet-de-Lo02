@@ -1,6 +1,7 @@
 package fr.utt.lo02;
 
 import java.util.* ;
+import java.lang.* ;
 
 public abstract class Joueur {
 
@@ -25,8 +26,10 @@ public abstract class Joueur {
      * Regarder le jeu dans main (méthode qui appelle une méthode afficher() de la classe main
      */
 
-    public void piocher(Carte carte) {
+    public Carte piocher() {
+        Carte cartePioche = Pioche.getFirst(pioche) ;
         main.add(carte);
+        return carte ;
     }
 
     // -------------------------------------------- CHOISIR CARTE -----------------------------------------------
@@ -45,7 +48,7 @@ public abstract class Joueur {
 
         // Possibilité d'afficher les cartes de la main
 
-        /** Methode à coder : en attende de la classe Main ?*/
+        /** Methode à coder : en attente de la classe Main ?*/
 
         // On demande quelle carte jouer
         // On part du principe que carte prend en paramètre deux String : couleur et valeur ?
@@ -85,6 +88,7 @@ public abstract class Joueur {
     // -------------------------------------------- JOUER UNE CARTE ------------------------------------------
 
     public void JouerCarte(Carte carte) {
+        Joueur.choisirCarte() ;
         Talon.recevoirCarte(carte) ;
     }
 
@@ -98,24 +102,28 @@ public abstract class Joueur {
         return carte;
 */
 
+
+
+
+    //-------------------------------------------- "SOUS-CLASSES" ---------------------------------------------
+
     // Création de la classe JoueurReel
     public class JoueurReel extends Joueur {
-        /**
-         * Constructeur
-         **/
+
         public Joueur(String nom) {
-            this.nom = nom;
-            Joueur.NombreJoueur++;
+            this.nom = nom ;
+            Joueur.NombreJoueur++ ;
         }
     }
 
+    // Création de la classe Adversaire
+
     public class Adversaire extends Joueur {
-        /**
-         * Constructeur
-         **/
+        // On essaiera de jouer à plusieurs en local ou écran scindé ?
+
         public Adversaire(String nom) {
-            this.nom = nom;
-            Joueur.NombreJoueur++;
+            this.nom = nom ;
+            Joueur.NombreJoueur++ ;
         }
     }
 }
