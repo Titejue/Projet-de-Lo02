@@ -10,7 +10,24 @@ In France, the game is now called American eight.
 
 The object of the game is to be the first to get rid of all the player's cards to a discard pile.
 There are many variations of the basic game like **UNO**.
+
 We will follow the rules proposed by the website Wikipedia to develop our game : 
 [Wikipedia rules](https://fr.wikipedia.org/wiki/8_am%C3%A9ricain)
 
+## Project progress
+
+- [ ] Class Player *("Joueur" in French)*  
+  - [ ] Class RealPlayer *("JoueurReel)*  
+  - [ ] Class Opponent *("Adversaire")*  
+- [ ] Class Stock *("Pioche")*  
+- [ ] Class Discard *("Défausse" or "Talon")*  
+- [ ] Class Card *("Carte")*  
+- [ ] Class Game  *("Partie")*  
+
+
+
+
 Getting Started ! 
+
+
+
