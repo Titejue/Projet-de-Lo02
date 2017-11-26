@@ -25,8 +25,8 @@ public class Pioche {
     // --------------------------------------------- RECEVOIR CARTE ------------------------------------------------
 
     public void recevoirCarte(LinkedList<Carte> liste){
-        pioche.add(Talon.talon) ;
-        
+        pioche.add(Talon.talon()) ;
+
 
 
     }
