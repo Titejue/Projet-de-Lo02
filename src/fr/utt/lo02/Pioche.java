@@ -31,4 +31,19 @@ public class Pioche {
 
     }
 
+
+    // --------------------------------------------- Get premiere CARTE ------------------------------------------------
+
+    public Carte getFirst(){
+        Carte carte = pioche.getFirst();
+        return carte ;
+    }
+
+
+
+
+
+
+
+
 }
