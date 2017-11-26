@@ -92,15 +92,22 @@ public abstract class Joueur {
         Talon.recevoirCarte(carte) ;
     }
 
+    // -------------------------------------------- PIOCHER UNE CARTE ------------------------------------------
 
-/**
-    //  On pose la 1ère carte du deck sur la défausse
-    Carte carte = this.liste.getFirst();
-    // On supprime la carte du paquet de cartes du joueur
-        this.liste.remove(carte);
-    // On renvoie la valeur de la carte jouée
-        return carte;
-*/
+    public void PiocherCarte(int nombre) {
+        for (int i=0, i=nombre, i++) {
+            Carte carte = Pioche.getFirst();
+            System.out.println("Vous avez pioché la carte " + Carte.carte.getValeur() + " de " + Carte.carte.getCouleur());
+            main = main.add(carte) ;
+            Talon.talon = Talon.talon.remove(carte) ;
+        }
+        /**
+         * Quand piocher ?
+         * Quand on ne peut pas joueur : on passe alors son tour
+         * Quand on subit l'action d'une carte spéciale
+         * Il faut donc entrer en paramètre d'entrer le nombre de carte à piocher
+         */
+    }
 
 
 
@@ -117,7 +124,6 @@ public abstract class Joueur {
     }
 
     // Création de la classe Adversaire
-
     public class Adversaire extends Joueur {
         // On essaiera de jouer à plusieurs en local ou écran scindé ?
 
@@ -126,5 +132,8 @@ public abstract class Joueur {
             Joueur.NombreJoueur++ ;
         }
     }
+
+
+
 }
 
