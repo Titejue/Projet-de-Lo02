@@ -1,14 +1,18 @@
 package fr.utt.lo02;
 
-import java.util.* ;
-import java.lang.* ;
-
 public abstract class Joueur {
 
     //Nom du joueur
     protected String nom ;
     //Cartes en main du joueur
-    protected LinkedList<Carte> main ;
+    protected Hand main ;
+
+// -------------------------------------- CONSTRUCTEUR --------------------------------------------------
+    public Joueur(String nom,  ){
+        this.nom = nom;
+        this.main = new Hand(var) ;
+
+    }
 
 
 

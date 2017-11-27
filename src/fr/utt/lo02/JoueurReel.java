@@ -5,14 +5,10 @@ import java.util.Scanner;
 
 public class JoueurReel extends Joueur {
 
-    private String nom ;
-    //Cartes en main du joueur
-    protected LinkedList<Carte> main ;
-
 
     // ----------------------------- CONSTRUCTEUR -------------------------------------------------------
     public JoueurReel(String nom) {
-        this.nom = nom ;
+       this.nom = nom ;
     }
 
 

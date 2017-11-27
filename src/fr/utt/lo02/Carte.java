@@ -12,6 +12,9 @@ public class Carte {
         this.valeur = num ;
         this.couleur = type ;
     }
+    public Carte(ValeurCarte num) {
+        this.valeur = num ;
+    }
 
 
     // ------------------------------- GETTER ET SETTER -------------------------------------------------------------

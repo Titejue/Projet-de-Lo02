@@ -4,24 +4,24 @@ import java.util.* ;
 import java.lang.* ;
 
 
-public class Partie
-{
+public class Partie {
+
     // Declaration d'un singleton
-    private static Partie ourInstance = new Partie( 1, 2);
+    private static Partie ourInstance =  null;
 
     // Attributs de la classe
 
-    private boolean fini = false ;
+    private boolean fini = false;
 
-    private static LinkedList<Joueur> joueurs ;
-    private static int nbJoueur ;
-    private int variante ;
-    private int
+    private static LinkedList<Joueur> joueurs;
+    private static int nbJoueur;
+    private int variante;
+    private int typeJeu
 
-    private int nbPaquetCartes ;
+    private int nbPaquetCartes;
 
 
-    // ------------------------ CONSTRUCTEUR
+    // ------------------------ CONSTRUCTEUR --------------------------------------
 
     /**
      * Il faudrait plutot se demander si le nombre de joueur ne devrait pas etre choisi par le joueur lui meme
@@ -36,9 +36,10 @@ public class Partie
         // On crée le Talon une fois par partie
         Talon talon = new Talon();
         // On crée le jeu de carte au moment de la création du jeu
-        JeuDeCarte jeuCarte = new JeuDeCarte(int typeDeJeu) ;
-    }
+        JeuDeCarte jeuCarte = new JeuDeCarte(typeDeJeu) ;
 
+
+    }
 
 
 // ---------------------------------- GETTER ET SETTER ---------------------------------------------------
@@ -48,54 +49,36 @@ public class Partie
         return joueurs;
     }
 
-    public static void setJoueurs(LinkedList<Joueur> joueurs) {
-        Partie.joueurs = joueurs;
+    public static Partie getInstance() {
+        if (ourInstance == null){
+            ourInstance = new Partie(2, 0, 1); // On mettra les paramètres plus tard
+            return ourInstance;
+        }
     }
+
 
     // -------------------------------- PIOCHER UNE OU PLUSIEURS CARTE(S)
 
     /**
      * Le joueur va recevoir un "entier" en pénalité
-     *
      */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     public void terminer(boolean fini) {
         this.fini = fini;
     }
 
-    public static Partie getInstance() {
-        return ourInstance;
-    }
 
 
-    public static void main (String[] args)
-    {
-        System.out.println("Veuillez saisir votre nom");
-        Scanner sc = new Scanner(System.in) ;
-        String nomJoueur = sc.nextLine() ;
-        System.out.println("Combien de joueur dans la partie (vous compris)");
-        Partie.nbJoueur = sc.nextInt() ;
-        joueurs.add(new JoueurReel());
 
 
-    }
+
+
+
+
+
+
+    // --------------------------------- METHODE MAIN ---------------------------------------------------------
+
+
 }

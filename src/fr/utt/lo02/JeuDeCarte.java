@@ -4,10 +4,9 @@ import java.util.* ;
 
 public class JeuDeCarte {
 
-    int variante ;
     private LinkedList<Carte> jeu ;
 
-    public JeuDeCarte(int typeJeu){
+    public JeuDeCarte(int typeJeu) {
 
         /**
          * 0 : Jeu classique 54 cartes (52 cartes + 2 Jokers)
@@ -16,27 +15,46 @@ public class JeuDeCarte {
          * 3 : Jeu de 32 cartes
          */
 
-        switch (typeJeu)
-        {
+        jeu = new LinkedList<>();
+
+        switch (typeJeu) {
             case 0:
-                System.out.println("Ouch !");
+                for (CouleurCarte couleur : CouleurCarte.values()) {
+                    for (ValeurCarte valeur : new ValeurCarte[]{ValeurCarte.AS, ValeurCarte.DEUX, ValeurCarte.TROIS, ValeurCarte.QUATRE, ValeurCarte.CINQ, ValeurCarte.SIX, ValeurCarte.SEPT, ValeurCarte.HUIT, ValeurCarte.NEUF, ValeurCarte.DIX, ValeurCarte.V, ValeurCarte.D, ValeurCarte.R}) {
+                        jeu.add(new Carte(valeur, couleur));
+                    }
+                }
+                jeu.add(new Carte(ValeurCarte.Joker));
+                jeu.add(new Carte(ValeurCarte.Joker));
                 break;
             case 1:
-                System.out.println("Vous avez juste la moyenne.");
+                for (CouleurCarte couleur : CouleurCarte.values()) {
+                    for (ValeurCarte valeur : new ValeurCarte[]{ValeurCarte.AS, ValeurCarte.DEUX, ValeurCarte.TROIS, ValeurCarte.QUATRE, ValeurCarte.CINQ, ValeurCarte.SIX, ValeurCarte.SEPT, ValeurCarte.HUIT, ValeurCarte.NEUF, ValeurCarte.DIX, ValeurCarte.V, ValeurCarte.D, ValeurCarte.R}) {
+                        jeu.add(new Carte(valeur, couleur));
+                    }
+                }
                 break;
             case 2:
-                System.out.println("Parfait !");
+                for (CouleurCarte couleur : CouleurCarte.values()) {
+                    for (ValeurCarte valeur : new ValeurCarte[]{ValeurCarte.AS, ValeurCarte.SEPT, ValeurCarte.HUIT, ValeurCarte.NEUF, ValeurCarte.DIX, ValeurCarte.V, ValeurCarte.D, ValeurCarte.R}) {
+                        jeu.add(new Carte(valeur, couleur));
+                    }
+                }
+                jeu.add(new Carte(ValeurCarte.Joker));
+                jeu.add(new Carte(ValeurCarte.Joker));
                 break;
             case 3:
+                for (CouleurCarte couleur : CouleurCarte.values()) {
+                    for (ValeurCarte valeur : new ValeurCarte[]{ValeurCarte.AS, ValeurCarte.SEPT, ValeurCarte.HUIT, ValeurCarte.NEUF, ValeurCarte.DIX, ValeurCarte.V, ValeurCarte.D, ValeurCarte.R}) {
+                        jeu.add(new Carte(valeur, couleur));
+                    }
+                }
                 break;
             default:
-                System.out.println("Il faut davantage travailler.");
+                System.out.println("Erreur dans le choix du type de paquet de carte");
         }
-
-
-        
-
     }
+
 
     public LinkedList<Carte> getJeu() {
         return jeu ;

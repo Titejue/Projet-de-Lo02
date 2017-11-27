@@ -4,5 +4,5 @@ public enum CouleurCarte {
     Trefle,
     Coeur,
     Carreau,
-    Pique ;
+    Pique ,
 }

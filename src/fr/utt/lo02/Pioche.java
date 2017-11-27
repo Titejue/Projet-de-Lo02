@@ -18,7 +18,6 @@ public class Pioche {
      * Etre mélangé
      */
 
-
     public Pioche(LinkedList<JeuDeCarte> jeux)
     /*type de paquet : faux = 32, vrai = 52
     joker : faux = pas de joker
