@@ -5,8 +5,10 @@ public class VarianteClassique {
     private int numVariante;
 
 
-    public VarianteClassique(int numVariante) {
-        this.numVariante = numVariante;
-        
+    public VarianteClassique() {
+        this.numVariante = numVariante ;
     }
+
+    public void effet(int )
+
 }
