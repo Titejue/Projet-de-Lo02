@@ -19,22 +19,14 @@ public class Pioche {
      */
 
 
-    public Pioche(int nbPaquet, boolean typeDePaquet, boolean joker)
+    public Pioche(LinkedList<JeuDeCarte> jeux)
     /*type de paquet : faux = 32, vrai = 52
     joker : faux = pas de joker
      */
     {
-        int i;
-        Carte carteT = new Carte(ValeurCarte.AS, CouleurCarte.Trefle);
-        Carte carteCa = new Carte(ValeurCarte.AS, CouleurCarte.Carreau);
-        Carte carteCo = new Carte(ValeurCarte.AS, CouleurCarte.Coeur);
-        Carte carteP = new Carte(ValeurCarte.AS, CouleurCarte.Pique);
-        if(typeDePaquet)
+        for(JeuDeCarte jeu:jeux)
         {
-            for(i = 0; i<=52; i++)
-            {
-
-            }
+            
         }
     }
 
