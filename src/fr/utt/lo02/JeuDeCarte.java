@@ -16,14 +16,31 @@ public class JeuDeCarte {
          * 3 : Jeu de 32 cartes
          */
 
-        
+        switch (typeJeu)
+        {
+            case 0:
+                System.out.println("Ouch !");
+                break;
+            case 1:
+                System.out.println("Vous avez juste la moyenne.");
+                break;
+            case 2:
+                System.out.println("Parfait !");
+                break;
+            case 3:
+                break;
+            default:
+                System.out.println("Il faut davantage travailler.");
+        }
+
 
         
 
     }
 
-
-
+    public LinkedList<Carte> getJeu() {
+        return jeu ;
+    }
 
 
 
