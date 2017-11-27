@@ -12,8 +12,10 @@ public class Partie
     // Attributs de la classe
     private boolean fini = false ;
     private static LinkedList<Joueur> joueurs ;
+
     private static int nbJoueur ;
     private int variante ;
+
     private int nbPaquetCartes ;
 
 
@@ -26,13 +28,44 @@ public class Partie
 
         this.nbJoueur = nbjoueur;
         this.variante = variante;
+
         // On crée la pioche une fois par partie
         Pioche pioche = new Pioche();
         // On crée le Talon une fois par partie
         Talon talon = new Talon();
         // On crée le jeu de carte au moment de la création du jeu
-        JeuDeCarte jeuCarte = new JeuDeCarte( int typedeJeu);
+        JeuDeCarte jeuCarte = new JeuDeCarte(int typedeJeu) ;
     }
+
+
+
+// ---------------------------------- GETTER ET SETTER ---------------------------------------------------
+
+
+    public static LinkedList<Joueur> getJoueurs() {
+        return joueurs;
+    }
+
+    public static void setJoueurs(LinkedList<Joueur> joueurs) {
+        Partie.joueurs = joueurs;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

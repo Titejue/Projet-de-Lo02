@@ -9,6 +9,4 @@ public class VarianteClassique {
         this.numVariante = numVariante ;
     }
 
-    public void effet(int )
-
 }

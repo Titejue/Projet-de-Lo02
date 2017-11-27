@@ -24,4 +24,11 @@ public enum ValeurCarte {
         this.name = nom;
         this.valeur = valeur;
     }
+
+    public String toString() {
+        return "ValeurCarte{" +
+                "name='" + name + '\'' +
+                ", valeur=" + valeur +
+                '}';
+    }
 }
