@@ -36,7 +36,7 @@ public abstract class Joueur {
     public void recevoirCarte(Carte carte) {
         main = main.add(carte) ;
     }
-    
+
         /**
          * Quand piocher ?
          * Quand on ne peut pas joueur : on passe alors son tour
