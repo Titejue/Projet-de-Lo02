@@ -34,30 +34,22 @@ public class Pioche {
 
     public void distribuer(int nbDeCarte)
     {
-        
+        for(int i = 0; i < nbDeCarte; i++)
+        {
+            for(Joueur j: Partie.getJoueurs())
+            {
+                donnerCarte(j, 1);
+            }
+        }
     }
 
-    // --------------------------------------------- RECEVOIR CARTE ------------------------------------------------
-
-    public void recevoirCarte(LinkedList<Carte> liste){
-        pioche.add(Talon.talon()) ;
-
+    public Carte donnerCarte(Joueur j, int nbDeCarte)
+    {
+        for(int i = 0; i < nbDeCarte; i++) {
+            Carte c = pioche.getFirst();
+            j.recevoirCarte(c);
+            pioche.remove(c);
+        }
     }
-
-
-    // --------------------------------------------- Get premiere CARTE (piocher la premiere carte)------------------------------------------------
-
-    public Carte getFirst(){
-        Carte carte = pioche.getFirst();
-
-        return carte ;
-    }
-
-
-
-
-
-
-
 
 }
