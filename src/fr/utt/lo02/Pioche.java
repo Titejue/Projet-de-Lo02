@@ -26,7 +26,7 @@ public class Pioche {
     {
         for(JeuDeCarte jeu:jeux)
         {
-            
+
         }
     }
 
