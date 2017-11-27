@@ -35,8 +35,6 @@ public class Pioche {
     public void recevoirCarte(LinkedList<Carte> liste){
         pioche.add(Talon.talon()) ;
 
-
-
     }
 
 
