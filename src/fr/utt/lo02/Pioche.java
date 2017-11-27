@@ -1,5 +1,6 @@
 package fr.utt.lo02;
 
+import java.util.Collections;
 import java.util.LinkedList;
 
 public class Pioche {
@@ -24,10 +25,16 @@ public class Pioche {
     joker : faux = pas de joker
      */
     {
-        for(JeuDeCarte jeu:jeux)
+        for(JeuDeCarte jdc:jeux)
         {
-
+            pioche.addAll(jdc.getJeu());
         }
+        Collections.shuffle(pioche);
+    }
+
+    public void distribuer(int nbDeCarte)
+    {
+        
     }
 
     // --------------------------------------------- RECEVOIR CARTE ------------------------------------------------
