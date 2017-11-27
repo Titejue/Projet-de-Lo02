@@ -19,7 +19,15 @@ public class Pioche {
      */
 
 
-    public Pioche() {
+    public Pioche(LinkedList<JeuDeCarte> jeux)
+    /*type de paquet : faux = 32, vrai = 52
+    joker : faux = pas de joker
+     */
+    {
+        for(JeuDeCarte jeu:jeux)
+        {
+
+        }
     }
 
     // --------------------------------------------- RECEVOIR CARTE ------------------------------------------------
@@ -30,10 +38,11 @@ public class Pioche {
     }
 
 
-    // --------------------------------------------- Get premiere CARTE ------------------------------------------------
+    // --------------------------------------------- Get premiere CARTE (piocher la premiere carte)------------------------------------------------
 
     public Carte getFirst(){
         Carte carte = pioche.getFirst();
+
         return carte ;
     }
 
