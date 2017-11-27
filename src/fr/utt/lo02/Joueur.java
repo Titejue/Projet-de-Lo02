@@ -11,6 +11,7 @@ public abstract class Joueur {
     protected LinkedList<Carte> main ;
 
 
+
     /**
      * Un joueur peut :
      * Piocher

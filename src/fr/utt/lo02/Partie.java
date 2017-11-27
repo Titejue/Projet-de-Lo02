@@ -32,7 +32,15 @@ public class Partie
         Talon talon = new Talon() ;
         // On crée le jeu de carte au moment de la création du jeu
         JeuDeCarte jeuCarte = new JeuDeCarte(int typedeJeu) ;
+
+
+
+
+
+
     }
+
+
 
 
 

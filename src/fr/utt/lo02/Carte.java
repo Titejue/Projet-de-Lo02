@@ -36,7 +36,7 @@ public class Carte {
     public String toString() {
         String s ;
         if (this.getValeur() == ValeurCarte.Joker){
-            s = "" + this.getValeur() + "" ;
+            s = "" + this.valeur+ "" ;
         }
         else {
             s = "" + this.getValeur() + " de " + this.getCouleur() + "" ;
