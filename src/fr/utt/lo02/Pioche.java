@@ -19,7 +19,23 @@ public class Pioche {
      */
 
 
-    public Pioche() {
+    public Pioche(int nbPaquet, boolean typeDePaquet, boolean joker)
+    /*type de paquet : faux = 32, vrai = 52
+    joker : faux = pas de joker
+     */
+    {
+        int i;
+        Carte carteT = new Carte(ValeurCarte.AS, CouleurCarte.Trefle);
+        Carte carteCa = new Carte(ValeurCarte.AS, CouleurCarte.Carreau);
+        Carte carteCo = new Carte(ValeurCarte.AS, CouleurCarte.Coeur);
+        Carte carteP = new Carte(ValeurCarte.AS, CouleurCarte.Pique);
+        if(typeDePaquet)
+        {
+            for(i = 0; i<=52; i++)
+            {
+                
+            }
+        }
     }
 
     // --------------------------------------------- RECEVOIR CARTE ------------------------------------------------
@@ -32,10 +48,11 @@ public class Pioche {
     }
 
 
-    // --------------------------------------------- Get premiere CARTE ------------------------------------------------
+    // --------------------------------------------- Get premiere CARTE (piocher la premiere carte)------------------------------------------------
 
     public Carte getFirst(){
         Carte carte = pioche.getFirst();
+
         return carte ;
     }
 

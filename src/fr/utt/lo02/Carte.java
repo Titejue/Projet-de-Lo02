@@ -24,16 +24,19 @@ public class Carte {
     ValeurCarte getValeur() {
         return this.valeur;
     }
-    void setValeur(ValeurCarte numero) {
+    public void setValeur(ValeurCarte numero) {
         this.valeur = numero;
     }
 
     CouleurCarte getCouleur() {
         return this.couleur;
     }
-    void setCouleur(CouleurCarte type) {
+    public void setCouleur(CouleurCarte type) {
         this.couleur = type;
     }
+
+
+}
 
 
     protected void finalize() {
