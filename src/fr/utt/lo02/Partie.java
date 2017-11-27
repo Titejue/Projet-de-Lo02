@@ -29,21 +29,10 @@ public class Partie
         // On crée la pioche une fois par partie
         Pioche pioche = new Pioche();
         // On crée le Talon une fois par partie
-        Talon talon = new Talon() ;
+        Talon talon = new Talon();
         // On crée le jeu de carte au moment de la création du jeu
-        JeuDeCarte jeuCarte = new JeuDeCarte(int typedeJeu) ;
-
-
-
-
-
-
+        JeuDeCarte jeuCarte = new JeuDeCarte( int typedeJeu);
     }
-
-
-
-
-
 
 
 
