@@ -15,7 +15,7 @@ public class Carte {
 
     // Connaitre la carte (valeur et couleur)
     public String toString(){
-        String s;
+        String s ;
         s="["+this.getCouleur()+","+this.getValeur()+"]";
         return s;
     }

@@ -99,7 +99,7 @@ public abstract class Joueur {
             Carte carte = Pioche.getFirst();
             System.out.println("Vous avez pioché la carte " + Carte.carte.getValeur() + " de " + Carte.carte.getCouleur());
             main = main.add(carte) ;
-            Talon.talon = Talon.talon.remove(carte) ;
+            Pioche.pioche = Pioche.pioche.remove(carte) ;
         }
         /**
          * Quand piocher ?
