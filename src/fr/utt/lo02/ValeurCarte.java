@@ -14,7 +14,7 @@ public enum ValeurCarte {
     V("valet", 11),
     D("dame", 12),
     R("roi", 13),
-    Joker("Joker", 14) ;
+    Joker("Joker", 14);
 
     private String name = "";
     private int valeur = 0;
@@ -25,10 +25,5 @@ public enum ValeurCarte {
         this.valeur = valeur;
     }
 
-    public String toString() {
-        return "ValeurCarte{" +
-                "name='" + name + '\'' +
-                ", valeur=" + valeur +
-                '}';
-    }
 }
+

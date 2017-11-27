@@ -24,17 +24,6 @@ public abstract class Joueur {
 
 
 
-    public Carte piocher(Pioche p) {
-        Carte cartePioche = p.getFirst() ;
-        main.add(cartePioche);
-        return carte ;
-    }
-
-
-
-
-
-
     // -------------------------------------------- JOUER UNE CARTE ------------------------------------------
 
     public void JouerCarte(Carte carte) {
@@ -42,15 +31,12 @@ public abstract class Joueur {
         Talon.recevoirCarte(carte) ;
     }
 
-    // -------------------------------------------- PIOCHER UNE CARTE ------------------------------------------
+    // -------------------------------------------- RECEVOIR UNE CARTE ------------------------------------------
 
-    public void PiocherCarte(int nombre) {
-        for (int i=0, i=nombre, i++) {
-            Carte carte = Pioche.getFirst();
-            System.out.println("Vous avez pioché la carte " + Carte.carte.getValeur() + " de " + Carte.carte.getCouleur());
-            main = main.add(carte) ;
-            Pioche.pioche = Pioche.pioche.remove(carte) ;
-        }
+    public void recevoirCarte(Carte carte) {
+        main = main.add(carte) ;
+    }
+    
         /**
          * Quand piocher ?
          * Quand on ne peut pas joueur : on passe alors son tour
