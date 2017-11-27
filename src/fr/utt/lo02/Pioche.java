@@ -42,7 +42,7 @@ public class Pioche {
             }
         }
     }
-
+//Cette ligne ne sert à rien
     public Carte donnerCarte(Joueur j, int nbDeCarte)
     {
         for(int i = 0; i < nbDeCarte; i++) {
