@@ -10,11 +10,13 @@ public class Partie
     private static Partie ourInstance = new Partie( 1, 2);
 
     // Attributs de la classe
-    private boolean fini = false ;
-    private static LinkedList<Joueur> joueurs ;
 
+    private boolean fini = false ;
+
+    private static LinkedList<Joueur> joueurs ;
     private static int nbJoueur ;
     private int variante ;
+    private int
 
     private int nbPaquetCartes ;
 
@@ -24,7 +26,7 @@ public class Partie
     /**
      * Il faudrait plutot se demander si le nombre de joueur ne devrait pas etre choisi par le joueur lui meme
      */
-    private Partie(int nbjoueur, int variante) {
+    private Partie(int nbjoueur, int variante, int typeDeJeu) {
 
         this.nbJoueur = nbjoueur;
         this.variante = variante;
@@ -34,7 +36,7 @@ public class Partie
         // On crée le Talon une fois par partie
         Talon talon = new Talon();
         // On crée le jeu de carte au moment de la création du jeu
-        JeuDeCarte jeuCarte = new JeuDeCarte(int typedeJeu) ;
+        JeuDeCarte jeuCarte = new JeuDeCarte(int typeDeJeu) ;
     }
 
 
@@ -50,6 +52,12 @@ public class Partie
         Partie.joueurs = joueurs;
     }
 
+    // -------------------------------- PIOCHER UNE OU PLUSIEURS CARTE(S)
+
+    /**
+     * Le joueur va recevoir un "entier" en pénalité
+     *
+     */
 
 
 
