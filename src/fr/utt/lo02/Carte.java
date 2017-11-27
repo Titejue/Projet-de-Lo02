@@ -1,52 +1,47 @@
 package fr.utt.lo02;
 
 public class Carte {
-    private ValeurCarte valeur ; //Valeur de la carte
-    private CouleurCarte couleur;
-    // private Localisation localisation; // Endroits possibles où se trouve la carte
 
-    // CONSTRUCTEUR DE LA CLASSE CARTE
+    private ValeurCarte valeur ;
+    private CouleurCarte couleur ;
+
+
+    // ------------------------------- CONSTRUCTEUR -------------------------------------------------------------
 
     public Carte(ValeurCarte num, CouleurCarte type) {
-        this.valeur = num;
-        this.couleur = type;
-        //   this.localisation = Localisation.Pioche;
+        this.valeur = num ;
+        this.couleur = type ;
     }
 
-    // Connaitre la carte (valeur et couleur)
-    public String toString(){
-        String s ;
-        s="["+this.getCouleur()+","+this.getValeur()+"]";
-        return s;
-    }
 
-    // Getter et Setter
+    // ------------------------------- GETTER ET SETTER -------------------------------------------------------------
+
     ValeurCarte getValeur() {
         return this.valeur;
     }
-    public void setValeur(ValeurCarte numero) {
+
+    void setValeur(ValeurCarte numero) {
         this.valeur = numero;
     }
 
     CouleurCarte getCouleur() {
         return this.couleur;
     }
-    public void setCouleur(CouleurCarte type) {
+
+    void setCouleur(CouleurCarte type) {
         this.couleur = type;
     }
 
-
+    // Connaitre la carte (valeur et couleur)
+    public String toString() {
+        String s ;
+        if (this.getValeur() == ValeurCarte.Joker){
+            s = "" + this.valeur+ "" ;
+        }
+        else {
+            s = "" + this.getValeur() + " de " + this.getCouleur() + "" ;
+        }
+        return s ;
+    }
 }
 
-
-    protected void finalize() {
-    }
-
-    public void appliquer() {
-    }
-
-
-    public static void main(String[] args) {
-        Carte Test = new Carte(ValeurCarte.DIX,CouleurCarte.Pique);
-        System.out.println(Test);
-}
