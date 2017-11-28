@@ -1,19 +1,26 @@
 package fr.utt.lo02;
 
+import java.util.LinkedList;
+
 public abstract class Joueur {
 
     //Nom du joueur
     protected String nom ;
     //Cartes en main du joueur
-    protected Hand main ;
+    protected LinkedList<Carte> main ;
 
 // -------------------------------------- CONSTRUCTEUR --------------------------------------------------
-    public Joueur(String nom,  ){
+    public Joueur(){
         this.nom = nom;
-        this.main = new Hand(var) ;
-
+        this.main = new LinkedList<>() ;
     }
 
+// --------------------------------------- SETTER --------------------------------------------------------
+
+
+    public void setMain(LinkedList<Carte> main) {
+        this.main = main;
+    }
 
 
     /**
@@ -22,7 +29,7 @@ public abstract class Joueur {
      * Choisir une Carte
      * Poser une carte
      * Passer son tour
-     * Regarder le jeu dans main (méthode qui appelle une méthode afficher() de la classe main
+     * Regarder le jeu dans main (méthode qui appelle une méthode afficher()) de la classe main
      */
 
 

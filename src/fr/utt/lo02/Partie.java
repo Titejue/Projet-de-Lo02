@@ -43,11 +43,6 @@ public class Partie {
             joueurs.add(new Adversaire("adversaire" + j));
         }
 
-        // On crée la pioche une fois par partie
-        Pioche pioche = new Pioche();
-        // On crée le Talon une fois par partie
-        Talon talon = new Talon();
-
         // On demande les données nécessaires : type de jeu, nombre de Decks
         System.out.println("Avec quel Type de Jeu souhaitez-vous joueur ?\t 0 : Jeu classique 54 cartes (52 cartes + 2 Jokers)\t 1 : Jeu de 52 cartes\t 2 : Jeu de 34 cartes (32 cartes + 2 Jokers)\t 3 : Jeu de 32 cartes");
         this.typeDeJeu = sc.nextInt();
@@ -61,6 +56,14 @@ public class Partie {
         System.out.println("0 : Variante Classique \t 1 : Version de MonClar \t 2 : Version Minimale \t 3 : Variante 1 \t 4 : Variante Carte et Maou");
         this.numVar = sc.nextInt();
         this.variante = new Variante(numVar);
+
+        // On crée la pioche une fois par partie
+        Pioche pioche = new Pioche(jeuCarte);
+        // On crée le Talon une fois par partie
+        Talon talon = new Talon();
+
+
+        // Création des mains des joueurs
     }
 
 
@@ -80,6 +83,7 @@ public class Partie {
             System.out.println("Erreur : une partie est déja instanciée");
         }
     }
+
 
 
 
