@@ -50,5 +50,5 @@ public class Pioche {
             pioche.remove(c);
         }
     }
-
+//modification inutile
 }
