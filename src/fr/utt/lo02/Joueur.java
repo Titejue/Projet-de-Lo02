@@ -8,9 +8,9 @@ public abstract class Joueur {
     protected Hand main ;
 
 // -------------------------------------- CONSTRUCTEUR --------------------------------------------------
-    public Joueur(String nom){
+    public Joueur(String nom,  ){
         this.nom = nom;
-        this.main = new Hand() ;
+        this.main = new Hand(var) ;
 
     }
 
