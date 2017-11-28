@@ -63,6 +63,8 @@ public class Partie {
         Talon talon = new Talon();
 
 
+
+
         // Création des mains des joueurs
     }
 
