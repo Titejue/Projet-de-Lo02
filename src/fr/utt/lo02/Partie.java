@@ -55,14 +55,12 @@ public class Partie {
         this.nbDeck = sc.nextInt();
 
         // On crée le jeu de carte de type JeuDeCarte
-        JeuDeCarte jeuCarte = new JeuDeCarte(typeDeJeu, nbDeck);
+        this.jeuCarte = new JeuDeCarte(typeDeJeu, nbDeck);
 
         System.out.println("Veuillez choisir la variante :\t ");
         System.out.println("0 : Variante Classique \t 1 : Version de MonClar \t 2 : Version Minimale \t 3 : Variante 1 \t 4 : Variante Carte et Maou");
         this.numVar = sc.nextInt();
         this.variante = new Variante(numVar);
-
-
     }
 
 
@@ -77,6 +75,9 @@ public class Partie {
         if (ourInstance == null){
             ourInstance = new Partie(); // On mettra les paramètres plus tard
             return ourInstance;
+        }
+        else {
+            System.out.println("Erreur : une partie est déja instanciée");
         }
     }
 
