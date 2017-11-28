@@ -33,16 +33,14 @@ public class Pioche {
 
     public void distribuer(int nbDeCarte)
     {
-        for(int i = 0; i < nbDeCarte; i++)
-        {
-            for(Joueur j: Partie.getJoueurs())
-            {
+        for(int i = 0; i < nbDeCarte; i++) {
+            for(Joueur j: Partie.getJoueurs()){
                 donnerCarte(j, 1);
             }
         }
     }
 //Cette ligne ne sert à rien
-    public Carte donnerCarte(Joueur j, int nbDeCarte)
+    public void donnerCarte(Joueur j, int nbDeCarte)
     {
         for(int i = 0; i < nbDeCarte; i++) {
             Carte c = pioche.getFirst();

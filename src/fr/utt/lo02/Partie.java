@@ -62,10 +62,12 @@ public class Partie {
         // On crée le Talon une fois par partie
         Talon talon = new Talon();
 
-
-
-
         // Création des mains des joueurs
+
+
+
+
+
     }
 
 

@@ -1,11 +1,13 @@
 package fr.utt.lo02;
 
+import java.util.LinkedList;
+
 public abstract class Joueur {
 
     //Nom du joueur
     protected String nom ;
     //Cartes en main du joueur
-    protected Hand main ;
+    protected LinkedList<Carte> main ;
 
 // -------------------------------------- CONSTRUCTEUR --------------------------------------------------
     public Joueur(){
@@ -38,7 +40,7 @@ public abstract class Joueur {
     // -------------------------------------------- RECEVOIR UNE CARTE ------------------------------------------
 
     public void recevoirCarte(Carte carte) {
-        main = main.add(carte) ;
+        this.main.add(carte) ;
     }
 
         /**
