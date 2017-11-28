@@ -6,7 +6,7 @@ public class JeuDeCarte {
 
     private LinkedList<Carte> jeu ;
 
-    public JeuDeCarte(int typeJeu) {
+    public JeuDeCarte(int typeJeu, int nbDeck) {
 
         /**
          * 0 : Jeu classique 54 cartes (52 cartes + 2 Jokers)
@@ -17,41 +17,45 @@ public class JeuDeCarte {
 
         jeu = new LinkedList<>();
 
-        switch (typeJeu) {
-            case 0:
-                for (CouleurCarte couleur : CouleurCarte.values()) {
-                    for (ValeurCarte valeur : new ValeurCarte[]{ValeurCarte.AS, ValeurCarte.DEUX, ValeurCarte.TROIS, ValeurCarte.QUATRE, ValeurCarte.CINQ, ValeurCarte.SIX, ValeurCarte.SEPT, ValeurCarte.HUIT, ValeurCarte.NEUF, ValeurCarte.DIX, ValeurCarte.V, ValeurCarte.D, ValeurCarte.R}) {
-                        jeu.add(new Carte(valeur, couleur));
+
+        for (int i=0 ; i < nbDeck ; i++) {
+
+            switch (typeJeu) {
+                case 0:
+                    for (CouleurCarte couleur : CouleurCarte.values()) {
+                        for (ValeurCarte valeur : new ValeurCarte[]{ValeurCarte.AS, ValeurCarte.DEUX, ValeurCarte.TROIS, ValeurCarte.QUATRE, ValeurCarte.CINQ, ValeurCarte.SIX, ValeurCarte.SEPT, ValeurCarte.HUIT, ValeurCarte.NEUF, ValeurCarte.DIX, ValeurCarte.V, ValeurCarte.D, ValeurCarte.R}) {
+                            jeu.add(new Carte(valeur, couleur));
+                        }
                     }
-                }
-                jeu.add(new Carte(ValeurCarte.Joker));
-                jeu.add(new Carte(ValeurCarte.Joker));
-                break;
-            case 1:
-                for (CouleurCarte couleur : CouleurCarte.values()) {
-                    for (ValeurCarte valeur : new ValeurCarte[]{ValeurCarte.AS, ValeurCarte.DEUX, ValeurCarte.TROIS, ValeurCarte.QUATRE, ValeurCarte.CINQ, ValeurCarte.SIX, ValeurCarte.SEPT, ValeurCarte.HUIT, ValeurCarte.NEUF, ValeurCarte.DIX, ValeurCarte.V, ValeurCarte.D, ValeurCarte.R}) {
-                        jeu.add(new Carte(valeur, couleur));
+                    jeu.add(new Carte(ValeurCarte.Joker));
+                    jeu.add(new Carte(ValeurCarte.Joker));
+                    break;
+                case 1:
+                    for (CouleurCarte couleur : CouleurCarte.values()) {
+                        for (ValeurCarte valeur : new ValeurCarte[]{ValeurCarte.AS, ValeurCarte.DEUX, ValeurCarte.TROIS, ValeurCarte.QUATRE, ValeurCarte.CINQ, ValeurCarte.SIX, ValeurCarte.SEPT, ValeurCarte.HUIT, ValeurCarte.NEUF, ValeurCarte.DIX, ValeurCarte.V, ValeurCarte.D, ValeurCarte.R}) {
+                            jeu.add(new Carte(valeur, couleur));
+                        }
                     }
-                }
-                break;
-            case 2:
-                for (CouleurCarte couleur : CouleurCarte.values()) {
-                    for (ValeurCarte valeur : new ValeurCarte[]{ValeurCarte.AS, ValeurCarte.SEPT, ValeurCarte.HUIT, ValeurCarte.NEUF, ValeurCarte.DIX, ValeurCarte.V, ValeurCarte.D, ValeurCarte.R}) {
-                        jeu.add(new Carte(valeur, couleur));
+                    break;
+                case 2:
+                    for (CouleurCarte couleur : CouleurCarte.values()) {
+                        for (ValeurCarte valeur : new ValeurCarte[]{ValeurCarte.AS, ValeurCarte.SEPT, ValeurCarte.HUIT, ValeurCarte.NEUF, ValeurCarte.DIX, ValeurCarte.V, ValeurCarte.D, ValeurCarte.R}) {
+                            jeu.add(new Carte(valeur, couleur));
+                        }
                     }
-                }
-                jeu.add(new Carte(ValeurCarte.Joker));
-                jeu.add(new Carte(ValeurCarte.Joker));
-                break;
-            case 3:
-                for (CouleurCarte couleur : CouleurCarte.values()) {
-                    for (ValeurCarte valeur : new ValeurCarte[]{ValeurCarte.AS, ValeurCarte.SEPT, ValeurCarte.HUIT, ValeurCarte.NEUF, ValeurCarte.DIX, ValeurCarte.V, ValeurCarte.D, ValeurCarte.R}) {
-                        jeu.add(new Carte(valeur, couleur));
+                    jeu.add(new Carte(ValeurCarte.Joker));
+                    jeu.add(new Carte(ValeurCarte.Joker));
+                    break;
+                case 3:
+                    for (CouleurCarte couleur : CouleurCarte.values()) {
+                        for (ValeurCarte valeur : new ValeurCarte[]{ValeurCarte.AS, ValeurCarte.SEPT, ValeurCarte.HUIT, ValeurCarte.NEUF, ValeurCarte.DIX, ValeurCarte.V, ValeurCarte.D, ValeurCarte.R}) {
+                            jeu.add(new Carte(valeur, couleur));
+                        }
                     }
-                }
-                break;
-            default:
-                System.out.println("Erreur dans le choix du type de paquet de carte");
+                    break;
+                default:
+                    System.out.println("Erreur dans le choix du type de paquet de carte");
+            }
         }
     }
 

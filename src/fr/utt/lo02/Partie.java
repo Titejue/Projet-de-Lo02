@@ -14,29 +14,53 @@ public class Partie {
     private boolean fini = false;
 
     private static LinkedList<Joueur> joueurs;
-    private static int nbJoueur;
-    private int variante;
-    private int typeJeu
 
-    private int nbPaquetCartes;
-
+    private int nbJoueur;
+    private int numVar;
+    private int typeDeJeu ;
+    private int nbDeck ;
+    private Variante variante;
+    private JeuDeCarte jeuCarte;
 
     // ------------------------ CONSTRUCTEUR --------------------------------------
 
     /**
      * Il faudrait plutot se demander si le nombre de joueur ne devrait pas etre choisi par le joueur lui meme
      */
-    private Partie(int nbjoueur, int variante, int typeDeJeu) {
+    private Partie() {
 
-        this.nbJoueur = nbjoueur;
-        this.variante = variante;
+        System.out.println("Démarrage d'une partie");
+        Partie partie = Partie.getInstance();
+
+        System.out.println("Veuillez saisir votre nom");
+        Scanner sc = new Scanner(System.in);
+        String nomJoueur = sc.nextLine();
+        joueurs.add(new JoueurReel(nomJoueur));
+
+        System.out.println("Combien de joueur dans la partie (vous compris)");
+        this.nbJoueur = sc.nextInt();
+        for (int j = 1; j < nbJoueur; j++) {
+            joueurs.add(new Adversaire("adversaire" + j));
+        }
 
         // On crée la pioche une fois par partie
         Pioche pioche = new Pioche();
         // On crée le Talon une fois par partie
         Talon talon = new Talon();
-        // On crée le jeu de carte au moment de la création du jeu
-        JeuDeCarte jeuCarte = new JeuDeCarte(typeDeJeu) ;
+
+        // On demande les données nécessaires : type de jeu, nombre de Decks
+        System.out.println("Avec quel Type de Jeu souhaitez-vous joueur ?\t 0 : Jeu classique 54 cartes (52 cartes + 2 Jokers)\t 1 : Jeu de 52 cartes\t 2 : Jeu de 34 cartes (32 cartes + 2 Jokers)\t 3 : Jeu de 32 cartes");
+        this.typeDeJeu = sc.nextInt();
+        System.out.println("Veuillez choisir le nombre de jeu de Carte de ce type pour la partie : ");
+        this.nbDeck = sc.nextInt();
+
+        // On crée le jeu de carte de type JeuDeCarte
+        JeuDeCarte jeuCarte = new JeuDeCarte(typeDeJeu, nbDeck);
+
+        System.out.println("Veuillez choisir la variante :\t ");
+        System.out.println("0 : Variante Classique \t 1 : Version de MonClar \t 2 : Version Minimale \t 3 : Variante 1 \t 4 : Variante Carte et Maou");
+        this.numVar = sc.nextInt();
+        this.variante = new Variante(numVar);
 
 
     }
@@ -51,10 +75,11 @@ public class Partie {
 
     public static Partie getInstance() {
         if (ourInstance == null){
-            ourInstance = new Partie(2, 0, 1); // On mettra les paramètres plus tard
+            ourInstance = new Partie(); // On mettra les paramètres plus tard
             return ourInstance;
         }
     }
+
 
 
     // -------------------------------- PIOCHER UNE OU PLUSIEURS CARTE(S)
@@ -67,18 +92,5 @@ public class Partie {
     public void terminer(boolean fini) {
         this.fini = fini;
     }
-
-
-
-
-
-
-
-
-
-
-
-    // --------------------------------- METHODE MAIN ---------------------------------------------------------
-
 
 }
