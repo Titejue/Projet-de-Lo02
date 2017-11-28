@@ -11,12 +11,11 @@ public abstract class Joueur {
 
 // -------------------------------------- CONSTRUCTEUR --------------------------------------------------
     public Joueur(){
-        this.nom = nom;
-        //this.main = new Hand(var) ;
-
     }
 
-
+    public LinkedList<Carte> getMain() {
+        return main;
+    }
 
     /**
      * Un joueur peut :

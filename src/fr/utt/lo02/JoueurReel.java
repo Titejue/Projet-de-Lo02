@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 public class JoueurReel extends Joueur {
 
-
     // ----------------------------- CONSTRUCTEUR -------------------------------------------------------
     public JoueurReel(String nom) {
        this.nom = nom ;
@@ -55,7 +54,7 @@ public class JoueurReel extends Joueur {
         Carte carteChoisie = new Carte(carteValeur, carteCouleur) ;
 
         // On supprime la carteChoisie de la main du joueur
-        main = main.remove(carteChoisie);
+        this.main.remove(carteChoisie);
 
         // On peut choisir de retourner la carteChoisie ou on prend une methode void ?
         return carteChoisie;
