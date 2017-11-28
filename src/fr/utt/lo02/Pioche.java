@@ -24,7 +24,7 @@ public class Pioche {
     joker : faux = pas de joker
      */
     {
-        for(JeuDeCarte jdc:jeux)
+        for(JeuDeCarte jdc : jeux)
         {
             pioche.addAll(jdc.getJeu());
         }

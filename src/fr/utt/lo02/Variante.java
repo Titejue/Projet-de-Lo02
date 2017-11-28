@@ -2,8 +2,12 @@ package fr.utt.lo02;
 
 public interface Variante {
 
-    public void effetCarte(){
+    private int numVariante;
+    private int paiement ;
 
+    public void effetCarte(){
     }
+
+
 }
 
