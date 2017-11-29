@@ -29,6 +29,9 @@ public class Partie {
      */
     private Partie() {
 
+        //On instancie tout les paramètres : Variante, jeuDeCarte et la liste de Joueurs :
+        this.joueurs = new LinkedList<>() ;
+
         System.out.println("Démarrage d'une partie");
         Partie partie = Partie.getInstance();
 
@@ -55,14 +58,20 @@ public class Partie {
         System.out.println("Veuillez choisir la variante :\t ");
         System.out.println("0 : Variante Classique \t 1 : Version de MonClar \t 2 : Version Minimale \t 3 : Variante 1 \t 4 : Variante Carte et Maou");
         this.numVar = sc.nextInt();
+
+        /** Numéro de Variante
+         *
+         */
+        switch (numVar) {
+            case(0)
+        }
+
         this.variante = new Variante(numVar);
 
         // On crée la pioche une fois par partie
         Pioche pioche = new Pioche(jeuCarte);
         // On crée le Talon une fois par partie
         Talon talon = new Talon();
-
-        // Création des mains des joueurs
 
 
 
