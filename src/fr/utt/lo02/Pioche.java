@@ -17,36 +17,44 @@ public class Pioche {
      * Distribuer la pioche aux joueurs
      * Donner une ou plusieurs carte(s) à un joueur
      * Etre mélangé
-     */
+     *
 
-    public Pioche(LinkedList<JeuDeCarte> jeux)
-    /*type de paquet : faux = 32, vrai = 52
-    joker : faux = pas de joker
-     */
-    {
-        for(JeuDeCarte jdc : jeux)
-        {
+    // --------------------------------------- CONSTRUCTEUR ----------------------------------------------
+
+    public Pioche(LinkedList<JeuDeCarte> jeux) {
+        for (JeuDeCarte jdc : jeux) {
             pioche.addAll(jdc.getJeu());
         }
         Collections.shuffle(pioche);
     }
 
-    public void distribuer(int nbDeCarte)
-    {
-        for(int i = 0; i < nbDeCarte; i++) {
-            for(Joueur j: Partie.getJoueurs()){
+
+    // -------------------------------- DISTRIBUER LA CARTE -----------------------------------------------
+
+    public void distribuer(int nbDeCarte) {
+        for (int i = 0 ; i < nbDeCarte ; i++) {
+            for (Joueur j : Partie.getJoueurs()){
                 donnerCarte(j, 1);
             }
         }
     }
-//Cette ligne ne sert à rien
-    public void donnerCarte(Joueur j, int nbDeCarte)
-    {
-        for(int i = 0; i < nbDeCarte; i++) {
+
+
+    // --------------------------------- DONNER CARTE -----------------------------------------------------
+
+    public void donnerCarte(Joueur j, int nbDeCarte) {
+        for (int i = 0 ; i < nbDeCarte ; i++) {
             Carte c = pioche.getFirst();
             j.recevoirCarte(c);
             pioche.remove(c);
         }
     }
-//modification inutile
+
+
+    // --------------------------------- GETTER -----------------------------------------------------------
+
+    public LinkedList<Carte> getPioche() {
+        return pioche;
+    }
+
 }
