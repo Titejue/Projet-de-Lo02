@@ -12,10 +12,13 @@ abstract class VarianteClassique implements Variante {
         }
 
         public void effetCarte(Carte carte){
+
             switch(carte.getValeur()){
                 case AS :
+                    this.paiement = 0 ;
                     break;
                 case DEUX:
+
                     break;
                 case TROIS:
                     break ;
