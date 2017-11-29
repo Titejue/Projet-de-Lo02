@@ -17,7 +17,7 @@ public class Pioche {
      * Distribuer la pioche aux joueurs
      * Donner une ou plusieurs carte(s) à un joueur
      * Etre mélangé
-     *
+     */
 
     // --------------------------------------- CONSTRUCTEUR ----------------------------------------------
 
