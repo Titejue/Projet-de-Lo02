@@ -22,6 +22,8 @@ public class Pioche {
     // --------------------------------------- CONSTRUCTEUR ----------------------------------------------
 
     public Pioche(LinkedList<JeuDeCarte> jeux) {
+        this.pioche = new LinkedList<>();
+
         for (JeuDeCarte jdc : jeux) {
             pioche.addAll(jdc.getJeu());
         }
