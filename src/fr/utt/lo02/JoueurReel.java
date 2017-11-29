@@ -1,5 +1,6 @@
 package fr.utt.lo02;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -9,7 +10,6 @@ public class JoueurReel extends Joueur {
     public JoueurReel(String nom) {
        this.nom = nom ;
     }
-
 
 
 
@@ -61,4 +61,6 @@ public class JoueurReel extends Joueur {
 
         // Il faudrait appeler une méthode poser sur la defausse ou le talon pour gérer les listes !
     }
+
+
 }

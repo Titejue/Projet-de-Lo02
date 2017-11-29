@@ -6,16 +6,40 @@ public abstract class Joueur {
 
     //Nom du joueur
     protected String nom ;
+
     //Cartes en main du joueur
     protected LinkedList<Carte> main ;
 
-// -------------------------------------- CONSTRUCTEUR --------------------------------------------------
-    public Joueur(){
+
+    // --------------------------------------- REMPLIR MAIN ------------------------------------------------
+
+    protected void recevoirCarte(Carte carte) {
+        this.main.add(carte) ;
     }
 
-    public LinkedList<Carte> getMain() {
+    // -------------------------------------- GETTER MAIN --------------------------------------------------
+    protected LinkedList<Carte> getMain() {
         return main;
     }
+
+    public void setMain(LinkedList<Carte> main) {
+        this.main = main;
+    }
+
+    // ------------------------------------ RECEVOIR UNE CARTE -----------------------------------------------
+
+    public void ajouterCarte(Carte carte) {
+    }
+
+
+    // ------------------------------------ POSER UNE CARTE --------------------------------------------------
+    public void donnercarte(Carte carte) {
+    }
+
+
+
+
+
 
     /**
      * Un joueur peut :
@@ -31,16 +55,9 @@ public abstract class Joueur {
 
     // -------------------------------------------- JOUER UNE CARTE ------------------------------------------
 
-    public void JouerCarte(Carte carte) {
-        Joueur.choisirCarte() ;
-        Talon.recevoirCarte(carte) ;
-    }
 
-    // -------------------------------------------- RECEVOIR UNE CARTE ------------------------------------------
 
-    public void recevoirCarte(Carte carte) {
-        this.main.add(carte) ;
-    }
+
 
         /**
          * Quand piocher ?
