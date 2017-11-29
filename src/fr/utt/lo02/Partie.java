@@ -60,24 +60,35 @@ public class Partie {
         this.numVar = sc.nextInt();
 
         /** Numéro de Variante
-         *
+         * 0 : Variante Classique
+         * 1 : Version de MonClar
+         * 2 : Version Minimale
+         * 3 : Variante
+         * 4 : Variante Carte et Maou
          */
-        switch (numVar) {
-            case(0)
-        }
 
-        this.variante = new Variante(numVar);
+
+        switch (numVar) {
+            case(0) :
+                this.variante = new VarianteClassique() ;
+                break ;
+            case(1) :
+                this.variante = new VarianteMonClar();
+                break ;
+            case(2) :
+                this.variante = new VarianteMinimale();
+                break ;
+            case(3) :
+                this.variante  = new Variante1() ;
+                break ;
+        }
 
         // On crée la pioche une fois par partie
         Pioche pioche = new Pioche(jeuCarte);
         // On crée le Talon une fois par partie
         Talon talon = new Talon();
-
-
-
-
-
     }
+
 
 
 // ---------------------------------- GETTER ET SETTER ---------------------------------------------------
