@@ -2,8 +2,8 @@ package fr.utt.lo02;
 
 public interface Variante {
 
-    public void effetCarte() ;
-    public void piocher() ;
+    void effetCarte(Carte carte) ;
+   // public void piocher() ;
 
 }
 

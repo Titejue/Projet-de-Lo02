@@ -1,13 +1,12 @@
 package fr.utt.lo02;
 
-abstract class VarianteClassique implements Variante {
+public class VarianteClassique implements Variante {
 
     int numVariante;
     int paiement ;
 
 
-        public VarianteClassique(int numVariante) {
-            this.numVariante = numVariante;
+        protected VarianteClassique() {
             System.out.println("Vous avez choisi la variante Classique")
         }
 
@@ -48,6 +47,7 @@ abstract class VarianteClassique implements Variante {
             }
 
         }
+
 
 
 }
