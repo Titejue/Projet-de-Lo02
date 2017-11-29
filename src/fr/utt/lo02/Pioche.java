@@ -5,7 +5,8 @@ import java.util.LinkedList;
 
 public class Pioche {
 
-    protected LinkedList<Carte> pioche ;
+    private LinkedList<Carte> pioche ;
+    private JeuDeCarte jdc ;
 
     // Constructeur en cours
 
@@ -20,16 +21,11 @@ public class Pioche {
      */
 
     // --------------------------------------- CONSTRUCTEUR ----------------------------------------------
-
-    public Pioche(LinkedList<JeuDeCarte> jeux) {
-        this.pioche = new LinkedList<>();
-
-        for (JeuDeCarte jdc : jeux) {
-            pioche.addAll(jdc.getJeu());
-        }
+    public Pioche(JeuDeCarte jeux) {
+        this.pioche = new LinkedList<>() ;
+        pioche.addAll(jeux.getJeu());
         Collections.shuffle(pioche);
     }
-
 
     // -------------------------------- DISTRIBUER LA CARTE -----------------------------------------------
 
