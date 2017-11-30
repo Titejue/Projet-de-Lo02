@@ -14,7 +14,7 @@ public class JoueurReel extends Joueur {
 
 
     // ------------------------------------ CHOISIR CARTE ------------------------------------------------
-    public Carte choisirCarte() {
+    public void choisirCarte() {
 
         // Il faut créer un objet "carteChoisie" qui est l'une des cartes composant la main du joueur
         // Il va falloir demander par un terminal quelle carte jouer
@@ -51,16 +51,15 @@ public class JoueurReel extends Joueur {
          * Création de l'objet carteChoisie de type carte et défausse de la main du joueur
          * IL FAUT VERIFIER COMMENT PY DECLARE LE CONSTRUCTEUR CARTE !!!
          */
-        Carte carteChoisie = new Carte(carteValeur, carteCouleur) ;
+        //Carte carteChoisie = new Carte(carteValeur, carteCouleur) ;
 
         // On supprime la carteChoisie de la main du joueur
-        this.main.remove(carteChoisie);
+        //this.main.remove(carteChoisie);
 
         // On peut choisir de retourner la carteChoisie ou on prend une methode void ?
-        return carteChoisie;
+        //return carteChoisie;
 
         // Il faudrait appeler une méthode poser sur la defausse ou le talon pour gérer les listes !
     }
-
 
 }

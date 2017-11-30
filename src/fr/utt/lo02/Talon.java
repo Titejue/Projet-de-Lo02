@@ -22,6 +22,13 @@ public class Talon {
     }
 
 
+    // ------------------------------------- VIDER LE TALON (dans la pioche le plus souvent)---------------------
+
+    public void viderTalon(){
+        talon.removeAll(talon);
+    }
+
+
     // --------------------------------------------- GETTER ET SETTER  ---------------------------------------------
 
     public LinkedList<Carte> getTalon() {

@@ -5,16 +5,16 @@ import java.util.LinkedList;
 public abstract class Joueur {
 
     //Nom du joueur
-    protected String nom ;
+    protected String nom;
 
     //Cartes en main du joueur
-    protected LinkedList<Carte> main ;
+    protected LinkedList<Carte> main;
 
 
     // --------------------------------------- REMPLIR MAIN ------------------------------------------------
 
     protected void recevoirCarte(Carte carte) {
-        this.main.add(carte) ;
+        this.main.add(carte);
     }
 
     // -------------------------------------- GETTER MAIN --------------------------------------------------
@@ -37,10 +37,6 @@ public abstract class Joueur {
     }
 
 
-
-
-
-
     /**
      * Un joueur peut :
      * Piocher
@@ -51,26 +47,15 @@ public abstract class Joueur {
      */
 
 
-
-
     // -------------------------------------------- JOUER UNE CARTE ------------------------------------------
 
 
-
-
-
-        /**
-         * Quand piocher ?
-         * Quand on ne peut pas joueur : on passe alors son tour
-         * Quand on subit l'action d'une carte spéciale
-         * Il faut donc entrer en paramètre d'entrer le nombre de carte à piocher
-         */
-    }
-
-
-
-
-
-
+    /**
+     * Quand piocher ?
+     * Quand on ne peut pas joueur : on passe alors son tour
+     * Quand on subit l'action d'une carte spéciale
+     * Il faut donc entrer en paramètre d'entrer le nombre de carte à piocher
+     */
 }
+
 
