@@ -24,6 +24,7 @@ public class VarianteClassique implements Variante {
                 this.paiement = 2;
                 break;
             case TROIS:
+                
                 break;
             case QUATRE:
                 break;

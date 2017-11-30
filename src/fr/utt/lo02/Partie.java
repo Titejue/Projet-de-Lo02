@@ -189,6 +189,8 @@ public class Partie {
     // On enregistrera les valeurs des cartes jouées dans une linkedList qui ne gardera qu'en mémoire que les x dernières cartes jouées.
     // x étant le nombre de joueurs dans la parties
 
+    
+
 
 
 
