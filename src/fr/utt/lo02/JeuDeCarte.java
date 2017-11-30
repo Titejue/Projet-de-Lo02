@@ -73,7 +73,6 @@ public class JeuDeCarte {
         else {
             System.out.println("Erreur dans le choix du type de paquet de carte");
         }
-
     }
 
 

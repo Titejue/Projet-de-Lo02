@@ -21,7 +21,7 @@ public class Partie {
 
     private int nbJoueur = 0;
     private int numVar = 5 ;
-    private int typeDeJeu ;
+    private int typeDeJeu = 4;
     private int nbDeck ;
     private Variante variante ;
     private JeuDeCarte jeuCarte ;
@@ -63,20 +63,21 @@ public class Partie {
             }
         }
 
+
         // On demande les données nécessaires : type de jeu, nombre de Decks
         while (this.typeDeJeu > 3) {
-            if (nbJoueur > 3){
+            System.out.println("Avec quel Type de Jeu souhaitez-vous joueur ?\n 0 : Jeu classique 54 cartes (52 cartes + 2 Jokers)\n 1 : Jeu de 52 cartes\n 2 : Jeu de 34 cartes (32 cartes + 2 Jokers)\n 3 : Jeu de 32 cartes");
+            this.typeDeJeu = sc.nextInt();
+            if (typeDeJeu > 3){
                 System.out.println("Le numéro sélectionné n'est pas répertorié  ! \n") ;
             }
             else {
                 for (int j = 1; j < nbJoueur; j++) {
-                    joueurs.add(new Adversaire("adversaire" + j));
+                    joueurs.add(new Adversaire("adversaire" + j)) ;
                 }
             }
-
-            System.out.println("Avec quel Type de Jeu souhaitez-vous joueur ?\n 0 : Jeu classique 54 cartes (52 cartes + 2 Jokers)\n 1 : Jeu de 52 cartes\n 2 : Jeu de 34 cartes (32 cartes + 2 Jokers)\n 3 : Jeu de 32 cartes");
-            this.typeDeJeu = sc.nextInt();
         }
+
         System.out.println("Veuillez choisir le nombre de jeu de Carte de ce type pour la partie : ");
         this.nbDeck = sc.nextInt();
 
@@ -153,9 +154,9 @@ public class Partie {
 
         // On dépose une carte de la pioche sur le talon
         talon.recevoirCarte(pioche.getPremiereCarte()) ;
-
-
     }
+
+
 
     /**
      * this.listePioche = pioche.getPioche() ;
@@ -187,6 +188,7 @@ public class Partie {
 
     // On enregistrera les valeurs des cartes jouées dans une linkedList qui ne gardera qu'en mémoire que les x dernières cartes jouées.
     // x étant le nombre de joueurs dans la parties
+
 
 
 
