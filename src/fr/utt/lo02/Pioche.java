@@ -27,16 +27,6 @@ public class Pioche {
         Collections.shuffle(pioche);
     }
 
-    // -------------------------------- DISTRIBUER LA CARTE -----------------------------------------------
-
-    public void distribuer(int nbDeCarte) {
-        for (int i = 0 ; i < nbDeCarte ; i++) {
-            for (Joueur j : Partie.getJoueurs()){
-                donnerCarte(j, 1);
-            }
-        }
-    }
-
 
     // --------------------------------- DONNER CARTE -----------------------------------------------------
 
@@ -48,11 +38,21 @@ public class Pioche {
         }
     }
 
-
     // --------------------------------- GETTER -----------------------------------------------------------
 
     public LinkedList<Carte> getPioche() {
         return pioche;
     }
+
+
+
+    // -------------------------------- DONNER LA PREMIERE CARTE ------------------------------------------
+
+    public Carte getPremiereCarte(){
+        Carte carte = pioche.getFirst();
+        return carte ;
+    }
+
+
 
 }
