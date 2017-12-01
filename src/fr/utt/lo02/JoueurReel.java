@@ -1,17 +1,96 @@
 package fr.utt.lo02;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Scanner;
 
 public class JoueurReel extends Joueur {
 
+
+
     // ----------------------------- CONSTRUCTEUR -------------------------------------------------------
     public JoueurReel(String nom) {
        this.nom = nom ;
+       this.main = new LinkedList<Carte>() ;
     }
 
 
+    // ---------------------------------------- JOUER ---------------------------------------------------
+
+    public void jouer(LinkedList<Carte> main, LinkedList<Carte> cartesJouable){
+        this.main = main ;
+        this.cartesJouable = cartesJouable ;
+        System.out.println("Votre main se compose de : ") ;
+        afficher(main) ;
+        System.out.println("\n");
+        System.out.println("Vous pouvez jouer : " );
+        afficher(cartesJouable) ;
+
+        Scanner sc = new Scanner(System.in) ;
+        System.out.println("\n");
+        System.out.println("Quelle carte souhaitez-vous jouer ?");
+        this.numCarte = sc.nextInt() ;
+        this.carteChoisie = new Carte (cartesJouable.get(numCarte).getValeur(), cartesJouable.get(numCarte).getCouleur());
+    }
+
+
+    // ------------------------------------- CHOISIR LA COULEUR DE LA CARTE --------------------------------
+
+    public void choisircouleur(){
+        Scanner sc = new Scanner(System.in) ;
+        System.out.println("\n");
+        Carte carte = new Carte();
+
+        int c = 5 ;
+        while (c>4 || c<1){
+            System.out.println("Veuillez choisir la Couleur pour les prochains tours :\n 1 : COEUR \n 2 : CARREAU \n 3 : TREFLE \n 4 : PIQUE");
+            c = sc.nextInt();
+            switch (c) {
+                case (1):
+                    carte.setCouleur(CouleurCarte.Coeur);
+                    this.couleurCarte = CouleurCarte.Coeur ;
+                    break;
+                case (2):
+                    carte.setCouleur(CouleurCarte.Carreau);
+                    this.couleurCarte = CouleurCarte.Carreau ;
+                    break;
+                case (3):
+                    carte.setCouleur(CouleurCarte.Trefle);
+                    this.couleurCarte = CouleurCarte.Trefle ;
+                    break;
+                case (4):
+                    carte.setCouleur(CouleurCarte.Pique);
+                    this.couleurCarte = CouleurCarte.Pique ;
+                    break;
+                default:
+                    System.out.println("Vous n'avez pas saisie la bonne référence");
+            }
+        }
+
+    }
+
+    // ---------------------------------------- AFFICHER LA MAIN -------------------------------------------
+
+    public void afficher(LinkedList<Carte> listeCarte) {
+        for (int i=0 ; i<listeCarte.size() ; i++){
+            System.out.println(i + " : " + listeCarte.get(i).toString());
+        }
+    }
+
+    // --------------------------------------- REMPLIR MAIN ------------------------------------------------
+    protected void recevoirCarte(Carte carte) {
+        this.main.add(carte) ;
+    }
+
+    // -------------------------------------- GETTER  --------------------------------------------------
+
+
+    public void setMain(LinkedList<Carte> main) {
+        this.main = main;
+    }
+
+    public CouleurCarte getCouleurCarte() {
+        return this.couleurCarte ;
+    }
 
     // ------------------------------------ CHOISIR CARTE ------------------------------------------------
     public void choisirCarte() {
@@ -61,5 +140,8 @@ public class JoueurReel extends Joueur {
 
         // Il faudrait appeler une méthode poser sur la defausse ou le talon pour gérer les listes !
     }
+
+
+
 
 }

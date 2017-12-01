@@ -8,7 +8,7 @@ public class Partie {
 
     // Declaration d'un singleton
 
-    private static Partie ourInstance = null ;
+    private static Partie ourInstance = null;
 
     // Attributs de la classe
 
@@ -16,20 +16,23 @@ public class Partie {
 
     private static LinkedList<Joueur> joueurs;
     private LinkedList<Carte> dernièresCartes;
-    private LinkedList<Carte> listePioche ;
+    private LinkedList<Carte> listePioche;
+    private LinkedList<Integer> verif;
 
 
     private int nbJoueur = 0;
-    private int numVar = 5 ;
+    private int numVar = 5;
     private int typeDeJeu = 4;
-    private int nbDeck ;
-    private Variante variante ;
-    private JeuDeCarte jeuCarte ;
-    private Carte derniereCarte ;
-    private Pioche pioche ;
-    private Talon talon ;
-    private int nombreDeCarteDeck ;
-    private int nombreCarteDistribuer ;
+    private int nbDeck;
+    private Variante variante;
+    private JeuDeCarte jeuCarte;
+    private Carte derniereCarte;
+    private Carte carteChoisie;
+    private Pioche pioche;
+    private Talon talon;
+    private int nombreDeCarteDeck;
+    private int nombreCarteDistribuer;
+    private int victoire;
 
 
     // ------------------------ CONSTRUCTEUR --------------------------------------
@@ -40,25 +43,27 @@ public class Partie {
     public Partie() {
 
         //On instancie tout les paramètres : Variante, jeuDeCarte et la liste de Joueurs :
-        this.joueurs = new LinkedList<>() ;
+        this.joueurs = new LinkedList<>();
 
-        System.out.println("Démarrage d'une partie") ;
+        System.out.println("Démarrage d'une partie");
 
-        System.out.println("Veuillez saisir votre nom") ;
-        Scanner sc = new Scanner(System.in) ;
-        String nomJoueur = sc.nextLine() ;
-        joueurs.add(new JoueurReel(nomJoueur)) ;
-        this.nbJoueur++ ;
+        System.out.println("Veuillez saisir votre nom");
+        Scanner sc = new Scanner(System.in);
+        String nomJoueur = sc.nextLine();
+        joueurs.add(new JoueurReel(nomJoueur));
+        this.nbJoueur++;
+        verif = new LinkedList<Integer>() ;
+        verif.add(0) ;
 
         while (this.nbJoueur < 2) {
             System.out.println("Combien de joueur dans la partie (vous compris)");
             this.nbJoueur = sc.nextInt();
-            if (nbJoueur < 2){
-                System.out.println("Le nombre de joueurs minimal est 2 !") ;
-            }
-            else {
+            if (nbJoueur < 2) {
+                System.out.println("Le nombre de joueurs minimal est 2 !");
+            } else {
                 for (int j = 1; j < nbJoueur; j++) {
                     joueurs.add(new Adversaire("adversaire" + j));
+                    verif.add(0) ;
                 }
             }
         }
@@ -68,13 +73,8 @@ public class Partie {
         while (this.typeDeJeu > 3) {
             System.out.println("Avec quel Type de Jeu souhaitez-vous joueur ?\n 0 : Jeu classique 54 cartes (52 cartes + 2 Jokers)\n 1 : Jeu de 52 cartes\n 2 : Jeu de 34 cartes (32 cartes + 2 Jokers)\n 3 : Jeu de 32 cartes");
             this.typeDeJeu = sc.nextInt();
-            if (typeDeJeu > 3){
-                System.out.println("Le numéro sélectionné n'est pas répertorié  ! \n") ;
-            }
-            else {
-                for (int j = 1; j < nbJoueur; j++) {
-                    joueurs.add(new Adversaire("adversaire" + j)) ;
-                }
+            if (typeDeJeu > 3) {
+                System.out.println("Le numéro sélectionné n'est pas répertorié  ! \n");
             }
         }
 
@@ -101,44 +101,42 @@ public class Partie {
 
 
         switch (numVar) {
-            case(0) :
-                this.variante = new VarianteClassique() ;
-                break ;
+            case (0):
+                this.variante = new VarianteClassique();
+                break;
             /**case(1) :
-                this.variante = new VarianteMonClar();
-                break ;
-            case(2) :
-                this.variante = new VarianteMinimale();
-                break ;
-            case(3) :
-                this.variante  = new Variante1() ;
-                break ;**/
+             this.variante = new VarianteMonClar();
+             break ;
+             case(2) :
+             this.variante = new VarianteMinimale();
+             break ;
+             case(3) :
+             this.variante  = new Variante1() ;
+             break ;**/
             default:
         }
 
         // On crée la pioche une fois par partie
-        this.pioche = new Pioche(jeuCarte) ;
+        this.pioche = new Pioche(jeuCarte);
         // On crée le Talon une fois par partie
-        this.talon = new Talon() ;
+        this.talon = new Talon();
 
 
         // On choisit le nombre de carte à distribuer
-        if (numVar == 0 || numVar == 1 || numVar == 2 || numVar == 3 || numVar == 4 ){
+        if (numVar == 0 || numVar == 1 || numVar == 2 || numVar == 3 || numVar == 4) {
             if (nbJoueur == 2) {
                 if (nbDeck == 1) {
                     this.nombreCarteDistribuer = 10;
                 } else {
                     this.nombreCarteDistribuer = 15;
                 }
-            }
-            else if (nbJoueur == 3){
+            } else if (nbJoueur == 3) {
                 if (nbDeck == 1) {
                     this.nombreCarteDistribuer = 8;
                 } else {
                     this.nombreCarteDistribuer = 12;
                 }
-            }
-            else {
+            } else {
                 if (nbDeck == 1) {
                     this.nombreCarteDistribuer = 6;
                 } else {
@@ -148,14 +146,15 @@ public class Partie {
         }
 
         // On distribue les cartes
-        for (int i=0 ; i<joueurs.size() ; i++) {
+        for (int i = 0; i < joueurs.size(); i++) {
             pioche.donnerCarte(joueurs.get(i), 1);
         }
 
         // On dépose une carte de la pioche sur le talon
-        talon.recevoirCarte(pioche.getPremiereCarte()) ;
+        talon.recevoirCarte(pioche.getPremiereCarte());
+        this.dernièresCartes = new LinkedList<Carte>() ;
+        dernièresCartes.add(pioche.getPioche().getLast());
     }
-
 
 
     /**
@@ -164,32 +163,128 @@ public class Partie {
      */
 
 
-
 // ---------------------------------- GETTER ET SETTER ---------------------------------------------------
-
-
     public LinkedList<Joueur> getJoueurs() {
         return joueurs;
     }
 
     public static Partie getInstance() {
-        if (ourInstance == null){
+        if (ourInstance == null) {
             ourInstance = new Partie();
         }
-        return ourInstance ;
+        return ourInstance;
     }
 
+    public LinkedList<Carte> getDernièresCartes() {
+        return dernièresCartes;
+    }
 
+    // ------------------------------------- VERIFIER VICTOIRE ---------------------------------------------
 
+    // Vérifier les victoires
 
+    public LinkedList<Integer> verifVictoire() {
+        for (int k = 0; k < nbJoueur; k++) {
+            Joueur joueurTour = joueurs.get(k);
+            if (joueurTour.getMain().size() == 0) {
+                verif.set(k, 1);
+            } else {
+                verif.set(k, 0);
+            }
+        }
+        return verif;
+    }
 
     // -------------------------------- GERER UN TOUR ---------------------------------
 
+    private int paiement;
 
     // On enregistrera les valeurs des cartes jouées dans une linkedList qui ne gardera qu'en mémoire que les x dernières cartes jouées.
     // x étant le nombre de joueurs dans la parties
 
-    
+    public void lancerPartie() {
+        int compteur = 0;
+        int sens = 1;
+        // Choisir le joueur dont c'est le tour
+        //int tour = new Random().nextInt(joueurs.size());
+        int tour = 0 ;
+        while (!verif.contains(1)) {
+            // Vérifier l'action de la dernière carte jouée
+            // Déterminer l'action du joueur en fonction de l'effet
+            // fin du tour : incrémenter le compteur et déterminer la valeur de la variable sens.
+
+
+            // PREMIER TOUR : on ne prend pas en compte l'effet de la carte sur le talon, seulement sa valeur et couleur
+            if (compteur == 0) {
+                this.paiement = 0;
+                variante.carteJouableDebut(joueurs.get(tour), joueurs.get(tour).getMain(), dernièresCartes);
+
+                // CAS 1 : on ne peut rien joueur
+                if (variante.getCartePourJouer().size() == 0) {
+                    System.out.println("Vous ne pouvez rien jouer, vous piochez une carte !\n");
+                    pioche.donnerCarte(joueurs.get(tour), 1);
+                    //On ne change pas le sens
+                    tour = tour + 1;
+                }
+                // CAS 2 : On peut jouer une carte
+                else {
+                    joueurs.get(tour).jouer(joueurs.get(tour).getMain(), variante.getCartePourJouer());
+                    this.carteChoisie = joueurs.get(tour).getCarteChoisie();
+                    talon.recevoirCarte(carteChoisie);
+                    LinkedList<Carte> mainFictive = joueurs.get(tour).getMain();
+                    mainFictive.remove(carteChoisie);
+                    joueurs.get(tour).setMain(mainFictive);
+                    this.derniereCarte = carteChoisie;
+                    dernièresCartes.add(carteChoisie);
+
+                    // On vérifie les effets de la carte
+
+
+                }
+
+
+                System.out.println("Vous ne pouvez rien jouer, vous piochez une carte !\n");
+                pioche.donnerCarte(joueurs.get(tour), 1);
+                //On ne change pas le sens
+                tour = tour + 1;
+            }
+
+
+            variante.carteJouable(joueurs.get(tour), joueurs.get(tour).getMain(), dernièresCartes);
+            joueurs.get(tour).jouer(joueurs.get(tour).getMain(), variante.getCartePourJouer());
+        }
+
+
+        joueurs.get(tour).jouer();
+
+
+        /** VALEUR DE PAIEMENT
+         * -5 : donner une carte à joueur
+         * -4 : saute le tour d'un joueur
+         * -3 : le joueur rejoue
+         * -2 : changer le sens
+         * -1 : changer de couleur
+         * 0 : ne fait rien
+         * 1 : +1 à un joueur
+         * 2 : +2 à un joueur
+         * 4 : +4 à un joueur
+         */
+
+
+    }
+
+
+    /**
+     * Va de 0 à la size-1
+     * int tour = new Random().nextInt(joueurs.size());
+     *
+     *
+     * sens = (tour + sens) % joueurs.size()
+     */
+
+}
+
+
 
 
 
@@ -203,8 +298,6 @@ public class Partie {
      */
 
 
-    public void terminer(boolean fini) {
+    /**public void terminer(boolean fini) {
         this.fini = fini;
-    }
-
-}
+    }*/

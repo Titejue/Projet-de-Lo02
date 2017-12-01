@@ -16,6 +16,8 @@ public class Carte {
         this.valeur = num ;
     }
 
+    public Carte() {}
+
 
     // ------------------------------- GETTER ET SETTER -------------------------------------------------------------
 
