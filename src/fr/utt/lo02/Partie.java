@@ -24,7 +24,7 @@ public class Partie {
     private int numVar = 5;
     private int typeDeJeu = 4;
     private int nbDeck;
-    private Variante variante;
+    private static Variante variante;
     private JeuDeCarte jeuCarte;
     private Carte derniereCarte;
     private Carte carteChoisie;
@@ -148,9 +148,7 @@ public class Partie {
         }
 
         // On distribue les cartes
-        for (int i = 0; i < joueurs.size(); i++) {
-            pioche.donnerCarte(joueurs.get(i), 1);
-        }
+        pioche.distribuer(nombreCarteDistribuer);
 
         // On dépose une carte de la pioche sur le talon
         talon.recevoirCarte(pioche.getPremiereCarte());
@@ -166,7 +164,7 @@ public class Partie {
 
 
 // ---------------------------------- GETTER ET SETTER ---------------------------------------------------
-    public LinkedList<Joueur> getJoueurs() {
+    public static LinkedList<Joueur> getJoueurs() {
         return joueurs;
     }
 
@@ -218,7 +216,9 @@ public class Partie {
         return tourPrecedent;
     }
 
-
+    public static Variante getVariante() {
+        return variante;
+    }
     // ------------------------------------- VERIFIER VICTOIRE ---------------------------------------------
 
     // Vérifier les victoires

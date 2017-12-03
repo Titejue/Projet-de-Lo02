@@ -16,7 +16,11 @@ public class Adversaire extends Joueur {
         this.main =  new LinkedList<Carte>() ;
     }
 
-    public void jouer() {
+    public void jouer(LinkedList<Carte> main, LinkedList<Carte> cartesJouable) {
+        // On récupère la lsite des cartes jouables
+        LinkedList<Carte> cjouable; //= Partie.getVariante().carteJouable();
+        int j = cjouable.size() * Math.random();
+
     }
 
     // --------------------------------------- REMPLIR MAIN ------------------------------------------------
