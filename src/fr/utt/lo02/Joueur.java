@@ -12,45 +12,42 @@ public abstract class Joueur {
     protected int numCarte ;
     protected CouleurCarte couleurCarte ;
     protected Carte carteChoisie ;
+    protected Carte carteAJouer ;
 
 
 
     // --------------------------------------- REMPLIR MAIN ------------------------------------------------
-
     protected void recevoirCarte(Carte carte) { }
 
 
 
     // ---------------------------------------- JOUER ------------------------------------------------------
-
     public void jouer(LinkedList<Carte> main, LinkedList<Carte> cartesJouable){}
 
 
 
     // -------------------------------------- GETTER MAIN --------------------------------------------------
-
     public void setMain(LinkedList<Carte> main) { }
 
 
-    // ------------------------------------ RECEVOIR UNE CARTE -----------------------------------------------
 
+    // ------------------------------------ RECEVOIR UNE CARTE -----------------------------------------------
     public void ajouterCarte(Carte carte) {   }
 
 
+
     // ------------------------------------ POSER UNE CARTE --------------------------------------------------
-    public void donnercarte(Carte carte) {
-    }
+    public void donnercarte(Carte carte) {}
+
 
 
     // ------------------------------------ CHOISIR COULEUR CARTE --------------------------------------------------
-
-    public void choisircouleur(){}
-
-    // ------------------------------------- JOUER -----------------------------------------------------------
-
-    public void jouer(){}
+    public void choisirCouleur(){}
 
 
+
+    // -------------------------------------- CHOISIR CARTE A DONNER ---------------------------------------------
+    public void choisirCarte(LinkedList<Joueur> joueurs, Joueur j){}
 
 
 
@@ -78,22 +75,10 @@ public abstract class Joueur {
         return carteChoisie;
     }
 
-    /**
-     * Un joueur peut
-     * Piocher
-     * Choisir une Carte
-     * Poser une carte
-     * Passer son tour
-     * Regarder le jeu dans main (méthode qui appelle une méthode afficher() de la classe main
-     */
+    public String getNom() {
+        return nom;
+    }
 
-
-    /**
-     * Quand piocher ?
-     * Quand on ne peut pas joueur : on passe alors son tour
-     * Quand on subit l'action d'une carte spéciale
-     * Il faut donc entrer en paramètre d'entrer le nombre de carte à piocher
-     */
 }
 
 

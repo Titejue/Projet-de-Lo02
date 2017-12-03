@@ -6,10 +6,13 @@ public interface Variante {
 
     LinkedList<Carte> getCartePourJouer();
     int getPaiement() ;
-    public int getSens() ;
-    public int getProchainTour() ;
+    int getSens() ;
+    int getProchainTour() ;
+    CouleurCarte getCouleur() ;
+
 
     int effetCarte(Carte carte) ;
+
 
    // public void piocher() ;
     void carteJouable(Joueur j, LinkedList<Carte> main, LinkedList<Carte> dernieresCartes, int payer);
@@ -20,7 +23,10 @@ public interface Variante {
 
 
     // Action des cartes
+    void actionCarte(int paie, int sens, int tour, int nbJoueur, Joueur j, LinkedList<Joueur> joueurs) ;
 
-    public void actionCarte(int paie, int sens, int tour, int nbJoueur) ;
+
+    // Mise en action
+    void miseEnAction(int paie, int tour) ;
 
 }

@@ -15,7 +15,9 @@ public class Carte {
     public Carte(ValeurCarte num) {
         this.valeur = num ;
     }
-
+    public Carte(CouleurCarte coul){
+        this.couleur = coul ;
+    }
     public Carte() {}
 
 

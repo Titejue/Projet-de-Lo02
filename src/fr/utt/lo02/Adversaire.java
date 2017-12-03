@@ -30,4 +30,13 @@ public class Adversaire extends Joueur {
 
 
 
+
+    // ---------------------------------- GETTER ---------------------------------------------------------
+
+    public String getNom(){
+        return this.nom ;
+    }
+
+
+
 }

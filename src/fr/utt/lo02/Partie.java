@@ -211,6 +211,13 @@ public class Partie {
     public int getNbJoueur() {
         return nbJoueur;
     }
+    public void setTourPrecedent(int tourPrecedent) {
+        this.tourPrecedent = tourPrecedent;
+    }
+    public int getTourPrecedent(){
+        return tourPrecedent;
+    }
+
 
     // ------------------------------------- VERIFIER VICTOIRE ---------------------------------------------
 
@@ -239,14 +246,13 @@ public class Partie {
     private int sens ;
     private int prochainTour ;
     private int tour ;
+    private int tourPrecedent;
+
     public void lancerPartie() {
-
-
-
-
         int compteur = 0 ;
         setTour(new Random().nextInt(joueurs.size()));
         setSens(1);
+        this.prochainTour = tour ;
 
         while (!verif.contains(1)) {
 
@@ -254,55 +260,77 @@ public class Partie {
             // Déterminer l'action du joueur en fonction de l'effet
             // fin du tour : incrémenter le compteur et déterminer la valeur de la variable sens.
 
+            this.tour = prochainTour ;
 
             // PREMIER TOUR : on ne prend pas en compte l'effet de la carte sur le talon, seulement sa valeur et couleur
             if (compteur == 0) {
-                this.paiement = 0;
-                variante.carteJouableDebut(joueurs.get(tour), joueurs.get(tour).getMain(), dernièresCartes);
+                this.paiement = 0 ;
+                variante.carteJouableDebut(joueurs.get(tour), joueurs.get(tour).getMain(), dernièresCartes) ;
 
                 // CAS 1 : on ne peut rien joueur
                 if (variante.getCartePourJouer().size() == 0) {
-                    System.out.println("Vous ne pouvez rien jouer, vous piochez une carte !\n");
-                    pioche.donnerCarte(joueurs.get(tour), 1);
+                    System.out.println("Vous ne pouvez rien jouer, vous piochez une carte !\n") ;
+                    pioche.donnerCarte(joueurs.get(tour), 1) ;
                     //On ne change pas le sens
                 }
                 // CAS 2 : On peut jouer une carte
                 else {
-                    joueurs.get(tour).jouer(joueurs.get(tour).getMain(), variante.getCartePourJouer());
+                    joueurs.get(tour).jouer(joueurs.get(tour).getMain(), variante.getCartePourJouer()) ;
                     //On a la carte choisie par le joueur
-                    this.carteChoisie = joueurs.get(tour).getCarteChoisie();
+                    this.carteChoisie = joueurs.get(tour).getCarteChoisie() ;
                     //On la pose sur le talon
-                    talon.recevoirCarte(carteChoisie);
+                    talon.recevoirCarte(carteChoisie) ;
 
                     // On retire la carte de la main du joueur
-                    LinkedList<Carte> mainFictive = joueurs.get(tour).getMain();
-                    mainFictive.remove(carteChoisie);
-                    joueurs.get(tour).setMain(mainFictive);
+                    LinkedList<Carte> mainFictive = joueurs.get(tour).getMain() ;
+                    mainFictive.remove(carteChoisie) ;
+                    joueurs.get(tour).setMain(mainFictive) ;
 
                     // on enregistre la carte choisie dans les dernières cartes
-                    this.derniereCarte = carteChoisie;
-                    dernièresCartes.add(carteChoisie);
+                    this.derniereCarte = carteChoisie ;
+                    dernièresCartes.add(carteChoisie) ;
 
                     // On vérifie les effets de la carte choisie
-                    variante.effetCarte(carteChoisie);
-                    setPaiement(variante.getPaiement());
+                    variante.effetCarte(carteChoisie) ;
+                    this.paiement = variante.getPaiement() ;
 
-                    // On va chercher l'action de la carte pour le prochain tour
-                    variante.actionCarte(paiement, sens, tour, nbJoueur);
-                    setSens(variante.getSens());
-                    setProchainTour(variante.getProchainTour());
+                    // On va chercher l'action de la carte pour le prochain tour sauf si elle doit s'exécuter sur ce tour
+                    // exemple :
+                    // donner une carte à un autre joueur de son choix
+                    // changer de couleur
+                    variante.actionCarte(paiement, sens, tour, nbJoueur, joueurs.get(tour), joueurs) ;
+
+                    // Si on change la couleur, on modifie la couleur d'une carte fictive posée sur le dessus de la pioche
+                    if (paiement==-1) {
+                        derniereCarte.setCouleur(variante.getCouleur()) ;
+                    }
+                    this.sens = variante.getSens() ;
+                    this.prochainTour = variante.getProchainTour() ;
                 }
-                compteur ++ ;
+
+            } else {
+                // On met en action la carte précédente
+               // variante.carteJouable(joueurs.get(tour), joueurs.get(tour).getMain(), dernièresCartes) ;
+
+
+
+
+
+
+                // On met en action la dernière carte jouée
+
+
+
+
+
+                variante.carteJouableDebut(joueurs.get(tour), joueurs.get(tour).getMain(), dernièresCartes);
+
+
             }
-            else {
-
-
-
-
-
-
-
-            }
+            compteur++;
+            setTourPrecedent(getTour());
+            setTour(getProchainTour());
+        }
 
 
 
@@ -310,11 +338,11 @@ public class Partie {
                      *
                      * Changement de sens
                      *
-                     * -5 : donner une carte à joueur
+                     * OK -5 : donner une carte à joueur
                      * OK -4 : saute le tour d'un joueur
                      * OK -3 : le joueur rejoue
                      * OK -2 : changer le sens
-                     * -1 : changer de couleur
+                     * OK -1 : changer de couleur
                      * 0 : ne fait rien
                      * 1 : +1 à un joueur
                      * 2 : +2 à un joueur
@@ -334,7 +362,7 @@ public class Partie {
 
 **/
 
-
+/**
 
 
 
@@ -374,7 +402,8 @@ public class Partie {
      *
      */
 
-}
+
+
 
 
 
@@ -393,3 +422,5 @@ public class Partie {
     /**public void terminer(boolean fini) {
         this.fini = fini;
     }*/
+    }
+}

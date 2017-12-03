@@ -12,6 +12,10 @@ public class VarianteClassique implements Variante {
     int sens ;
     int prochainTour ;
 
+    Carte carteADonner ;
+    CouleurCarte couleur ;
+    CouleurCarte couleurCarte ;
+
 
     // --------------------------- CONSTRUCTEUR ----------------------------------------------------
     public void VarianteClassique() {
@@ -114,7 +118,7 @@ public class VarianteClassique implements Variante {
                 }
             } else {
                 // La dernière carte posée est "neutre" : ne permet pas de changer de couleur
-                if (payer == 0 || payer == -5 || payer == -4 || payer == -3 || payer == -2) {
+                if (payer == 0 || payer == -5 || payer == -4 || payer == -3 || payer == -2 || payer == -1) {
                     // On a une ou plusieurs cartes de même valeurs (carte spéciale possible)
                     if (dernieresCartes.getLast().getValeur() == main.get(i).getValeur()) {
                         this.carteJouable = main.get(i);
@@ -136,14 +140,28 @@ public class VarianteClassique implements Variante {
                             this.cartePourJouer.add(carteJouable);
                         }
                     }
-                } else if (payer == -1) {
-                    // On demande la couleur qu'a choisi le joueur précedent
+                } else {
+
+                    // Un As a été joué précedemment
+                    if (dernieresCartes.getLast().getValeur() == ValeurCarte.AS) {
+                        // Soit on possède une carte AS
+                        if (ValeurCarte.AS == main.get(i).getValeur()) {
+                            this.carteJouable = main.get(i);
+                            if (!cartePourJouer.contains(carteJouable)) {
+                                this.cartePourJouer.add(carteJouable);
+                            }
+                        }
 
 
+                    }
                 }
+
+
             }
         }
+
     }
+
 
 
 
@@ -161,7 +179,8 @@ public class VarianteClassique implements Variante {
 
     // ---------------------------- ACTION DES CARTES -----------------------------------------------
 
-    public void actionCarte(int paie, int sens, int tour, int nbJoueur) {
+    public void actionCarte(int paie, int sens, int tour, int nbJoueur, Joueur j, LinkedList<Joueur> joueurs) {
+;
 
         // On gère les action, prochain tour et le sens du jeu dans ces conditions if
 
@@ -180,6 +199,19 @@ public class VarianteClassique implements Variante {
             this.sens = sens;
             this.prochainTour = (((tour + 2 * sens) % nbJoueur + nbJoueur) % nbJoueur) ;
         }
+        else if (paie == -5) {
+            // Le joueur peut donner une carte à n'importe quel joueur
+            j.choisirCarte(joueurs, j) ;
+            this.sens = sens ;
+            this.prochainTour = (((tour + sens)%  nbJoueur + nbJoueur ) % nbJoueur);
+        }
+        else if (paie == -1) {
+            // Le joueur peut choisir la couleur
+            j.choisirCouleur() ;
+            this.couleur = j.getCouleurCarte() ;
+            this.sens = sens ;
+            this.prochainTour = (((tour + sens)%  nbJoueur + nbJoueur ) % nbJoueur);
+        }
         else {
             this.sens = sens ;
             this.prochainTour = (((tour + 2 * sens) % nbJoueur + nbJoueur) % nbJoueur)  ;
@@ -187,7 +219,13 @@ public class VarianteClassique implements Variante {
     }
 
 
-    public void miseEnAction(int paie){
+
+    public void miseEnAction(int paie, int tourPrecedent){
+        switch (paie){
+            case(-5) :
+
+
+        }
 
     }
 
@@ -195,7 +233,7 @@ public class VarianteClassique implements Variante {
 
 
     /** VALEUR DE PAIEMENT
-     * -5 : donner une carte à joueur
+     * OK -5 : donner une carte à un joueur de votre choix
      * OK -4 : saute le tour d'un joueur
      * OK -3 : le joueur rejoue
      * OK -2 : changer le sens
@@ -220,4 +258,11 @@ public class VarianteClassique implements Variante {
     public int getProchainTour() {
         return prochainTour;
     }
+    public void setCarteADonner(Carte carte){
+        this.carteADonner = carte ;
+    }
+    public CouleurCarte getCouleur(){
+        return couleur ;
+    }
+
 }
