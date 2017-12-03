@@ -302,15 +302,25 @@ public class Partie {
 
                     // Si on change la couleur, on modifie la couleur d'une carte fictive posée sur le dessus de la pioche
                     if (paiement==-1) {
-                        derniereCarte.setCouleur(variante.getCouleur()) ;
+                        derniereCarte.setCouleur(variante.getCouleur());
+                        dernièresCartes.remove(carteChoisie);
+                        dernièresCartes.add(derniereCarte) ;
                     }
                     this.sens = variante.getSens() ;
                     this.prochainTour = variante.getProchainTour() ;
                 }
 
             } else {
-                // On met en action la carte précédente
-               // variante.carteJouable(joueurs.get(tour), joueurs.get(tour).getMain(), dernièresCartes) ;
+
+                variante.carteJouable(joueurs.get(tour),joueurs.get(tour).getMain(), dernièresCartes, paiement) ;
+
+                // CAS 1 : on ne peut rien jouer
+
+
+                // CAS 2 : On peut jouer
+
+
+
 
 
 
