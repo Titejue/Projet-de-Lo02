@@ -24,4 +24,10 @@ public class Adversaire extends Joueur {
     protected void recevoirCarte(Carte carte) {
         this.main.add(carte);
     }
+
+
+
+
+
+
 }

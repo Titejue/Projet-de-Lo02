@@ -9,12 +9,17 @@ public class VarianteClassique implements Variante {
     LinkedList<Carte> cartePourJouer ;
 
     Carte carteJouable;
+    int sens ;
+    int prochainTour ;
 
 
+    // --------------------------- CONSTRUCTEUR ----------------------------------------------------
     public void VarianteClassique() {
         System.out.println("Vous avez choisi la variante Classique");
     }
 
+
+    // ------------------------------------ EFFET DES CARTES ----------------------------------------
     public int effetCarte(Carte carte) {
 
         /** VALEUR DE PAIEMENT
@@ -77,8 +82,9 @@ public class VarianteClassique implements Variante {
         return paiement;
     }
 
-    public void carteJouable(Joueur j, LinkedList<Carte> main, LinkedList<Carte> dernieresCartes) {
 
+    // ---------------------------- CARTES JOUABLES ----------------------------------------------------------
+    public void carteJouable(Joueur j, LinkedList<Carte> main, LinkedList<Carte> dernieresCartes, int payer) {
 
 
         int taille = dernieresCartes.size();
@@ -108,7 +114,7 @@ public class VarianteClassique implements Variante {
                 }
             } else {
                 // La dernière carte posée est "neutre" : ne permet pas de changer de couleur
-                if (effetCarte(dernieresCartes.getLast()) == 0 && effetCarte(dernieresCartes.getLast()) == -5 && effetCarte(dernieresCartes.getLast()) == -4 && effetCarte(dernieresCartes.getLast()) == -3 && effetCarte(dernieresCartes.getLast()) == -2) {
+                if (payer == 0 || payer == -5 || payer == -4 || payer == -3 || payer == -2) {
                     // On a une ou plusieurs cartes de même valeurs (carte spéciale possible)
                     if (dernieresCartes.getLast().getValeur() == main.get(i).getValeur()) {
                         this.carteJouable = main.get(i);
@@ -130,16 +136,16 @@ public class VarianteClassique implements Variante {
                             this.cartePourJouer.add(carteJouable);
                         }
                     }
-                } else if (effetCarte(dernieresCartes.getLast()) == -5) {
+                } else if (payer == -1) {
                     // On demande la couleur qu'a choisi le joueur précedent
 
-                    {
 
-                    }
                 }
             }
         }
     }
+
+
 
     // ----------------------------- PREMIER TOUR ----------------------------------------------------
     public void carteJouableDebut(Joueur j, LinkedList<Carte> main, LinkedList<Carte> dernieresCartes) {
@@ -152,11 +158,66 @@ public class VarianteClassique implements Variante {
     }
 
 
-    // ----------------------------------- GETTER ET SETTER -------------------------------------------
-    public LinkedList<Carte> getCartePourJouer() {
-        return cartePourJouer;
+
+    // ---------------------------- ACTION DES CARTES -----------------------------------------------
+
+    public void actionCarte(int paie, int sens, int tour, int nbJoueur) {
+
+        // On gère les action, prochain tour et le sens du jeu dans ces conditions if
+
+        if (paie == -2) {
+            System.out.println("Le sens du jeu change ! \n");
+            this.sens = (-1) * sens;
+            this.prochainTour = (((tour + sens)%  nbJoueur + nbJoueur ) % nbJoueur);
+        }
+        else if (paie == -3) {
+            System.out.println("Vous allez rejouer !\n");
+            this.sens  = sens ;
+            this.prochainTour = tour;
+        }
+        else if (paie == -4) {
+            System.out.println("Le tour du joueur suivant est sauté !\n");
+            this.sens = sens;
+            this.prochainTour = (((tour + 2 * sens) % nbJoueur + nbJoueur) % nbJoueur) ;
+        }
+        else {
+            this.sens = sens ;
+            this.prochainTour = (((tour + 2 * sens) % nbJoueur + nbJoueur) % nbJoueur)  ;
+        }
+    }
+
+
+    public void miseEnAction(int paie){
+
     }
 
 
 
+
+    /** VALEUR DE PAIEMENT
+     * -5 : donner une carte à joueur
+     * OK -4 : saute le tour d'un joueur
+     * OK -3 : le joueur rejoue
+     * OK -2 : changer le sens
+     * -1 : changer de couleur
+     * 0 : ne fait rien
+     * 1 : +1 à un joueur
+     * 2 : +2 à un joueur
+     * 4 : +4 à un joueur
+     */
+
+
+    // ----------------------------------- GETTER ET SETTER -------------------------------------------
+    public LinkedList<Carte> getCartePourJouer() {
+        return cartePourJouer;
+    }
+    public int getPaiement(){
+        return paiement;
+    }
+    public int getSens() {
+        return sens;
+    }
+    public int getProchainTour() {
+        return prochainTour;
+    }
 }

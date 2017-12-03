@@ -9,6 +9,11 @@ public class Main {
         System.out.println("Une partie va se démarrer");
         Partie partie = Partie.getInstance();
 
+        partie.lancerPartie() ;
+
+
+
+
 
     }
 

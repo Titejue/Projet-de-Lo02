@@ -29,7 +29,7 @@ public class JoueurReel extends Joueur {
         System.out.println("\n");
         System.out.println("Quelle carte souhaitez-vous jouer ?");
         this.numCarte = sc.nextInt() ;
-        this.carteChoisie = new Carte (cartesJouable.get(numCarte).getValeur(), cartesJouable.get(numCarte).getCouleur());
+        this.carteChoisie = new Carte (cartesJouable.get(numCarte).getValeur(), cartesJouable.get(numCarte).getCouleur()) ;
     }
 
 

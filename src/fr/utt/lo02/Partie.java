@@ -33,6 +33,7 @@ public class Partie {
     private int nombreDeCarteDeck;
     private int nombreCarteDistribuer;
     private int victoire;
+    private int paiement;
 
 
     // ------------------------ CONSTRUCTEUR --------------------------------------
@@ -64,6 +65,7 @@ public class Partie {
                 for (int j = 1; j < nbJoueur; j++) {
                     joueurs.add(new Adversaire("adversaire" + j));
                     verif.add(0) ;
+                    nbJoueur ++ ;
                 }
             }
         }
@@ -179,6 +181,37 @@ public class Partie {
         return dernièresCartes;
     }
 
+    public int getSens() {
+        return sens;
+    }
+    public void setSens(int sens) {
+        this.sens = sens;
+    }
+
+    public void setPaiement(int paiement) {
+        this.paiement = paiement;
+    }
+
+    public void setProchainTour(int prochainTour) {
+        this.prochainTour = prochainTour;
+    }
+
+    public int getProchainTour() {
+        return prochainTour ;
+    }
+
+    public int getTour() {
+        return tour;
+    }
+
+    public void setTour(int tour) {
+        this.tour = tour;
+    }
+
+    public int getNbJoueur() {
+        return nbJoueur;
+    }
+
     // ------------------------------------- VERIFIER VICTOIRE ---------------------------------------------
 
     // Vérifier les victoires
@@ -197,18 +230,26 @@ public class Partie {
 
     // -------------------------------- GERER UN TOUR ---------------------------------
 
-    private int paiement;
+
 
     // On enregistrera les valeurs des cartes jouées dans une linkedList qui ne gardera qu'en mémoire que les x dernières cartes jouées.
     // x étant le nombre de joueurs dans la parties
 
+
+    private int sens ;
+    private int prochainTour ;
+    private int tour ;
     public void lancerPartie() {
-        int compteur = 0;
-        int sens = 1;
-        // Choisir le joueur dont c'est le tour
-        //int tour = new Random().nextInt(joueurs.size());
-        int tour = 0 ;
+
+
+
+
+        int compteur = 0 ;
+        setTour(new Random().nextInt(joueurs.size()));
+        setSens(1);
+
         while (!verif.contains(1)) {
+
             // Vérifier l'action de la dernière carte jouée
             // Déterminer l'action du joueur en fonction de l'effet
             // fin du tour : incrémenter le compteur et déterminer la valeur de la variable sens.
@@ -224,21 +265,82 @@ public class Partie {
                     System.out.println("Vous ne pouvez rien jouer, vous piochez une carte !\n");
                     pioche.donnerCarte(joueurs.get(tour), 1);
                     //On ne change pas le sens
-                    tour = tour + 1;
                 }
                 // CAS 2 : On peut jouer une carte
                 else {
                     joueurs.get(tour).jouer(joueurs.get(tour).getMain(), variante.getCartePourJouer());
+                    //On a la carte choisie par le joueur
                     this.carteChoisie = joueurs.get(tour).getCarteChoisie();
+                    //On la pose sur le talon
                     talon.recevoirCarte(carteChoisie);
+
+                    // On retire la carte de la main du joueur
                     LinkedList<Carte> mainFictive = joueurs.get(tour).getMain();
                     mainFictive.remove(carteChoisie);
                     joueurs.get(tour).setMain(mainFictive);
+
+                    // on enregistre la carte choisie dans les dernières cartes
                     this.derniereCarte = carteChoisie;
                     dernièresCartes.add(carteChoisie);
 
-                    // On vérifie les effets de la carte
+                    // On vérifie les effets de la carte choisie
+                    variante.effetCarte(carteChoisie);
+                    setPaiement(variante.getPaiement());
 
+                    // On va chercher l'action de la carte pour le prochain tour
+                    variante.actionCarte(paiement, sens, tour, nbJoueur);
+                    setSens(variante.getSens());
+                    setProchainTour(variante.getProchainTour());
+                }
+                compteur ++ ;
+            }
+            else {
+
+
+
+
+
+
+
+            }
+
+
+
+                    /** VALEUR DE PAIEMENT
+                     *
+                     * Changement de sens
+                     *
+                     * -5 : donner une carte à joueur
+                     * OK -4 : saute le tour d'un joueur
+                     * OK -3 : le joueur rejoue
+                     * OK -2 : changer le sens
+                     * -1 : changer de couleur
+                     * 0 : ne fait rien
+                     * 1 : +1 à un joueur
+                     * 2 : +2 à un joueur
+                     * 4 : +4 à un joueur
+                     * /
+
+
+
+
+/**
+                    if (paiement == -3){
+                        tour =
+                    }
+
+                    sens = (tour + sens) % joueurs.size() ;
+
+
+**/
+
+
+
+
+
+
+                    // On vérifie les effets de la carte
+                    variante.carteJouable(joueurs.get(tour), joueurs.get(tour).getMain(), dernièresCartes, paiement);
 
                 }
 
@@ -250,7 +352,7 @@ public class Partie {
             }
 
 
-            variante.carteJouable(joueurs.get(tour), joueurs.get(tour).getMain(), dernièresCartes);
+
             joueurs.get(tour).jouer(joueurs.get(tour).getMain(), variante.getCartePourJouer());
         }
 
@@ -258,17 +360,7 @@ public class Partie {
         joueurs.get(tour).jouer();
 
 
-        /** VALEUR DE PAIEMENT
-         * -5 : donner une carte à joueur
-         * -4 : saute le tour d'un joueur
-         * -3 : le joueur rejoue
-         * -2 : changer le sens
-         * -1 : changer de couleur
-         * 0 : ne fait rien
-         * 1 : +1 à un joueur
-         * 2 : +2 à un joueur
-         * 4 : +4 à un joueur
-         */
+
 
 
     }
@@ -279,7 +371,7 @@ public class Partie {
      * int tour = new Random().nextInt(joueurs.size());
      *
      *
-     * sens = (tour + sens) % joueurs.size()
+     *
      */
 
 }
