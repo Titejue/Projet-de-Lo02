@@ -53,6 +53,22 @@ public class Pioche {
         return carte ;
     }
 
+    //----------------------------------DISTRIBUER----------------------------------------------
+
+    public void distribuer(int nombreDeCarte)
+    {
+        Carte c;
+        for(int i=0; i<=nombreDeCarte; i++)
+        {
+            for(Joueur j: Partie.getJoueurs())
+            {
+                c = pioche.getFirst();
+                j.ajouterCarte(c);
+                pioche.remove(c);
+            }
+        }
+    }
+
 
 
 }
