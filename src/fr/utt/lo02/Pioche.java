@@ -32,9 +32,9 @@ public class Pioche {
 
     public void donnerCarte(Joueur j, int nbDeCarte) {
         for (int i = 0 ; i < nbDeCarte ; i++) {
-            Carte c = pioche.getFirst();
+            Carte c = this.pioche.getFirst();
             j.recevoirCarte(c);
-            pioche.remove(c);
+            this.pioche.remove(c);
         }
     }
 
@@ -49,7 +49,7 @@ public class Pioche {
     // -------------------------------- DONNER LA PREMIERE CARTE ------------------------------------------
 
     public Carte getPremiereCarte(){
-        Carte carte = pioche.getFirst();
+        Carte carte = this.pioche.getFirst();
         return carte ;
     }
 

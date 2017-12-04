@@ -26,7 +26,6 @@ public interface Variante {
     void actionCarte(int paie, int sens, int tour, int nbJoueur, Joueur j, LinkedList<Joueur> joueurs) ;
 
 
-    // Mise en action
-    void miseEnAction(int paie, int tour) ;
+
 
 }

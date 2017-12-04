@@ -175,10 +175,18 @@ public class VarianteClassique implements Variante {
 
     // ----------------------------- PREMIER TOUR ----------------------------------------------------
     public void carteJouableDebut(Joueur j, LinkedList<Carte> main, LinkedList<Carte> dernieresCartes) {
-        for (int i = 0; i < main.size(); i++) {
-            this.carteJouable = main.get(i);
-            if (!cartePourJouer.contains(carteJouable)) {
-                this.cartePourJouer.add(carteJouable);
+        this.cartePourJouer = new LinkedList<Carte>() ;
+        for (int i = 0 ; i < main.size() ; i++) {
+            if (dernieresCartes.getLast().getValeur() == main.get(i).getValeur()) {
+                this.carteJouable = main.get(i) ;
+                if (!this.cartePourJouer.contains(carteJouable)) {
+                    this.cartePourJouer.add(carteJouable) ;
+                }
+            } else if (dernieresCartes.getLast().getCouleur() == main.get(i).getCouleur()){
+                this.carteJouable = main.get(i) ;
+                if (!this.cartePourJouer.contains(carteJouable)) {
+                    this.cartePourJouer.add(carteJouable);
+                }
             }
         }
     }
@@ -216,6 +224,7 @@ public class VarianteClassique implements Variante {
             // Le joueur peut choisir la couleur
             j.choisirCouleur() ;
             this.couleur = j.getCouleurCarte() ;
+            System.out.println("La couleur a été changée en : " + getCouleur());
             this.sens = sens ;
             this.prochainTour = (((tour + sens)%  nbJoueur + nbJoueur ) % nbJoueur);
         }
@@ -227,19 +236,7 @@ public class VarianteClassique implements Variante {
 
 
 
-    public void miseEnAction(int paie, int tourPrecedent){
-        switch (paie){
-            case(-5) :
-
-
-        }
-
-    }
-
-
-
-
-    /** VALEUR DE PAIEMENT
+      /** VALEUR DE PAIEMENT
      * OK -5 : donner une carte à un joueur de votre choix
      * OK -4 : saute le tour d'un joueur
      * OK -3 : le joueur rejoue
@@ -271,5 +268,6 @@ public class VarianteClassique implements Variante {
     public CouleurCarte getCouleur(){
         return couleur ;
     }
+
 
 }

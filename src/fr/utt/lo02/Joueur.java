@@ -22,7 +22,7 @@ public abstract class Joueur {
 
 
     // ---------------------------------------- JOUER ------------------------------------------------------
-    public void jouer(LinkedList<Carte> main, LinkedList<Carte> cartesJouable){}
+    public void jouer(LinkedList<Carte> main, LinkedList<Carte> cartesJouable, Joueur j){}
 
 
 

@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class JoueurReel extends Joueur {
 
+    // ajouter méthode supprimer carte de la main
 
 
     // ----------------------------- CONSTRUCTEUR -------------------------------------------------------
@@ -16,20 +17,22 @@ public class JoueurReel extends Joueur {
 
     // ---------------------------------------- JOUER ---------------------------------------------------
 
-    public void jouer(LinkedList<Carte> main, LinkedList<Carte> cartesJouable){
-        this.main = main ;
+    public void jouer(LinkedList<Carte> main, LinkedList<Carte> cartesJouable, Joueur j ){
+        j.setMain(main) ;
         this.cartesJouable = cartesJouable ;
         System.out.println("Votre main se compose de : ") ;
-        afficher(main) ;
-        System.out.println("\n");
-        System.out.println("Vous pouvez jouer : " );
-        afficher(cartesJouable) ;
+        afficher(this.main) ;
+        System.out.println("\nVous pouvez jouer : " );
+        afficher(this.cartesJouable) ;
 
         Scanner sc = new Scanner(System.in) ;
         System.out.println("\n");
         System.out.println("Quelle carte souhaitez-vous jouer ?");
         this.numCarte = sc.nextInt() ;
-        this.carteChoisie = new Carte (cartesJouable.get(numCarte).getValeur(), cartesJouable.get(numCarte).getCouleur()) ;
+        this.carteChoisie = cartesJouable.get(numCarte) ;
+        this.main.remove(carteChoisie) ;
+
+        // new Carte (cartesJouable.get(numCarte).getValeur(), cartesJouable.get(numCarte).getCouleur()) ;
     }
 
 
@@ -80,13 +83,11 @@ public class JoueurReel extends Joueur {
 
 
 
-
-
-
     // --------------------------------------- REMPLIR MAIN ------------------------------------------------
     protected void recevoirCarte(Carte carte) {
         this.main.add(carte) ;
     }
+
 
 
     // -------------------------------------- GETTER  ------------------------------------------------------

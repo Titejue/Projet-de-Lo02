@@ -29,6 +29,13 @@ public class Talon {
     }
 
 
+    // ----------------------------------- Retourner la dernière carte du talon -----------------------------------
+    public Carte getDerniereCarte(){
+        Carte carte = this.talon.getLast();
+        return carte ;
+    }
+
+
     // --------------------------------------------- GETTER ET SETTER  ---------------------------------------------
 
     public LinkedList<Carte> getTalon() {
