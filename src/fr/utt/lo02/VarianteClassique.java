@@ -144,6 +144,9 @@ public class VarianteClassique implements Variante {
 
                     // Un As a été joué précedemment
                     if (dernieresCartes.getLast().getValeur() == ValeurCarte.AS) {
+                        for (int k = 0; k < cartePourJouer.size(); k++) {
+                            this.cartePourJouer.remove(cartePourJouer.get(k));
+                        }
                         // Soit on possède une carte AS
                         if (ValeurCarte.AS == main.get(i).getValeur()) {
                             this.carteJouable = main.get(i);
@@ -151,17 +154,22 @@ public class VarianteClassique implements Variante {
                                 this.cartePourJouer.add(carteJouable);
                             }
                         }
-
-
+                    } else if (dernieresCartes.getLast().getValeur() == ValeurCarte.DEUX) {
+                        for (int k = 0; k < cartePourJouer.size(); k++) {
+                            this.cartePourJouer.remove(cartePourJouer.get(k));
+                        }
+                        // Soit on possède une carte AS
+                        if (ValeurCarte.DEUX == main.get(i).getValeur()) {
+                            this.carteJouable = main.get(i);
+                            if (!cartePourJouer.contains(carteJouable)) {
+                                this.cartePourJouer.add(carteJouable);
+                            }
+                        }
                     }
                 }
-
-
             }
         }
-
     }
-
 
 
 
@@ -180,7 +188,6 @@ public class VarianteClassique implements Variante {
     // ---------------------------- ACTION DES CARTES -----------------------------------------------
 
     public void actionCarte(int paie, int sens, int tour, int nbJoueur, Joueur j, LinkedList<Joueur> joueurs) {
-;
 
         // On gère les action, prochain tour et le sens du jeu dans ces conditions if
 
