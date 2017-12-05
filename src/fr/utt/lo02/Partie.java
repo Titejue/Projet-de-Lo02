@@ -277,12 +277,15 @@ public class Partie {
             // Fin du tour : incrémenter le compteur et déterminer la valeur de la variable sens.
 
             if (pioche.getPioche().size() == 0){
-                System.out.println("Vérification du");
+                System.out.println("La pioche est vide");
                 Carte carteTalon = talon.getDerniereCarte() ;
                 LinkedList<Carte> newTalon = talon.getTalon() ;
                 newTalon.remove(carteTalon) ;
                 pioche.setPioche(newTalon) ;
-                LinkedList<Carte> cT = null ;
+                // On mélange la pioche
+                System.out.println("On mélange la pioche");
+
+                LinkedList<Carte> cT = new LinkedList<Carte>() ;
                 cT.add(carteTalon);
                 talon.setTalon(cT);
             }

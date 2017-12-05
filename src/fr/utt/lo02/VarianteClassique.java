@@ -243,7 +243,7 @@ public class VarianteClassique implements Variante {
         if (carte.getValeur() == ValeurCarte.V) {
             System.out.println("Le sens du jeu change ! \n");
             this.sens = (-1) * sens;
-            this.prochainTour = (((tour + sens)%  nbJoueur + nbJoueur ) % nbJoueur);
+            this.prochainTour = (((tour + this.sens)%  nbJoueur + nbJoueur ) % nbJoueur);
         }
         else if (carte.getValeur() == ValeurCarte.DIX) {
             System.out.println("Vous allez rejouer !\n");
@@ -253,13 +253,13 @@ public class VarianteClassique implements Variante {
         else if (carte.getValeur() == ValeurCarte.SEPT) {
             System.out.println("Le tour du joueur suivant est sauté !\n");
             this.sens = sens;
-            this.prochainTour = (((tour + 2 * sens) % nbJoueur + nbJoueur) % nbJoueur) ;
+            this.prochainTour = (((tour + 2 * this.sens) % nbJoueur + nbJoueur) % nbJoueur) ;
         }
         else if (carte.getValeur() == ValeurCarte.CINQ) {
             // Le joueur peut donner une carte à n'importe quel joueur
             j.choisirCarte(joueurs, j) ;
             this.sens = sens ;
-            this.prochainTour = (((tour + sens)%  nbJoueur + nbJoueur ) % nbJoueur);
+            this.prochainTour = (((tour + this.sens)%  nbJoueur + nbJoueur ) % nbJoueur);
         }
         else if (carte.getValeur() == ValeurCarte.HUIT) {
             // Le joueur peut choisir la couleur
@@ -267,11 +267,11 @@ public class VarianteClassique implements Variante {
             this.couleur = j.getCouleurCarte() ;
             System.out.println("Vous avez choisi la couleur " + couleur );
             this.sens = sens ;
-            this.prochainTour = (((tour + sens)%  nbJoueur + nbJoueur ) % nbJoueur);
+            this.prochainTour = (((tour + this.sens)%  nbJoueur + nbJoueur ) % nbJoueur);
         }
         else {
             this.sens = sens ;
-            this.prochainTour = (((tour + sens) % nbJoueur + nbJoueur) % nbJoueur)  ;
+            this.prochainTour = (((tour + this.sens) % nbJoueur + nbJoueur) % nbJoueur)  ;
         }
     }
 
