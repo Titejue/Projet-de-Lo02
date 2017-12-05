@@ -34,10 +34,9 @@ public class Pioche {
     public LinkedList<Carte> donnerCarte(Joueur j, int nbDeCarte) {
         LinkedList<Carte> listeTest = new LinkedList<Carte>();
         for (int i = 0 ; i < nbDeCarte ; i++) {
-            Carte c = this.pioche.getFirst();
-            j.recevoirCarte(c);
-            this.pioche.remove(c);
-            listeTest.add(c);
+            j.recevoirCarte(this.pioche.getFirst());
+            this.pioche.remove(this.pioche.getFirst());
+            listeTest.add(this.pioche.getFirst());
         }
         return listeTest;
     }

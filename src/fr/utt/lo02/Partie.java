@@ -370,7 +370,7 @@ public class Partie {
                 variante.carteJouable(joueurTour, joueurTour.getMain(), dernieresCartes, paiement);
 
                 // on fixe le paiementTotal
-                this.paiementTotal = paiementTotal + this.paiement;
+                this.paiementTotal = paiementTotal + paiement;
 
 
                 // CAS 1 : on ne peut rien jouer

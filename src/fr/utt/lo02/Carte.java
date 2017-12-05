@@ -27,6 +27,7 @@ public class Carte {
         return this.valeur;
     }
 
+
     void setValeur(ValeurCarte numero) {
         this.valeur = numero;
     }

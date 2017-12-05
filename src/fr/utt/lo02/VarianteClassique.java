@@ -118,34 +118,44 @@ public class VarianteClassique implements Variante {
                     }
                 }
             }
-            /// La dernière carte posée est "neutre"
+            // La dernière carte posée est "neutre"
             else if (payer == 0) {
 
-                // On a une ou plusieurs cartes de même valeurs (carte spéciale possible)
-                if (dernieresCartes.getLast().getValeur() == c.getValeur()) {
+                // Et c'était un joker, on peut donc jouer n'importe quelle carte par dessus
+                if (dernieresCartes.getLast().getValeur() == ValeurCarte.Joker) {
                     this.carteJouable = c;
                     if (!cartePourJouer.contains(this.carteJouable)) {
                         this.cartePourJouer.add(this.carteJouable);
                     }
-                }
+                } else {
+                    // Sinon :
+                    // On a une ou plusieurs cartes de même valeurs (carte spéciale possible)
+                    if (dernieresCartes.getLast().getValeur() == c.getValeur()) {
+                        this.carteJouable = c;
+                        if (!cartePourJouer.contains(this.carteJouable)) {
+                            this.cartePourJouer.add(this.carteJouable);
+                        }
+                    }
 
-                // On a une ou plusieurs cartes de même couleur (carte spéciale possible)
-                else if (dernieresCartes.getLast().getCouleur() == c.getCouleur()) {
-                    this.carteJouable = c;
-                    if (!cartePourJouer.contains(this.carteJouable)) {
-                        this.cartePourJouer.add(this.carteJouable);
+                    // On a une ou plusieurs cartes de même couleur (carte spéciale possible)
+                    else if (dernieresCartes.getLast().getCouleur() == c.getCouleur()) {
+                        this.carteJouable = c;
+                        if (!cartePourJouer.contains(this.carteJouable)) {
+                            this.cartePourJouer.add(this.carteJouable);
+                        }
+                    }
+
+                    // On a un joker
+                    else if (c.getValeur() == ValeurCarte.Joker) {
+                        this.carteJouable = c;
+                        if (!cartePourJouer.contains(this.carteJouable)) {
+                            this.cartePourJouer.add(this.carteJouable);
+                        }
                     }
                 }
-
-                // On a un joker
-                else if (c.getValeur() == ValeurCarte.Joker) {
-                    this.carteJouable = c;
-                    if (!cartePourJouer.contains(this.carteJouable)) {
-                        this.cartePourJouer.add(this.carteJouable);
-                    }
-                }
-            } else {
-
+            }
+            // La dernière carte posée était spéciale : As ou deux
+            else {
                 if (payer > 0) {
 
                     // Un As a été joué précedemment
@@ -225,13 +235,12 @@ public class VarianteClassique implements Variante {
 
 
 
-
-
     // ------------------------------ VIDER CARTE POUR JOUER -----------------------------------------------
 
     public void viderCartePourJouer(){
         this.cartePourJouer.removeAll(cartePourJouer) ;
     }
+
 
 
     // ---------------------------- ACTION DES CARTES -----------------------------------------------
