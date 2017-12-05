@@ -7,6 +7,7 @@ public class Pioche {
 
     private LinkedList<Carte> pioche ;
     private JeuDeCarte jdc ;
+    private Carte carteTest ;
 
     // Constructeur en cours
 
@@ -30,18 +31,25 @@ public class Pioche {
 
     // --------------------------------- DONNER CARTE -----------------------------------------------------
 
-    public void donnerCarte(Joueur j, int nbDeCarte) {
+    public LinkedList<Carte> donnerCarte(Joueur j, int nbDeCarte) {
+        LinkedList<Carte> listeTest = new LinkedList<Carte>();
         for (int i = 0 ; i < nbDeCarte ; i++) {
             Carte c = this.pioche.getFirst();
             j.recevoirCarte(c);
             this.pioche.remove(c);
+            listeTest.add(c);
         }
+        return listeTest;
     }
 
     // --------------------------------- GETTER -----------------------------------------------------------
 
     public LinkedList<Carte> getPioche() {
         return pioche;
+    }
+
+    public void setPioche(LinkedList<Carte> pioche) {
+        this.pioche = pioche;
     }
 
 
@@ -68,6 +76,8 @@ public class Pioche {
             }
         }
     }
+
+
 
 
 

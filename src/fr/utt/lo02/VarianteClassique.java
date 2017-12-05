@@ -52,25 +52,25 @@ public class VarianteClassique implements Variante {
                 this.paiement = 0;
                 break;
             case CINQ:
-                this.paiement = -5;
+                this.paiement = 0;
                 break;
             case SIX:
                 this.paiement = 0;
                 break;
             case SEPT:
-                this.paiement = -4;
+                this.paiement = 0;
                 break;
             case HUIT:
-                this.paiement = -1;
+                this.paiement = 0;
                 break;
             case NEUF:
                 this.paiement = 0;
                 break;
             case DIX:
-                this.paiement = -3;
+                this.paiement = 0;
                 break;
             case V:
-                this.paiement = -2;
+                this.paiement = 0;
                 break;
             case D:
                 this.paiement = 0;
@@ -105,64 +105,91 @@ public class VarianteClassique implements Variante {
          */
 
         // On balaie les cartes de la main :
-        for (int i = 0; i < main.size(); i++) {
+        for (Carte c : main) {
+
 
             // On commence par le cas spécial : 3 cartes similaires ont déja été posées
-            if (dernieresCartes.getLast() == dernieresCartes.get(taille - 2) && dernieresCartes.get(taille - 2) == dernieresCartes.get(taille - 3) && dernieresCartes.get(taille - 3) == dernieresCartes.get(taille - 4)) {
+            if (dernieresCartes.size()>3 && dernieresCartes.getLast().getValeur() == dernieresCartes.get(taille - 2).getValeur() && dernieresCartes.get(taille - 2).getValeur() == dernieresCartes.get(taille - 3).getValeur() && dernieresCartes.get(taille - 3).getValeur() == dernieresCartes.get(taille - 4).getValeur()) {
                 // carte de même valeur
-                if (dernieresCartes.getLast().getValeur() == main.get(i).getValeur()) {
-                    this.carteJouable = main.get(i);
-                    if (!cartePourJouer.contains(carteJouable)) {
-                        this.cartePourJouer.add(carteJouable);
+                if (dernieresCartes.getLast().getValeur() == c.getValeur()) {
+                    this.carteJouable = c;
+                    if (!cartePourJouer.contains(this.carteJouable)) {
+                        this.cartePourJouer.add(this.carteJouable);
+                    }
+                }
+            }
+            /// La dernière carte posée est "neutre"
+            else if (payer == 0) {
+
+                // On a une ou plusieurs cartes de même valeurs (carte spéciale possible)
+                if (dernieresCartes.getLast().getValeur() == c.getValeur()) {
+                    this.carteJouable = c;
+                    if (!cartePourJouer.contains(this.carteJouable)) {
+                        this.cartePourJouer.add(this.carteJouable);
+                    }
+                }
+
+                // On a une ou plusieurs cartes de même couleur (carte spéciale possible)
+                else if (dernieresCartes.getLast().getCouleur() == c.getCouleur()) {
+                    this.carteJouable = c;
+                    if (!cartePourJouer.contains(this.carteJouable)) {
+                        this.cartePourJouer.add(this.carteJouable);
+                    }
+                }
+
+                // On a un joker
+                else if (c.getValeur() == ValeurCarte.Joker) {
+                    this.carteJouable = c;
+                    if (!cartePourJouer.contains(this.carteJouable)) {
+                        this.cartePourJouer.add(this.carteJouable);
                     }
                 }
             } else {
-                // La dernière carte posée est "neutre" : ne permet pas de changer de couleur
-                if (payer == 0 || payer == -5 || payer == -4 || payer == -3 || payer == -2 || payer == -1) {
-                    // On a une ou plusieurs cartes de même valeurs (carte spéciale possible)
-                    if (dernieresCartes.getLast().getValeur() == main.get(i).getValeur()) {
-                        this.carteJouable = main.get(i);
-                        if (!cartePourJouer.contains(carteJouable)) {
-                            this.cartePourJouer.add(carteJouable);
-                        }
-                    }
-                    // On a une ou plusieurs cartes de même couleur (carte spéciale possible)
-                    else if (dernieresCartes.getLast().getCouleur() == main.get(i).getCouleur()) {
-                        this.carteJouable = main.get(i);
-                        if (!cartePourJouer.contains(carteJouable)) {
-                            this.cartePourJouer.add(carteJouable);
-                        }
-                    }
-                    // On a un joker
-                    else if (main.get(i).getValeur() == ValeurCarte.Joker) {
-                        this.carteJouable = main.get(i);
-                        if (!cartePourJouer.contains(carteJouable)) {
-                            this.cartePourJouer.add(carteJouable);
-                        }
-                    }
-                } else {
+
+                if (payer > 0) {
 
                     // Un As a été joué précedemment
                     if (dernieresCartes.getLast().getValeur() == ValeurCarte.AS) {
-                        for (int k = 0; k < cartePourJouer.size(); k++) {
-                            this.cartePourJouer.remove(cartePourJouer.get(k));
-                        }
-                        // Soit on possède une carte AS
-                        if (ValeurCarte.AS == main.get(i).getValeur()) {
-                            this.carteJouable = main.get(i);
-                            if (!cartePourJouer.contains(carteJouable)) {
-                                this.cartePourJouer.add(carteJouable);
+                        if (cartePourJouer.size() > 0) {
+                            for (int k = 0; k < cartePourJouer.size(); k++) {
+                                cartePourJouer.remove(cartePourJouer.get(k));
                             }
                         }
-                    } else if (dernieresCartes.getLast().getValeur() == ValeurCarte.DEUX) {
-                        for (int k = 0; k < cartePourJouer.size(); k++) {
-                            this.cartePourJouer.remove(cartePourJouer.get(k));
-                        }
                         // Soit on possède une carte AS
-                        if (ValeurCarte.DEUX == main.get(i).getValeur()) {
-                            this.carteJouable = main.get(i);
-                            if (!cartePourJouer.contains(carteJouable)) {
-                                this.cartePourJouer.add(carteJouable);
+                        if (ValeurCarte.AS == c.getValeur()) {
+                            this.carteJouable = c;
+                            if (!cartePourJouer.contains(this.carteJouable)) {
+                                this.cartePourJouer.add(this.carteJouable);
+                            }
+                        }
+                        // Soit on possède une carte Joker
+                        else if (ValeurCarte.Joker == c.getValeur()) {
+                            this.carteJouable = c;
+                            if (!cartePourJouer.contains(this.carteJouable)) {
+                                this.cartePourJouer.add(this.carteJouable);
+                            }
+                        }
+                    }
+
+                    // Une Carte DEUX a été jouée précedemment
+                    else if (dernieresCartes.getLast().getValeur() == ValeurCarte.DEUX) {
+                        if (cartePourJouer.size() > 0) {
+                            for (int k = 0; k < cartePourJouer.size(); k++) {
+                                cartePourJouer.remove(cartePourJouer.get(k));
+                            }
+                        }
+                        // Soit on possède une carte DEUX
+                        if (ValeurCarte.DEUX == c.getValeur()) {
+                            this.carteJouable = c;
+                            if (!cartePourJouer.contains(this.carteJouable)) {
+                                this.cartePourJouer.add(this.carteJouable);
+                            }
+                        }
+                        // Soit on possède une carte Joker
+                        else if (ValeurCarte.Joker == c.getValeur()) {
+                            this.carteJouable = c;
+                            if (!cartePourJouer.contains(this.carteJouable)) {
+                                this.cartePourJouer.add(this.carteJouable);
                             }
                         }
                     }
@@ -175,15 +202,20 @@ public class VarianteClassique implements Variante {
 
     // ----------------------------- PREMIER TOUR ----------------------------------------------------
     public void carteJouableDebut(Joueur j, LinkedList<Carte> main, LinkedList<Carte> dernieresCartes) {
+
         this.cartePourJouer = new LinkedList<Carte>() ;
-        for (int i = 0 ; i < main.size() ; i++) {
-            if (dernieresCartes.getLast().getValeur() == main.get(i).getValeur()) {
-                this.carteJouable = main.get(i) ;
-                if (!this.cartePourJouer.contains(carteJouable)) {
+
+        for (Carte c : main) {
+
+            if (dernieresCartes.getLast().getValeur() == c.getValeur()) {
+                this.carteJouable = c ;
+                if (this.cartePourJouer.contains(carteJouable) == false) {
                     this.cartePourJouer.add(carteJouable) ;
                 }
-            } else if (dernieresCartes.getLast().getCouleur() == main.get(i).getCouleur()){
-                this.carteJouable = main.get(i) ;
+            }
+
+            else if (dernieresCartes.getLast().getCouleur() == c.getCouleur()){
+                this.carteJouable = c ;
                 if (!this.cartePourJouer.contains(carteJouable)) {
                     this.cartePourJouer.add(carteJouable);
                 }
@@ -193,44 +225,53 @@ public class VarianteClassique implements Variante {
 
 
 
+
+
+    // ------------------------------ VIDER CARTE POUR JOUER -----------------------------------------------
+
+    public void viderCartePourJouer(){
+        this.cartePourJouer.removeAll(cartePourJouer) ;
+    }
+
+
     // ---------------------------- ACTION DES CARTES -----------------------------------------------
 
-    public void actionCarte(int paie, int sens, int tour, int nbJoueur, Joueur j, LinkedList<Joueur> joueurs) {
+    public void actionCarte(Carte carte, int sens, int tour, int nbJoueur, Joueur j, LinkedList<Joueur> joueurs) {
 
         // On gère les action, prochain tour et le sens du jeu dans ces conditions if
 
-        if (paie == -2) {
+        if (carte.getValeur() == ValeurCarte.V) {
             System.out.println("Le sens du jeu change ! \n");
             this.sens = (-1) * sens;
             this.prochainTour = (((tour + sens)%  nbJoueur + nbJoueur ) % nbJoueur);
         }
-        else if (paie == -3) {
+        else if (carte.getValeur() == ValeurCarte.DIX) {
             System.out.println("Vous allez rejouer !\n");
             this.sens  = sens ;
             this.prochainTour = tour;
         }
-        else if (paie == -4) {
+        else if (carte.getValeur() == ValeurCarte.SEPT) {
             System.out.println("Le tour du joueur suivant est sauté !\n");
             this.sens = sens;
             this.prochainTour = (((tour + 2 * sens) % nbJoueur + nbJoueur) % nbJoueur) ;
         }
-        else if (paie == -5) {
+        else if (carte.getValeur() == ValeurCarte.CINQ) {
             // Le joueur peut donner une carte à n'importe quel joueur
             j.choisirCarte(joueurs, j) ;
             this.sens = sens ;
             this.prochainTour = (((tour + sens)%  nbJoueur + nbJoueur ) % nbJoueur);
         }
-        else if (paie == -1) {
+        else if (carte.getValeur() == ValeurCarte.HUIT) {
             // Le joueur peut choisir la couleur
             j.choisirCouleur() ;
             this.couleur = j.getCouleurCarte() ;
-            System.out.println("La couleur a été changée en : " + getCouleur());
+            System.out.println("Vous avez choisi la couleur " + couleur );
             this.sens = sens ;
             this.prochainTour = (((tour + sens)%  nbJoueur + nbJoueur ) % nbJoueur);
         }
         else {
             this.sens = sens ;
-            this.prochainTour = (((tour + 2 * sens) % nbJoueur + nbJoueur) % nbJoueur)  ;
+            this.prochainTour = (((tour + sens) % nbJoueur + nbJoueur) % nbJoueur)  ;
         }
     }
 
@@ -252,6 +293,9 @@ public class VarianteClassique implements Variante {
     // ----------------------------------- GETTER ET SETTER -------------------------------------------
     public LinkedList<Carte> getCartePourJouer() {
         return cartePourJouer;
+    }
+    public void setCartePourJouer(LinkedList<Carte> cartePourJouer){
+        this.cartePourJouer = cartePourJouer ;
     }
     public int getPaiement(){
         return paiement;

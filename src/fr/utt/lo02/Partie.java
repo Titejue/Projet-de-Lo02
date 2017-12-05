@@ -15,7 +15,7 @@ public class Partie {
     private boolean fini = false;
 
     private static LinkedList<Joueur> joueurs;
-    private LinkedList<Carte> dernièresCartes;
+    private LinkedList<Carte> dernieresCartes;
     private LinkedList<Carte> listePioche;
     private LinkedList<Integer> verif;
 
@@ -24,7 +24,7 @@ public class Partie {
     private int numVar = 5;
     private int typeDeJeu = 4;
     private int nbDeck;
-    private Variante variante;
+    private static Variante variante;
     private JeuDeCarte jeuCarte;
     private Carte derniereCarte;
     private Carte carteChoisie;
@@ -154,17 +154,13 @@ public class Partie {
         }
 
         // On distribue les cartes
-        for (int j = 0; j < nombreCarteDistribuer; j++) {
-            for (int i = 0; i < joueurs.size(); i++) {
-                pioche.donnerCarte(joueurs.get(i), 1);
-            }
-        }
+        pioche.distribuer(nombreCarteDistribuer);
 
         // On dépose une carte de la pioche sur le talon
         talon.recevoirCarte(pioche.getPremiereCarte());
         System.out.println("La carte sur le talon est : " + talon.getDerniereCarte() + "\n");
-        this.dernièresCartes = new LinkedList<Carte>();
-        dernièresCartes.add(pioche.getPioche().getLast());
+        this.dernieresCartes = new LinkedList<Carte>();
+        dernieresCartes.add(talon.getTalon().getLast());
     }
 
 
@@ -175,7 +171,7 @@ public class Partie {
 
 
 // ---------------------------------- GETTER ET SETTER ---------------------------------------------------
-    public LinkedList<Joueur> getJoueurs() {
+    public static LinkedList<Joueur> getJoueurs() {
         return joueurs;
     }
 
@@ -186,8 +182,8 @@ public class Partie {
         return ourInstance;
     }
 
-    public LinkedList<Carte> getDernièresCartes() {
-        return dernièresCartes;
+    public LinkedList<Carte> getDernieresCartes() {
+        return dernieresCartes;
     }
 
     public int getSens() {
@@ -234,6 +230,9 @@ public class Partie {
         this.paiementTotal = a;
     }
 
+    public static Variante getVariante() {
+        return variante;
+    }
 
     // ------------------------------------- VERIFIER VICTOIRE ---------------------------------------------
 
@@ -267,9 +266,8 @@ public class Partie {
 
     public void lancerPartie() {
         int compteur = 0;
-        setTour(new Random().nextInt(joueurs.size()));
         setSens(1);
-        this.prochainTour = tour;
+        this.prochainTour = new Random().nextInt(joueurs.size());
         setPaiementTotal(0);
 
         while (!verif.contains(1)) {
@@ -278,63 +276,93 @@ public class Partie {
             // Déterminer l'action du joueur en fonction de l'effet
             // Fin du tour : incrémenter le compteur et déterminer la valeur de la variable sens.
 
-            this.tour = prochainTour;
-            System.out.println("\nC'est au tour du joueur " + joueurs.get(tour).getNom() + "\n");
-            this.joueurTour = joueurs.get(tour);
-            System.out.println("La carte sur le talon est : " + talon.getDerniereCarte().toString());
+            if (pioche.getPioche().size() == 0){
+                Carte carteTalon = talon.getDerniereCarte() ;
+                LinkedList<Carte> newTalon = talon.getTalon() ;
+                newTalon.remove(carteTalon) ;
+                pioche.setPioche(newTalon) ;
+                LinkedList<Carte> cT = null ;
+                cT.add(carteTalon);
+                talon.setTalon(cT);
+            }
+
+            this.tour = prochainTour ;
+            this.joueurTour = joueurs.get(tour) ;
+
+            System.out.println("\n----------------------------------------------- ") ;
+            System.out.println("\nC'est au tour du joueur " + joueurTour.getNom() ) ;
+            System.out.println("La carte sur le talon est : " + talon.getDerniereCarte().toString()) ;
+
+
+
 
             // PREMIER TOUR : on ne prend pas en compte l'effet de la carte sur le talon, seulement sa valeur et couleur
+
+
             if (compteur == 0) {
-                this.paiement = 0;
-                variante.carteJouableDebut(joueurTour, joueurTour.getMain(), dernièresCartes);
+                this.paiement = 0 ;
+                variante.carteJouableDebut(joueurTour, joueurTour.getMain(), dernieresCartes) ;
 
                 // CAS 1 : on ne peut rien joueur
                 if (variante.getCartePourJouer().size() == 0) {
-                    System.out.println("Vous ne pouvez rien jouer, vous piochez une carte !\n");
-                    pioche.donnerCarte(joueurs.get(tour), 1);
+                    System.out.println("Vous ne pouvez rien jouer, vous piochez une carte !") ;
+
+                    LinkedList<Carte> listeTest = new LinkedList<Carte>();
+                    listeTest = pioche.donnerCarte(joueurTour, 1) ;
+                    System.out.println("Vous avez pioché la carte " + listeTest.getLast().toString() + "\n") ;
+
                     //On ne change pas le sens
                     // On incrémente le tour et le compteur
-                    this.prochainTour = (((tour + sens) % nbJoueur + nbJoueur) % nbJoueur);
+                    this.prochainTour = Math.floorMod(tour + sens , nbJoueur) ;
                     compteur++;
-
                 }
+
                 // CAS 2 : On peut jouer une carte
                 else {
                     joueurTour.jouer(joueurTour.getMain(), variante.getCartePourJouer(), joueurTour);
-                    //On a la carte choisie par le joueur
 
+                    //On a la carte choisie par le joueur
                     this.carteChoisie = joueurTour.getCarteChoisie();
                     System.out.println("La carte " + carteChoisie.toString() + " est jouée \n");
+
                     //On la pose sur le talon
-                    talon.recevoirCarte(carteChoisie);
+                    talon.recevoirCarte(carteChoisie) ;
 
                     // on enregistre la carte choisie dans les dernières cartes
-                    this.derniereCarte = carteChoisie;
-                    dernièresCartes.add(carteChoisie);
+                    dernieresCartes.add(carteChoisie) ;
 
                     // On vérifie les effets de la carte choisie
-                    variante.effetCarte(carteChoisie);
-                    setPaiement(variante.getPaiement());
+                    variante.effetCarte(carteChoisie) ;
+                    setPaiement(variante.getPaiement()) ;
 
                     // On va chercher l'action de la carte pour le prochain tour sauf si elle doit s'exécuter sur ce tour
-                    // exemple :
+                    // Exemple :
                     // donner une carte à un autre joueur de son choix
                     // changer de couleur
-                    variante.actionCarte(paiement, sens, tour, nbJoueur, joueurTour, joueurs);
+                    variante.actionCarte(dernieresCartes.getLast(), sens, tour, nbJoueur, joueurTour, joueurs) ;
+
 
                     // Si on change la couleur, on modifie la couleur d'une carte fictive posée sur le dessus du talon
-                    if (paiement == -1) {
-                        derniereCarte.setCouleur(variante.getCouleur());
-                        dernièresCartes.remove(carteChoisie);
-                        dernièresCartes.add(derniereCarte);
+                    //if (paiement == -1) {
+                    if (dernieresCartes.getLast().getValeur() == ValeurCarte.HUIT) {
+                        dernieresCartes.getLast().setCouleur(variante.getCouleur()) ;
                     }
-                    this.sens = variante.getSens();
-                    this.prochainTour = variante.getProchainTour();
-                    compteur++;
+
+                    this.sens = variante.getSens() ;
+                    this.prochainTour = variante.getProchainTour() ;
+                    compteur++ ;
                 }
 
+                // TEST SURVIE
+                variante.viderCartePourJouer() ;
+
+
+
+
+            // TOUR > 1
+
             } else {
-                variante.carteJouable(joueurTour, joueurTour.getMain(), dernièresCartes, paiement);
+                variante.carteJouable(joueurTour, joueurTour.getMain(), dernieresCartes, paiement);
 
                 // on fixe le paiementTotal
                 this.paiementTotal = paiementTotal + this.paiement;
@@ -343,9 +371,15 @@ public class Partie {
                 // CAS 1 : on ne peut rien jouer
                 if (variante.getCartePourJouer().size() == 0) {
                     // La dernière carte était une carte AS ou DEUX :
-                    if (derniereCarte.getValeur() == ValeurCarte.AS || derniereCarte.getValeur() == ValeurCarte.DEUX) {
+                    if (dernieresCartes.getLast().getValeur() == ValeurCarte.AS || dernieresCartes.getLast().getValeur() == ValeurCarte.DEUX) {
                         System.out.println("Vous ne pouvez rien jouer, et vous piochez " + paiementTotal + " Cartes.");
-                        pioche.donnerCarte(joueurTour, paiementTotal);
+
+                        LinkedList<Carte> listeTest = new LinkedList<Carte>();
+                        listeTest = pioche.donnerCarte(joueurTour, paiementTotal) ;
+                        System.out.println("Vous avez pioché les cartes : ");
+                        for (int i = 0 ; i < listeTest.size() ; i++) {
+                            System.out.println(listeTest.get(i).toString());
+                        }
 
                         // On remet le paiement à zéro
                         this.paiementTotal = 0;
@@ -353,59 +387,69 @@ public class Partie {
 
                         // On ne change pas le sens
                         // On incrémente le tour et le compteur
-                        this.prochainTour = (((tour + sens) % nbJoueur + nbJoueur) % nbJoueur);
+                        this.prochainTour = Math.floorMod(tour + sens , nbJoueur) ;
 
                     }
+
                     // Le dernière carte était neutre
                     else {
-                        System.out.println("Vous ne pouvez rien jouer, vous piochez une carte !\n");
-                        pioche.donnerCarte(joueurTour, 1);
+                        System.out.println("Vous ne pouvez rien jouer, vous piochez une carte !\n") ;
+
+                        LinkedList<Carte> listeTest = new LinkedList<Carte>();
+                        listeTest = pioche.donnerCarte(joueurs.get(tour), 1) ;
+                        System.out.println("Vous avez pioché la carte " + listeTest.getLast().toString() + "\n") ;
 
                         //On ne change pas le sens
                         // On incrémente le tour et le compteur
-                        this.prochainTour = (((tour + sens) % nbJoueur + nbJoueur) % nbJoueur);
-                        this.paiementTotal = 0;
+
+                        this.prochainTour = Math.floorMod(tour + sens , nbJoueur) ;
+                        this.paiementTotal = 0 ;
                         this.paiement = 0 ;
                     }
-                    compteur++;
+                    compteur++ ;
                 }
 
                 // CAS 2 : On peut jouer
                 else {
                     // On fait choisir une carte au joueur
-                    joueurTour.jouer(joueurTour.getMain(), variante.getCartePourJouer(), joueurTour);
+                    joueurTour.jouer(joueurTour.getMain(), variante.getCartePourJouer(), joueurTour) ;
 
                     //On a la carte choisie par le joueur
-                    this.carteChoisie = joueurTour.getCarteChoisie();
-                    System.out.println("La carte " + carteChoisie.toString() + " est jouée \n");
+                    this.carteChoisie = joueurTour.getCarteChoisie() ;
+                    System.out.println("La carte " + carteChoisie.toString() + " est jouée \n") ;
                     //On la pose sur le talon
-                    talon.recevoirCarte(carteChoisie);
+                    //Carte newcarteCouleur = new Carte(carteChoisie.getValeur(), carteChoisie.getCouleur()) ;
+                    talon.recevoirCarte(carteChoisie) ;
 
                     // On enregistre la carte choisie dans les dernières cartes
-                    this.derniereCarte = carteChoisie;
-                    dernièresCartes.add(carteChoisie);
+                    dernieresCartes.add(carteChoisie) ;
 
                     // On vérifie les effets de la carte choisie
-                    variante.effetCarte(carteChoisie);
-                    setPaiement(variante.getPaiement());
+                    variante.effetCarte(carteChoisie) ;
+                    setPaiement(variante.getPaiement()) ;
 
                     // On va chercher l'action de la carte pour le prochain tour sauf si elle doit s'exécuter sur ce tour
                     // Exemple :
                     // Donner une carte à un autre joueur de son choix
                     // Changer de couleur
-                    variante.actionCarte(paiement, sens, tour, nbJoueur, joueurs.get(tour), joueurs);
+                    variante.actionCarte(dernieresCartes.getLast(), sens, tour, nbJoueur, joueurs.get(tour), joueurs);
 
                     // Si on change la couleur, on modifie la couleur d'une carte fictive posée sur le dessus de la pioche
-                    if (paiement == -1) {
-                        derniereCarte.setCouleur(variante.getCouleur());
-                        dernièresCartes.remove(carteChoisie);
-                        dernièresCartes.add(derniereCarte);
+                    if (dernieresCartes.getLast().getValeur() == ValeurCarte.HUIT) {
+                        dernieresCartes.getLast().setCouleur(variante.getCouleur());
+                        //dernieresCartes.remove(carteChoisie);
+                       // dernieresCartes.add(derniereCarte);
                     }
                     this.sens = variante.getSens();
                     this.prochainTour = variante.getProchainTour();
                     compteur++ ;
+
+
                 }
+                // TEST SURVIE
+                variante.viderCartePourJouer() ;
             }
+            verif = verifVictoire() ;
         }
     }
 }

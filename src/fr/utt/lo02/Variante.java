@@ -23,9 +23,11 @@ public interface Variante {
 
 
     // Action des cartes
-    void actionCarte(int paie, int sens, int tour, int nbJoueur, Joueur j, LinkedList<Joueur> joueurs) ;
+    void actionCarte(Carte carte, int sens, int tour, int nbJoueur, Joueur j, LinkedList<Joueur> joueurs) ;
 
 
+    void setCartePourJouer(LinkedList<Carte> cartePourJouer) ;
 
+    void viderCartePourJouer() ;
 
 }

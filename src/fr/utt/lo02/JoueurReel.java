@@ -28,7 +28,13 @@ public class JoueurReel extends Joueur {
         Scanner sc = new Scanner(System.in) ;
         System.out.println("\n");
         System.out.println("Quelle carte souhaitez-vous jouer ?");
-        this.numCarte = sc.nextInt() ;
+        this.numCarte = -1 ;
+
+        while( numCarte < 0 || numCarte > cartesJouable.size()){
+            this.numCarte = sc.nextInt() ;
+        }
+
+
         this.carteChoisie = cartesJouable.get(numCarte) ;
         this.main.remove(carteChoisie) ;
 

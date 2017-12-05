@@ -2,6 +2,8 @@ package fr.utt.lo02;
 
 
 import java.util.LinkedList;
+import java.util.Random;
+import java.util.Scanner;
 
 public class Adversaire extends Joueur {
 
@@ -16,20 +18,76 @@ public class Adversaire extends Joueur {
         this.main =  new LinkedList<Carte>() ;
     }
 
-    public void jouer(LinkedList<Carte> main, LinkedList<Carte> cartesJouable) {
-        // On récupère la lsite des cartes jouables
-        LinkedList<Carte> cjouable; //= Partie.getVariante().carteJouable();
-        int j = cjouable.size() * Math.random();
+    // ---------------------------------------- JOUER ---------------------------------------------------
+    public void jouer(LinkedList<Carte> main, LinkedList<Carte> cartesJouable, Joueur j){
+        j.setMain(main) ;
+        this.cartesJouable = cartesJouable ;
 
+        // Séléction aléatoire d'une carte par l'IA
+        this.numCarte = new Random().nextInt(this.cartesJouable.size()) ;
+        this.carteChoisie = this.cartesJouable.get(numCarte) ;
+        this.main.remove(carteChoisie) ;
     }
 
-    // --------------------------------------- REMPLIR MAIN ------------------------------------------------
 
+    // ------------------------------------- CHOISIR LA COULEUR DE LA CARTE --------------------------------
+    public void choisirCouleur() {
+        Carte carte = new Carte();
+
+        int c = 5;
+        while (c > 4 || c < 1) {
+            // Choisir une couleur entre 1 et 4
+            c = new Random().nextInt(5);
+            switch (c) {
+                case (1):
+                    carte.setCouleur(CouleurCarte.Coeur);
+                    this.couleurCarte = CouleurCarte.Coeur;
+                    break;
+                case (2):
+                    carte.setCouleur(CouleurCarte.Carreau);
+                    this.couleurCarte = CouleurCarte.Carreau;
+                    break;
+                case (3):
+                    carte.setCouleur(CouleurCarte.Trefle);
+                    this.couleurCarte = CouleurCarte.Trefle;
+                    break;
+                case (4):
+                    carte.setCouleur(CouleurCarte.Pique);
+                    this.couleurCarte = CouleurCarte.Pique;
+                    break;
+            }
+        }
+    }
+
+
+    // --------------------------------------- RECEVOIR CARTE DANS MAIN ------------------------------------------------
     protected void recevoirCarte(Carte carte) {
-        this.main.add(carte);
+        this.main.add(carte) ;
     }
 
 
+    // ------------------------------------ CHOISIR CARTE --------------------------------------------------
+    public void choisirCarte(LinkedList<Joueur> joueurs, Joueur j) {
+        int c = new Random().nextInt(getMain().size()) ;
+        int numCarteAJouer = c ;
+
+        Carte carteADonner = main.get(numCarteAJouer);
+
+        // Choisir le joueur à qui la donner
+        joueurs.remove(j);
+
+
+        System.out.println("Veuillez choisir le joueur à qui donner cette carte");
+        int numjoueur = new Random().nextInt(joueurs.size()) ;
+
+        // Donner la carte au joueur séléctionné
+        joueurs.get(numjoueur).recevoirCarte(carteADonner);
+        // On supprime cette carte de la main du joueur
+        // on pourrait peut-être utiliser
+        LinkedList<Carte> mainFictive = j.getMain();
+        mainFictive.remove(carteADonner);
+        j.setMain(mainFictive);
+    }
 
 
 
@@ -37,7 +95,15 @@ public class Adversaire extends Joueur {
 
     // ---------------------------------- GETTER ---------------------------------------------------------
 
-    public String getNom(){
+    public void setMain(LinkedList<Carte> main) {
+        this.main = main;
+    }
+
+    public CouleurCarte getCouleurCarte() {
+        return this.couleurCarte ;
+    }
+
+    public String getNom() {
         return this.nom ;
     }
 
