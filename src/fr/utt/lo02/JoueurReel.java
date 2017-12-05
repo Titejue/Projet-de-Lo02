@@ -131,25 +131,28 @@ public class JoueurReel extends Joueur {
             System.out.println("Veuillez choisir une carte à donner à un joueur");
             numCarteAJouer = s.nextInt();
         }
-        Carte carteADonner = main.get(numCarteAJouer);
+        Carte carteADonner = new Carte() ;
+        carteADonner = main.get(numCarteAJouer);
 
         // Choisir le joueur à qui la donner
-        joueurs.remove(j);
-        System.out.println("Voici la liste des joueurs : \n");
+        joueurs.remove(j) ;
+        System.out.println("Voici la liste des joueurs : \n") ;
         for (int i = 0; i < joueurs.size(); i++) {
-            System.out.println(i + " : " + joueurs.get(i).getNom());
+            System.out.println(i + " : " + joueurs.get(i).getNom()) ;
         }
 
-        System.out.println("Veuillez choisir le joueur à qui donner cette carte");
-        int numjoueur = s.nextInt();
+        System.out.println("Veuillez choisir le joueur à qui donner cette carte") ;
+
+
+        int numjoueur = s.nextInt() ;
 
         // Donner la carte au joueur séléctionné
-        joueurs.get(numjoueur).recevoirCarte(carteADonner);
+        joueurs.get(numjoueur).recevoirCarte(carteADonner) ;
         // On supprime cette carte de la main du joueur
         // on pourrait peut-être utiliser
-        LinkedList<Carte> mainFictive = j.getMain();
-        mainFictive.remove(carteADonner);
-        j.setMain(mainFictive);
+        LinkedList<Carte> mainFictive = j.getMain() ;
+        mainFictive.remove(carteADonner) ;
+        j.setMain(mainFictive) ;
     }
 
 

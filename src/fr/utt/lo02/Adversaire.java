@@ -68,10 +68,10 @@ public class Adversaire extends Joueur {
 
     // ------------------------------------ CHOISIR CARTE --------------------------------------------------
     public void choisirCarte(LinkedList<Joueur> joueurs, Joueur j) {
-        int c = new Random().nextInt(getMain().size()) ;
-        int numCarteAJouer = c ;
+        int numCarteAJouer = new Random().nextInt(getMain().size()) ;
 
-        Carte carteADonner = main.get(numCarteAJouer);
+        Carte carteADonner = new Carte() ;
+        carteADonner = j.main.get(numCarteAJouer);
 
         // Choisir le joueur à qui la donner
         joueurs.remove(j);
@@ -79,11 +79,13 @@ public class Adversaire extends Joueur {
 
         System.out.println("Veuillez choisir le joueur à qui donner cette carte");
         int numjoueur = new Random().nextInt(joueurs.size()) ;
-
+        System.out.println("Le joueur " + joueurs.get(numjoueur) + " est séléctionné");
         // Donner la carte au joueur séléctionné
+        System.out.println("Il reçoit la carte " + carteADonner.toString());
+
         joueurs.get(numjoueur).recevoirCarte(carteADonner);
+
         // On supprime cette carte de la main du joueur
-        // on pourrait peut-être utiliser
         LinkedList<Carte> mainFictive = j.getMain();
         mainFictive.remove(carteADonner);
         j.setMain(mainFictive);
