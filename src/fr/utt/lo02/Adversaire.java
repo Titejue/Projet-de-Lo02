@@ -90,6 +90,12 @@ public class Adversaire extends Joueur {
     }
 
 
+    // ------------------------------------ Afficher la main ----------------------------------------
+    public void afficher(LinkedList<Carte> listeCarte) {
+        for (int i=0 ; i<listeCarte.size() ; i++){
+            System.out.println(i + " : " + listeCarte.get(i).toString());
+        }
+    }
 
 
 
@@ -105,6 +111,10 @@ public class Adversaire extends Joueur {
 
     public String getNom() {
         return this.nom ;
+    }
+
+    public LinkedList<Carte> getMain() {
+        return this.main ;
     }
 
 

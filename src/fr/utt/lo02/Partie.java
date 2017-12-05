@@ -54,8 +54,8 @@ public class Partie {
         joueurs.add(new JoueurReel(nomJoueur));
 
 
-        verif = new LinkedList<Integer>();
-        verif.add(0);
+        this.verif = new LinkedList<Integer>();
+        this.verif.add(0);
 
         while (this.nbJoueur < 2) {
             System.out.println("Combien de joueur dans la partie (vous compris)");
@@ -65,7 +65,7 @@ public class Partie {
             } else {
                 for (int j = 1; j < nbJoueur; j++) {
                     joueurs.add(new Adversaire("adversaire" + j));
-                    verif.add(0);
+                    this.verif.add(0);
                 }
             }
         }
@@ -154,13 +154,23 @@ public class Partie {
         }
 
         // On distribue les cartes
-        pioche.distribuer(nombreCarteDistribuer);
+        pioche.distribuer(nombreCarteDistribuer, joueurs);
+
+        /**  PROCESSUS DE VERIFICATION QUE LES MAINS ONT BIEN ETE IMPLEMENTEES
+
+         for (int j=0 ; j<nbJoueur ; j++){
+            System.out.println("On retourne la main de " + joueurs.get(j).getNom()) ;
+            joueurs.get(j).afficher(joueurs.get(j).getMain()) ;
+
+         }
+         */
 
         // On dépose une carte de la pioche sur le talon
-        talon.recevoirCarte(pioche.getPremiereCarte());
-        System.out.println("La carte sur le talon est : " + talon.getDerniereCarte() + "\n");
-        this.dernieresCartes = new LinkedList<Carte>();
-        dernieresCartes.add(talon.getTalon().getLast());
+        talon.recevoirCarte(pioche.getPremiereCarte()) ;
+        pioche.supprimer(talon.getDerniereCarte()) ;
+        System.out.println("La carte sur le talon est : " + talon.getDerniereCarte() + "\n") ;
+        this.dernieresCartes = new LinkedList<Carte>() ;
+        dernieresCartes.add(talon.getTalon().getLast()) ;
     }
 
 
@@ -238,17 +248,6 @@ public class Partie {
 
     // Vérifier les victoires
 
-    public LinkedList<Integer> verifVictoire() {
-        for (int k = 0; k < nbJoueur; k++) {
-            Joueur joueurTour = joueurs.get(k);
-            if (joueurTour.getMain().size() == 0) {
-                verif.set(k, 1);
-            } else {
-                verif.set(k, 0);
-            }
-        }
-        return verif;
-    }
 
     // -------------------------------- GERER UN TOUR ---------------------------------
 
@@ -270,6 +269,7 @@ public class Partie {
         this.prochainTour = new Random().nextInt(joueurs.size());
         setPaiementTotal(0);
 
+
         while (!verif.contains(1)) {
 
             // Vérifier l'action de la dernière carte jouée
@@ -277,6 +277,7 @@ public class Partie {
             // Fin du tour : incrémenter le compteur et déterminer la valeur de la variable sens.
 
             if (pioche.getPioche().size() == 0){
+                System.out.println("Vérification du");
                 Carte carteTalon = talon.getDerniereCarte() ;
                 LinkedList<Carte> newTalon = talon.getTalon() ;
                 newTalon.remove(carteTalon) ;
@@ -295,13 +296,13 @@ public class Partie {
 
 
 
-
             // PREMIER TOUR : on ne prend pas en compte l'effet de la carte sur le talon, seulement sa valeur et couleur
 
 
             if (compteur == 0) {
                 this.paiement = 0 ;
                 variante.carteJouableDebut(joueurTour, joueurTour.getMain(), dernieresCartes) ;
+
 
                 // CAS 1 : on ne peut rien joueur
                 if (variante.getCartePourJouer().size() == 0) {
@@ -316,6 +317,7 @@ public class Partie {
                     this.prochainTour = Math.floorMod(tour + sens , nbJoueur) ;
                     compteur++;
                 }
+
 
                 // CAS 2 : On peut jouer une carte
                 else {
@@ -370,6 +372,7 @@ public class Partie {
 
                 // CAS 1 : on ne peut rien jouer
                 if (variante.getCartePourJouer().size() == 0) {
+
                     // La dernière carte était une carte AS ou DEUX :
                     if (dernieresCartes.getLast().getValeur() == ValeurCarte.AS || dernieresCartes.getLast().getValeur() == ValeurCarte.DEUX) {
                         System.out.println("Vous ne pouvez rien jouer, et vous piochez " + paiementTotal + " Cartes.");
@@ -449,8 +452,19 @@ public class Partie {
                 // TEST SURVIE
                 variante.viderCartePourJouer() ;
             }
-            verif = verifVictoire() ;
+
+
+            // On modifie la liste vérif si besoin
+            for (int k = 0; k < nbJoueur; k++) {
+                if (joueurs.get(k).getMain().size() == 0) {
+                    System.out.println("Le joueur " + joueurs.get(k).getNom() + " a gagné ! ") ;
+                    verif.set(k, 1);
+                } else {
+                    verif.set(k, 0);
+                }
+            }
         }
+        System.out.println("La partie est terminée.") ;
     }
 }
 

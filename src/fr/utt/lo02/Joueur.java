@@ -31,12 +31,7 @@ public abstract class Joueur {
 
 
 
-    // ------------------------------------ RECEVOIR UNE CARTE -----------------------------------------------
-    public void ajouterCarte(Carte carte) {   }
-
-
-
-    // ------------------------------------ POSER UNE CARTE --------------------------------------------------
+        // ------------------------------------ POSER UNE CARTE --------------------------------------------------
     public void donnercarte(Carte carte) {}
 
 
@@ -60,7 +55,7 @@ public abstract class Joueur {
 
 
     protected LinkedList<Carte> getMain() {
-        return main;
+        return this.main;
     }
 
     public int getNumCarte() {
@@ -78,6 +73,12 @@ public abstract class Joueur {
     public String getNom() {
         return nom;
     }
+
+
+    public void afficher(LinkedList<Carte> listeCarte) {  }
+
+
+
 
 }
 

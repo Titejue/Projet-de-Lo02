@@ -111,6 +111,11 @@ public class JoueurReel extends Joueur {
         return this.nom ;
     }
 
+    public LinkedList<Carte> getMain() {
+        return this.main ;
+    }
+
+
 
 
 
