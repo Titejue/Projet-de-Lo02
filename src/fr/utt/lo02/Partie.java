@@ -79,16 +79,45 @@ public class Partie {
         while (this.typeDeJeu > 3) {
             System.out.println("Avec quel Type de Jeu souhaitez-vous joueur ?\n 0 : Jeu classique 54 cartes (52 cartes + 2 Jokers)\n 1 : Jeu de 52 cartes\n 2 : Jeu de 34 cartes (32 cartes + 2 Jokers)\n 3 : Jeu de 32 cartes");
             this.typeDeJeu = sc.nextInt();
-            if (typeDeJeu > 3) {
+            if (typeDeJeu > 3 || typeDeJeu < 0) {
                 System.out.println("Le numéro sélectionné n'est pas répertorié  ! \n");
             }
         }
 
-        System.out.println("Veuillez choisir le nombre de jeu de Carte de ce type pour la partie : ");
-        this.nbDeck = sc.nextInt();
-
-        // On crée le jeu de carte de type JeuDeCarte
+        nbDeck = 0 ;
         this.jeuCarte = new JeuDeCarte(typeDeJeu, nbDeck);
+        while (nbDeck < 1 || nbDeck > 30 || this.nbJoueur*15 > this.nbDeck*jeuCarte.getJeu().size()) {
+
+
+            System.out.println("Veuillez choisir le nombre de jeu de Carte de ce type pour la partie : ");
+            this.nbDeck = sc.nextInt();
+
+            if (nbDeck < 1) {
+                System.out.println("On ne peut pas jouer au 8 américain sans Deck ! \n");
+            }
+
+            else if (nbDeck > 31) {
+                System.out.println("Le nombre limite de deck a été fixé à 30. \n");
+            }
+
+            else if (0 < nbDeck && nbDeck <= 30 && nbJoueur * 15 > nbDeck * jeuCarte.getJeu().size()) {
+                System.out.println("Vous n'avez pas choisi assez de decks par rapport au nombre de joueurs \n");
+                this.jeuCarte = new JeuDeCarte(typeDeJeu, nbDeck);
+            }
+        }
+
+        if (typeDeJeu == 0){
+            System.out.println(nbDeck +" jeu de 54 cartes contenant deux Jokers vient d'être créé ");
+        }
+        else if (typeDeJeu == 1){
+            System.out.println(nbDeck +" jeu de 52 cartes vient d'être créé ");
+        }
+        else if (typeDeJeu == 2){
+            System.out.println(nbDeck +" jeu de 34 cartes contenant deux jokers vient d'être créé ");
+        }
+        else if (typeDeJeu == 3) {
+            System.out.println(nbDeck +" jeu de 32 cartes vient d'être créé ");
+        }
 
 
         int var = -1 ;

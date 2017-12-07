@@ -57,24 +57,9 @@ public class JeuDeCarte {
                 default:
             }
         }
-
-        if (typeJeu == 0){
-            System.out.println("Un jeu de 54 cartes contenant deux Jokers vient d'être créé ");
-        }
-        else if (typeJeu == 1){
-            System.out.println("Un jeu de 52 cartes vient d'être créé ");
-        }
-        else if (typeJeu == 2){
-            System.out.println("Un jeu de 34 cartes contenant deux jokers vient d'être créé ");
-        }
-        else if (typeJeu == 3) {
-            System.out.println("Un jeu de 32 cartes vient d'être créé ");
-        }
-        else {
-            System.out.println("Erreur dans le choix du type de paquet de carte");
-        }
     }
 
+    public JeuDeCarte(){}
 
     //Retourne la liste de Cartes
     public LinkedList<Carte> getJeu() {
