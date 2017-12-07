@@ -21,7 +21,7 @@ public class Partie {
 
 
     private int nbJoueur = 0;
-    private int numVar = 5;
+    private int numVar ;
     private int typeDeJeu = 4;
     private int nbDeck;
     private static Variante variante;
@@ -57,12 +57,16 @@ public class Partie {
         this.verif = new LinkedList<Integer>();
         this.verif.add(0);
 
-        while (this.nbJoueur < 2) {
+        while (this.nbJoueur < 2 || this.nbJoueur > 10) {
             System.out.println("Combien de joueur dans la partie (vous compris)");
             this.nbJoueur = sc.nextInt();
             if (nbJoueur < 2) {
                 System.out.println("Le nombre de joueurs minimal est 2 !");
-            } else {
+            }
+            else if (nbJoueur > 10){
+                System.out.println("On ne peut pas jouer à plus de 10 joueurs ! ");
+            }
+            else {
                 for (int j = 1; j < nbJoueur; j++) {
                     joueurs.add(new Adversaire("adversaire" + j));
                     this.verif.add(0);
@@ -87,10 +91,20 @@ public class Partie {
         this.jeuCarte = new JeuDeCarte(typeDeJeu, nbDeck);
 
 
+        int var = -1 ;
+        this.numVar = 5 ;
+
         while (this.numVar > 4) {
-            System.out.println("Veuillez choisir la variante : ");
-            System.out.println("0 : Variante Classique \n 1 : Version de MonClar \n 2 : Version Minimale \n 3 : Variante 1 \n 4 : Variante Carte et Maou");
-            this.numVar = sc.nextInt();
+            while (var != 0) {
+                System.out.println("Veuillez choisir la variante : ");
+                System.out.println("0 : Variante Classique \n 1 : Version de MonClar \n 2 : Version Minimale \n 3 : Variante 1 \n 4 : Variante Carte et Maou");
+                this.numVar = sc.nextInt();
+                if (numVar != 0) {
+                    System.out.println("Nous n'avons pas encore implémenté cette variante ! ");
+                } else {
+                    var = 0;
+                }
+            }
         }
 
         /** Numéro de Variante
@@ -276,8 +290,8 @@ public class Partie {
             // Déterminer l'action du joueur en fonction de l'effet
             // Fin du tour : incrémenter le compteur et déterminer la valeur de la variable sens.
 
-            if (pioche.getPioche().size() == 0){
-                System.out.println("La pioche est vide");
+            if (pioche.getPioche().size() < 10){
+                System.out.println("Il y a moins de 10 cartes dans la pioche ! ");
                 Carte carteTalon = talon.getDerniereCarte() ;
                 LinkedList<Carte> newTalon = talon.getTalon() ;
                 newTalon.remove(carteTalon) ;
@@ -296,7 +310,9 @@ public class Partie {
             System.out.println("\n----------------------------------------------- ") ;
             System.out.println("\nC'est au tour du joueur " + joueurTour.getNom() ) ;
             System.out.println("La carte sur le talon est : " + talon.getDerniereCarte().toString()) ;
-
+            if (dernieresCartes.getLast().getValeur() == ValeurCarte.HUIT){
+                System.out.println("La couleur choisie au dernier tour est le " + dernieresCartes.getLast().getCouleur()) ;
+            }
 
 
             // PREMIER TOUR : on ne prend pas en compte l'effet de la carte sur le talon, seulement sa valeur et couleur
@@ -334,7 +350,8 @@ public class Partie {
                     talon.recevoirCarte(carteChoisie) ;
 
                     // on enregistre la carte choisie dans les dernières cartes
-                    dernieresCartes.add(carteChoisie) ;
+                    Carte derniereCarte = new Carte (carteChoisie.getValeur(), carteChoisie.getCouleur()) ;
+                    dernieresCartes.add(derniereCarte) ;
 
                     // On vérifie les effets de la carte choisie
                     variante.effetCarte(carteChoisie) ;
@@ -349,7 +366,7 @@ public class Partie {
 
                     // Si on change la couleur, on modifie la couleur d'une carte fictive posée sur le dessus du talon
                     //if (paiement == -1) {
-                    if (dernieresCartes.getLast().getValeur() == ValeurCarte.HUIT) {
+                    if (talon.getDerniereCarte().getValeur() == ValeurCarte.HUIT) {
                         dernieresCartes.getLast().setCouleur(variante.getCouleur()) ;
                     }
 
@@ -428,7 +445,8 @@ public class Partie {
                     talon.recevoirCarte(carteChoisie) ;
 
                     // On enregistre la carte choisie dans les dernières cartes
-                    dernieresCartes.add(carteChoisie) ;
+                    Carte derniereCarte = new Carte (carteChoisie.getValeur(), carteChoisie.getCouleur()) ;
+                    dernieresCartes.add(derniereCarte) ;
 
                     // On vérifie les effets de la carte choisie
                     variante.effetCarte(carteChoisie) ;
@@ -438,14 +456,27 @@ public class Partie {
                     // Exemple :
                     // Donner une carte à un autre joueur de son choix
                     // Changer de couleur
+
+                    // On vérifie une première fois la liste vérif si besoin
+                    for (int k = 0; k < joueurs.size() ; k++) {
+                        System.out.println("On affiche k " + k) ;
+                        System.out.println("On affiche joueurs size : " + joueurs.size()) ;
+
+                        System.out.println("On affiche le joueur " + joueurs.get(k).getNom() ) ;
+                        if (joueurs.get(k).getMain().size() == 0) {
+                            System.out.println("Le joueur " + joueurs.get(k).getNom() + " a gagné ! ") ;
+                            verif.set(k, 1);
+                        } else {
+                            verif.set(k, 0);
+                        }
+                    }
                     variante.actionCarte(dernieresCartes.getLast(), sens, tour, nbJoueur, joueurs.get(tour), joueurs);
 
                     // Si on change la couleur, on modifie la couleur d'une carte fictive posée sur le dessus de la pioche
-                    if (dernieresCartes.getLast().getValeur() == ValeurCarte.HUIT) {
+                    if (talon.getDerniereCarte().getValeur() == ValeurCarte.HUIT) {
                         dernieresCartes.getLast().setCouleur(variante.getCouleur());
-                        //dernieresCartes.remove(carteChoisie);
-                       // dernieresCartes.add(derniereCarte);
                     }
+
                     this.sens = variante.getSens();
                     this.prochainTour = variante.getProchainTour();
                     compteur++ ;
@@ -456,9 +487,12 @@ public class Partie {
                 variante.viderCartePourJouer() ;
             }
 
+            // On vérifie une seconde fois la liste vérif si besoin
+            for (int k = 0; k < joueurs.size() ; k++) {
+                System.out.println("On affiche k " + k) ;
+                System.out.println("On affiche joueurs size : " + joueurs.size()) ;
 
-            // On modifie la liste vérif si besoin
-            for (int k = 0; k < nbJoueur; k++) {
+                System.out.println("On affiche le joueur " + joueurs.get(k).getNom() ) ;
                 if (joueurs.get(k).getMain().size() == 0) {
                     System.out.println("Le joueur " + joueurs.get(k).getNom() + " a gagné ! ") ;
                     verif.set(k, 1);

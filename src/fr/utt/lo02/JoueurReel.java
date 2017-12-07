@@ -27,16 +27,24 @@ public class JoueurReel extends Joueur {
 
         Scanner sc = new Scanner(System.in) ;
         System.out.println("\n");
-        System.out.println("Quelle carte souhaitez-vous jouer ?");
-        this.numCarte = -1 ;
+        int test = -1 ;
 
-        while( numCarte < 0 || numCarte > cartesJouable.size()){
-            this.numCarte = sc.nextInt() ;
+        while( 0 > test || test > cartesJouable.size()){
+
+            System.out.println("Quelle carte souhaitez-vous jouer ?");
+            test = sc.nextInt() ;
+            if (test < 0 || test > cartesJouable.size()){
+                System.out.println("Vous n'avez pas saisi le bon numéro ! ");
+            }
+            else {
+                this.numCarte = test ;
+                this.carteChoisie = cartesJouable.get(numCarte) ;
+                this.main.remove(carteChoisie) ;
+            }
         }
 
 
-        this.carteChoisie = cartesJouable.get(numCarte) ;
-        this.main.remove(carteChoisie) ;
+
 
         // new Carte (cartesJouable.get(numCarte).getValeur(), cartesJouable.get(numCarte).getCouleur()) ;
     }
@@ -122,7 +130,9 @@ public class JoueurReel extends Joueur {
 
     // ------------------------------------ CHOISIR CARTE --------------------------------------------------
     public void choisirCarte(LinkedList<Joueur> joueurs, Joueur j) {
+
         int numCarteAJouer = -1;
+
         Scanner s = new Scanner(System.in);
         afficher(getMain());
 
@@ -135,24 +145,32 @@ public class JoueurReel extends Joueur {
         carteADonner = main.get(numCarteAJouer);
 
         // Choisir le joueur à qui la donner
-        joueurs.remove(j) ;
+        // joueurs.remove(j) ;
+
+
         System.out.println("Voici la liste des joueurs : \n") ;
-        for (int i = 0; i < joueurs.size(); i++) {
-            System.out.println(i + " : " + joueurs.get(i).getNom()) ;
+        for (int i = 1; i < joueurs.size(); i++) {
+            System.out.println(i + " : " + joueurs.get(i).getNom());
         }
 
         System.out.println("Veuillez choisir le joueur à qui donner cette carte") ;
-
-
         int numjoueur = s.nextInt() ;
 
         // Donner la carte au joueur séléctionné
         joueurs.get(numjoueur).recevoirCarte(carteADonner) ;
+        System.out.println("toto test") ;
+
+        j.afficher(j.getMain()) ;
+        System.out.println("Le joueur a bien reçu la carte") ;
+
         // On supprime cette carte de la main du joueur
         // on pourrait peut-être utiliser
         LinkedList<Carte> mainFictive = j.getMain() ;
         mainFictive.remove(carteADonner) ;
         j.setMain(mainFictive) ;
+
+
+
     }
 
 

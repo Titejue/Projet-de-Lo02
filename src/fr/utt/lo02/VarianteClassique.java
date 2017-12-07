@@ -14,8 +14,6 @@ public class VarianteClassique implements Variante {
 
     Carte carteADonner ;
     CouleurCarte couleur ;
-    CouleurCarte couleurCarte ;
-
 
     // --------------------------- CONSTRUCTEUR ----------------------------------------------------
     public void VarianteClassique() {
