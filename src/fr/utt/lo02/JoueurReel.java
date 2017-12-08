@@ -150,7 +150,7 @@ public class JoueurReel extends Joueur {
 
         System.out.println("Voici la liste des joueurs : \n") ;
         for (int i = 1; i < joueurs.size(); i++) {
-            System.out.println(i + " : " + joueurs.get(i).getNom());
+            System.out.println(i + " : " + joueurs.get(i).getNom() + " : " + joueurs.get(i).getMain().size() + " cartes en main." );
         }
 
         System.out.println("Veuillez choisir le joueur à qui donner cette carte") ;
