@@ -105,7 +105,7 @@ public class Partie {
                     System.out.println("Le deck va être créé ! \n") ;
                     this.jeuCarte = new JeuDeCarte(typeDeJeu, nbDeck) ;
                 }
-                else{
+                else {
                     System.out.println("Vous n'avez pas choisi assez de decks par rapport au nombre de joueurs \n") ;
                     this.jeuCarte = new JeuDeCarte(typeDeJeu, nbDeck) ;
                 }
@@ -349,6 +349,7 @@ public class Partie {
 
             System.out.println("\n----------------------------------------------- ") ;
             System.out.println("\nC'est au tour du joueur " + joueurTour.getNom() ) ;
+            System.out.println("Le joueur " + joueurTour.getNom() + " possède " + joueurTour.getMain().size() + " en main. " ) ;
             System.out.println("La carte sur le talon est : " + talon.getDerniereCarte().toString()) ;
             if (dernieresCartes.getLast().getValeur() == ValeurCarte.HUIT){
                 System.out.println("La couleur choisie au dernier tour est le " + dernieresCartes.getLast().getCouleur()) ;
@@ -451,7 +452,6 @@ public class Partie {
                         // On ne change pas le sens
                         // On incrémente le tour et le compteur
                         this.prochainTour = Math.floorMod(tour + sens , nbJoueur) ;
-
                     }
 
                     // Le dernière carte était neutre
