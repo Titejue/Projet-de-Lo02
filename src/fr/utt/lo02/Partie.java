@@ -497,7 +497,10 @@ public class Partie {
                     // Donner une carte à un autre joueur de son choix
                     // Changer de couleur
 
+
+
                     // On vérifie une première fois la liste vérif si besoin
+                    /**
                     for (int k = 0; k < joueurs.size() ; k++) {
                         System.out.println("On affiche k " + k) ;
                         System.out.println("On affiche joueurs size : " + joueurs.size()) ;
@@ -510,6 +513,9 @@ public class Partie {
                             verif.set(k, 0);
                         }
                     }
+                     */
+
+
                     variante.actionCarte(dernieresCartes.getLast(), sens, tour, nbJoueur, joueurs.get(tour), joueurs);
 
                     // Si on change la couleur, on modifie la couleur d'une carte fictive posée sur le dessus de la pioche
@@ -527,6 +533,7 @@ public class Partie {
                 variante.viderCartePourJouer() ;
             }
 
+            /**
             // On vérifie une seconde fois la liste vérif si besoin
             for (int k = 0; k < joueurs.size() ; k++) {
                 System.out.println("On affiche k " + k) ;
@@ -540,6 +547,7 @@ public class Partie {
                     verif.set(k, 0);
                 }
             }
+             */
         }
         System.out.println("La partie est terminée.") ;
     }
