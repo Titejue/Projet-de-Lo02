@@ -87,7 +87,7 @@ public class VarianteMonClar implements Variante {
 
 
     // ---------------------------- CARTES JOUABLES ----------------------------------------------------------
-    public void carteJouable(Joueur j, LinkedList<Carte> main, LinkedList<Carte> dernieresCartes, int payer) {
+    public void carteJouable(LinkedList<Carte> main, LinkedList<Carte> dernieresCartes, int payer) {
 
 
         int taille = dernieresCartes.size();

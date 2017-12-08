@@ -15,7 +15,7 @@ public interface Variante {
 
 
    // public void piocher() ;
-    void carteJouable(Joueur j, LinkedList<Carte> main, LinkedList<Carte> dernieresCartes, int payer);
+    void carteJouable(LinkedList<Carte> main, LinkedList<Carte> dernieresCartes, int payer);
 
 
     // Premier Tour

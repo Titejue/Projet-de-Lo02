@@ -62,11 +62,9 @@ public class Partie {
             this.nbJoueur = sc.nextInt();
             if (nbJoueur < 2) {
                 System.out.println("Le nombre de joueurs minimal est 2 !");
-            }
-            else if (nbJoueur > 10){
+            } else if (nbJoueur > 10) {
                 System.out.println("On ne peut pas jouer à plus de 10 joueurs ! ");
-            }
-            else {
+            } else {
                 for (int j = 1; j < nbJoueur; j++) {
                     joueurs.add(new Adversaire("adversaire" + j));
                     this.verif.add(0);
@@ -84,34 +82,28 @@ public class Partie {
             }
         }
 
-        nbDeck = 0 ;
-        this.jeuCarte = new JeuDeCarte(typeDeJeu, nbDeck) ;
+        nbDeck = 0;
+        this.jeuCarte = new JeuDeCarte(typeDeJeu, nbDeck);
 
-        while (nbDeck < 1 || nbDeck > 30 || this.nbJoueur*15 > this.nbDeck*jeuCarte.getJeu().size()) {
-
-            System.out.println("Veuillez choisir le nombre de jeu de Carte de ce type pour la partie : ") ;
-            this.nbDeck = sc.nextInt() ;
+        while (nbDeck < 1 || nbDeck > 30) {
+            //while (this.nbJoueur * 15 > this.nbDeck * jeuCarte.getJeu().size()) {
+            this.jeuCarte = new JeuDeCarte(typeDeJeu, nbDeck);
+            System.out.println("Veuillez choisir le nombre de jeu de Carte de ce type pour la partie : ");
+            this.nbDeck = sc.nextInt();
 
             if (nbDeck < 1) {
-                System.out.println("On ne peut pas jouer au 8 américain sans Deck ! \n") ;
-            }
-
-            else if (nbDeck > 30) {
-                System.out.println("Le nombre limite de deck a été fixé à 30. \n") ;
-            }
-
-            else {
-                if (nbJoueur*15 <= nbDeck * jeuCarte.getJeu().size()) {
-                    System.out.println("Le deck va être créé ! \n") ;
-                    this.jeuCarte = new JeuDeCarte(typeDeJeu, nbDeck) ;
-                }
-                else {
-                    System.out.println("Vous n'avez pas choisi assez de decks par rapport au nombre de joueurs \n") ;
-                    this.jeuCarte = new JeuDeCarte(typeDeJeu, nbDeck) ;
-                }
-
-            }
+                System.out.println("On ne peut pas jouer au 8 américain sans Deck ! \n");
+            } else if (nbDeck > 30) {
+                System.out.println("Le nombre limite de deck a été fixé à 30. \n");
+            } else {
+                //if (nbJoueur * 15 <= nbDeck * jeuCarte.getJeu().size()) {
+                System.out.println("Le deck va être créé ! \n");
+            } //else if (nbJoueur * 15 > nbDeck * jeuCarte.getJeu().size()) {
+            // System.out.println("Vous n'avez pas choisi assez de decks par rapport au nombre de joueurs \n");
+            //}
         }
+        // }
+
 
         if (typeDeJeu == 0){
             System.out.println(nbDeck +" jeu de 54 cartes contenant deux Jokers vient d'être créé ");
@@ -332,12 +324,15 @@ public class Partie {
 
             if (pioche.getPioche().size() < 10){
                 System.out.println("Il y a moins de 10 cartes dans la pioche ! ");
+
                 Carte carteTalon = talon.getDerniereCarte() ;
-                LinkedList<Carte> newTalon = talon.getTalon() ;
-                newTalon.remove(carteTalon) ;
-                pioche.setPioche(newTalon) ;
+
+                talon.getTalon().remove(carteTalon) ;
+
+                pioche.getPioche().addAll(talon.getTalon()) ;
                 // On mélange la pioche
-                System.out.println("On mélange la pioche");
+                System.out.println("On mélange la pioche") ;
+
 
                 LinkedList<Carte> cT = new LinkedList<Carte>() ;
                 cT.add(carteTalon);
@@ -425,7 +420,7 @@ public class Partie {
             // TOUR > 1
 
             } else {
-                variante.carteJouable(joueurTour, joueurTour.getMain(), dernieresCartes, paiement);
+                variante.carteJouable(joueurTour.getMain(), dernieresCartes, paiement);
 
                 // on fixe le paiementTotal
                 this.paiementTotal = paiementTotal + paiement;
