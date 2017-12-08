@@ -126,7 +126,9 @@ public class VarianteClassique implements Variante {
                         this.cartePourJouer.add(this.carteJouable);
                     }
                 } else {
+
                     // Sinon :
+
                     // On a une ou plusieurs cartes de même valeurs (carte spéciale possible)
                     if (dernieresCartes.getLast().getValeur() == c.getValeur()) {
                         this.carteJouable = c;

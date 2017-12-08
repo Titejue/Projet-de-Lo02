@@ -85,24 +85,29 @@ public class Partie {
         }
 
         nbDeck = 0 ;
-        this.jeuCarte = new JeuDeCarte(typeDeJeu, nbDeck);
+        this.jeuCarte = new JeuDeCarte(typeDeJeu, nbDeck) ;
+
         while (nbDeck < 1 || nbDeck > 30 || this.nbJoueur*15 > this.nbDeck*jeuCarte.getJeu().size()) {
 
-
-            System.out.println("Veuillez choisir le nombre de jeu de Carte de ce type pour la partie : ");
-            this.nbDeck = sc.nextInt();
+            System.out.println("Veuillez choisir le nombre de jeu de Carte de ce type pour la partie : ") ;
+            this.nbDeck = sc.nextInt() ;
 
             if (nbDeck < 1) {
-                System.out.println("On ne peut pas jouer au 8 américain sans Deck ! \n");
+                System.out.println("On ne peut pas jouer au 8 américain sans Deck ! \n") ;
             }
 
-            else if (nbDeck > 31) {
-                System.out.println("Le nombre limite de deck a été fixé à 30. \n");
+            else if (nbDeck > 30) {
+                System.out.println("Le nombre limite de deck a été fixé à 30. \n") ;
             }
 
-            else if (0 < nbDeck && nbDeck <= 30 && nbJoueur * 15 > nbDeck * jeuCarte.getJeu().size()) {
-                System.out.println("Vous n'avez pas choisi assez de decks par rapport au nombre de joueurs \n");
-                this.jeuCarte = new JeuDeCarte(typeDeJeu, nbDeck);
+            else if (0 < nbDeck && nbDeck < 31) {
+                if (nbJoueur*15 < nbDeck * jeuCarte.getJeu().size()) {
+                    System.out.println(" Le deck va être créé ! \n") ;
+                }
+                else{
+                    System.out.println("Vous n'avez pas choisi assez de decks par rapport au nombre de joueurs \n") ;
+                }
+                this.jeuCarte = new JeuDeCarte(typeDeJeu, nbDeck) ;
             }
         }
 
@@ -126,12 +131,15 @@ public class Partie {
         while (this.numVar > 4) {
             while (var != 0) {
                 System.out.println("Veuillez choisir la variante : ");
-                System.out.println("0 : Variante Classique \n 1 : Version de MonClar \n 2 : Version Minimale \n 3 : Variante 1 \n 4 : Variante Carte et Maou");
+                System.out.println("0 : Variante Classique \n 1 : Version de Monclar \n 2 : Version Minimale \n 3 : Variante 1 \n 4 : Variante Carte et Maou");
                 this.numVar = sc.nextInt();
-                if (numVar != 0) {
-                    System.out.println("Nous n'avons pas encore implémenté cette variante ! ");
-                } else {
+
+                if (numVar == 0){
                     var = 0;
+                } else if(numVar ==1){
+                    var = 0;
+                } else {
+                    System.out.println("Nous n'avons pas encore implémenté cette variante ! ");
                 }
             }
         }
@@ -147,11 +155,12 @@ public class Partie {
 
         switch (numVar) {
             case (0):
-                this.variante = new VarianteClassique();
+                this.variante = new VarianteClassique() ;
                 break;
-            /**case(1) :
-             this.variante = new VarianteMonClar();
-             break ;
+            case(1) :
+                this.variante = new VarianteMonClar() ;
+                break ;
+             /**
              case(2) :
              this.variante = new VarianteMinimale();
              break ;
