@@ -101,13 +101,15 @@ public class Partie {
             }
 
             else {
-                if (nbJoueur*15 < nbDeck * jeuCarte.getJeu().size()) {
-                    System.out.println(" Le deck va être créé ! \n") ;
+                if (nbJoueur*15 <= nbDeck * jeuCarte.getJeu().size()) {
+                    System.out.println("Le deck va être créé ! \n") ;
+                    this.jeuCarte = new JeuDeCarte(typeDeJeu, nbDeck) ;
                 }
                 else{
                     System.out.println("Vous n'avez pas choisi assez de decks par rapport au nombre de joueurs \n") ;
+                    this.jeuCarte = new JeuDeCarte(typeDeJeu, nbDeck) ;
                 }
-                this.jeuCarte = new JeuDeCarte(typeDeJeu, nbDeck) ;
+
             }
         }
 
