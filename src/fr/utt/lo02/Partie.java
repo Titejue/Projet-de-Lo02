@@ -100,7 +100,7 @@ public class Partie {
                 System.out.println("Le nombre limite de deck a été fixé à 30. \n") ;
             }
 
-            else if (0 < nbDeck && nbDeck < 31) {
+            else {
                 if (nbJoueur*15 < nbDeck * jeuCarte.getJeu().size()) {
                     System.out.println(" Le deck va être créé ! \n") ;
                 }
