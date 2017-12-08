@@ -79,9 +79,9 @@ public class Adversaire extends Joueur {
 
         LinkedList<Joueur> listeF = new LinkedList<Joueur>() ;
 
-        for (int i=0 ; i<joueurs.size() ; i++) {
-            if (joueurs.get(i) != j) {
-                listeF.add(joueurs.get(i)) ;
+        for (Joueur l : joueurs) {
+            if (l != j) {
+                listeF.add(l) ;
             }
         }
 

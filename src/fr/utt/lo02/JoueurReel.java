@@ -158,9 +158,10 @@ public class JoueurReel extends Joueur {
 
         // Donner la carte au joueur séléctionné
         joueurs.get(numjoueur).recevoirCarte(carteADonner) ;
-        System.out.println("toto test") ;
 
-        j.afficher(j.getMain()) ;
+
+        // j.afficher(j.getMain()) ;
+
         System.out.println("Le joueur a bien reçu la carte") ;
 
         // On supprime cette carte de la main du joueur
