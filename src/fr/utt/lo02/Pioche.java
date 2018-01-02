@@ -62,16 +62,15 @@ public class Pioche {
 
     //----------------------------------DISTRIBUER----------------------------------------------
 
-    public void distribuer(int nombreDeCarte , LinkedList<Joueur> joueurs)
-    {
-        Carte c;
-        for(int i=0; i<=nombreDeCarte; i++)
-        {
-            for(Joueur j: joueurs)
+    public void distribuer(int nombreDeCarte , LinkedList<Joueur> joueurs){
+        Carte c ;
+
+        for(int i=0; i<=nombreDeCarte; i++){
+            for(Joueur j : joueurs)
             {
-                c = pioche.getFirst();
+                c = this.pioche.getFirst();
                 j.recevoirCarte(c);
-                pioche.remove(c);
+                this.pioche.remove(c);
             }
         }
     }

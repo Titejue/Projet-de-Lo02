@@ -83,11 +83,8 @@ public class Partie {
         }
 
         nbDeck = 0;
-        this.jeuCarte = new JeuDeCarte(typeDeJeu, nbDeck);
 
         while (nbDeck < 1 || nbDeck > 30) {
-            //while (this.nbJoueur * 15 > this.nbDeck * jeuCarte.getJeu().size()) {
-            this.jeuCarte = new JeuDeCarte(typeDeJeu, nbDeck);
             System.out.println("Veuillez choisir le nombre de jeu de Carte de ce type pour la partie : ");
             this.nbDeck = sc.nextInt();
 
@@ -96,26 +93,24 @@ public class Partie {
             } else if (nbDeck > 30) {
                 System.out.println("Le nombre limite de deck a été fixé à 30. \n");
             } else {
-                //if (nbJoueur * 15 <= nbDeck * jeuCarte.getJeu().size()) {
                 System.out.println("Le deck va être créé ! \n");
-            } //else if (nbJoueur * 15 > nbDeck * jeuCarte.getJeu().size()) {
-            // System.out.println("Vous n'avez pas choisi assez de decks par rapport au nombre de joueurs \n");
-            //}
+                this.jeuCarte = new JeuDeCarte(typeDeJeu, nbDeck);
+            }
         }
-        // }
+
 
 
         if (typeDeJeu == 0){
-            System.out.println(nbDeck +" jeu de 54 cartes contenant deux Jokers vient d'être créé ");
+            System.out.println(nbDeck +" jeu de 54 cartes contenant deux Jokers vient d'être créé ") ;
         }
         else if (typeDeJeu == 1){
-            System.out.println(nbDeck +" jeu de 52 cartes vient d'être créé ");
+            System.out.println(nbDeck +" jeu de 52 cartes vient d'être créé ") ;
         }
         else if (typeDeJeu == 2){
-            System.out.println(nbDeck +" jeu de 34 cartes contenant deux jokers vient d'être créé ");
+            System.out.println(nbDeck +" jeu de 34 cartes contenant deux jokers vient d'être créé ") ;
         }
         else if (typeDeJeu == 3) {
-            System.out.println(nbDeck +" jeu de 32 cartes vient d'être créé ");
+            System.out.println(nbDeck +" jeu de 32 cartes vient d'être créé ") ;
         }
 
 
@@ -322,23 +317,6 @@ public class Partie {
             // Déterminer l'action du joueur en fonction de l'effet
             // Fin du tour : incrémenter le compteur et déterminer la valeur de la variable sens.
 
-            if (pioche.getPioche().size() < 10){
-                System.out.println("Il y a moins de 10 cartes dans la pioche ! ");
-
-                Carte carteTalon = talon.getDerniereCarte() ;
-
-                talon.getTalon().remove(carteTalon) ;
-
-                pioche.getPioche().addAll(talon.getTalon()) ;
-                // On mélange la pioche
-                System.out.println("On mélange la pioche") ;
-
-
-                LinkedList<Carte> cT = new LinkedList<Carte>() ;
-                cT.add(carteTalon);
-                talon.setTalon(cT);
-            }
-
             this.tour = prochainTour ;
             this.joueurTour = joueurs.get(tour) ;
 
@@ -526,6 +504,25 @@ public class Partie {
                 }
                 // TEST SURVIE
                 variante.viderCartePourJouer() ;
+            }
+
+            if (pioche.getPioche().size() < 10) {
+                System.out.println("Il y a moins de 10 cartes dans la pioche ! ");
+                Carte carteTalon = talon.getDerniereCarte();
+                // On ajoute les cartes du talon dans la pioche et on vide le talon
+                for (int i = 0 ; i<talon.getTalon().size() ; i++) {
+                    pioche.getPioche().add(talon.getTalon().get(i)) ;
+                    talon.getTalon().remove(talon.getTalon().get(i)) ;
+                }
+                // A présent, la pioche contient toute les cartes du talons ainsi que celles qui restaient dans la pioche
+                // On supprime la dernière carte du talon de la pioche
+                pioche.getPioche().remove(carteTalon);
+                // On ajoute la fameuse carteTalon
+                talon.getTalon().add(carteTalon);
+                // On mélange la pioche
+                Collections.shuffle(pioche.getPioche());
+                System.out.println("On mélange la pioche");
+
             }
 
             /**

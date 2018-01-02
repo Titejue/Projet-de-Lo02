@@ -18,6 +18,8 @@ public class Adversaire extends Joueur {
         this.main =  new LinkedList<Carte>() ;
     }
 
+
+
     // ---------------------------------------- JOUER ---------------------------------------------------
     public void jouer(LinkedList<Carte> main, LinkedList<Carte> cartesJouable, Joueur j){
         j.setMain(main) ;
