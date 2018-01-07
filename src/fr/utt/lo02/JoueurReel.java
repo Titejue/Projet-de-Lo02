@@ -12,6 +12,7 @@ public class JoueurReel extends Joueur {
     public JoueurReel(String nom) {
        this.nom = nom ;
        this.main = new LinkedList<Carte>() ;
+       this.uneCarte = false;
     }
 
 
@@ -43,7 +44,16 @@ public class JoueurReel extends Joueur {
             }
         }
 
-
+        if(this.main.size() == 1 && !uneCarte)
+        {
+            uneCarte = true;
+            processus = new direCarte( this);
+        }
+        if(this.main.size() != 1 &&uneCarte)
+        {
+            uneCarte = false;
+            this.processus.plusUneCarte();
+        }
 
 
         // new Carte (cartesJouable.get(numCarte).getValeur(), cartesJouable.get(numCarte).getCouleur()) ;
@@ -170,7 +180,17 @@ public class JoueurReel extends Joueur {
         mainFictive.remove(carteADonner) ;
         j.setMain(mainFictive) ;
 
-
+        //On test si le joueur n'a plus qu'une carte
+        if(this.main.size() == 1 && !uneCarte)
+        {
+            uneCarte = true;
+            processus = new direCarte( this);
+        }
+        if(this.main.size() != 1 &&uneCarte)
+        {
+            uneCarte = false;
+            this.processus.plusUneCarte();
+        }
 
     }
 

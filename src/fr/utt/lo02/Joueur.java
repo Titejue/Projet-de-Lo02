@@ -13,6 +13,8 @@ public abstract class Joueur {
     protected CouleurCarte couleurCarte ;
     protected Carte carteChoisie ;
     protected Carte carteAJouer ;
+    protected boolean uneCarte;
+    protected direCarte processus;
 
 
 
