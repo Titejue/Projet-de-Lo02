@@ -12,7 +12,7 @@ public class direCarte implements Runnable{
     public direCarte( Joueur jC)
     {
         this.jConcerne = jC;
-        Thread t = new Thread();
+        Thread t = new Thread(this);
         t.start();
     }
     public void run()
