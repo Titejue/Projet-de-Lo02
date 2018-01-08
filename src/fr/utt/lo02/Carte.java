@@ -23,7 +23,7 @@ public class Carte {
 
     // ------------------------------- GETTER ET SETTER -------------------------------------------------------------
 
-    ValeurCarte getValeur() {
+    public ValeurCarte getValeur() {
         return this.valeur;
     }
 
@@ -32,7 +32,7 @@ public class Carte {
         this.valeur = numero;
     }
 
-    CouleurCarte getCouleur() {
+    public CouleurCarte getCouleur() {
         return this.couleur;
     }
 

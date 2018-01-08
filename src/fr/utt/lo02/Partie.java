@@ -177,7 +177,7 @@ public class Partie {
                 }
             } else if (nbJoueur == 3) {
                 if (nbDeck == 1) {
-                    System.out.println("On distribue 18 cartes par joueurs");
+                    System.out.println("On distribue 8 cartes par joueurs");
                     this.nombreCarteDistribuer = 8;
                 } else {
                     System.out.println("On distribue 12 cartes par joueurs");
