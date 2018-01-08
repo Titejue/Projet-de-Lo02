@@ -65,7 +65,7 @@ public class Pioche {
     public void distribuer(int nombreDeCarte , LinkedList<Joueur> joueurs){
         Carte c ;
 
-        for(int i=0; i<=nombreDeCarte; i++){
+        for(int i=0; i<nombreDeCarte; i++){
             for(Joueur j : joueurs)
             {
                 c = this.pioche.getFirst();

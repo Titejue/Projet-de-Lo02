@@ -8,12 +8,12 @@ package GUI;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-//import net.miginfocom.swing.*;
-
+import java.util.Observable;
+import java.util.Observer;
 /**
  * @author unknown
  */
-public class PanneauMenu extends JFrame implements ActionListener, MouseListener {
+public class PanneauMenu extends JFrame implements ActionListener, MouseListener, Observer {
 
     private JPanel panneauMenu;
 
@@ -110,7 +110,10 @@ public class PanneauMenu extends JFrame implements ActionListener, MouseListener
     public void mouseExited(MouseEvent ev) {
     }
 
+    public void update(Observable instanceObservable, Object arg1)
+    {
 
+    }
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - Juliette Mendras
     private JButton button1;

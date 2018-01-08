@@ -31,7 +31,7 @@ public class Adversaire extends Joueur {
         this.carteChoisie = this.cartesJouable.get(numCarte) ;
         this.main.remove(carteChoisie) ;
         // ON vérifie si le joueur n'a plus qu'une seule carte
-        if(this.main.size() == 1 && !uneCarte)
+        /*if(this.main.size() == 1 && !uneCarte)
         {
             uneCarte = true;
             processus = new direCarte( this);
@@ -40,7 +40,7 @@ public class Adversaire extends Joueur {
         {
             uneCarte = false;
             this.processus.plusUneCarte();
-        }
+        }*/
 
     }
 
@@ -113,7 +113,7 @@ public class Adversaire extends Joueur {
         j.setMain(mainFictive) ;
 
         // On test si le joueur n'a plus qu'une carte
-        if(this.main.size() == 1 && !uneCarte)
+        /*if(this.main.size() == 1 && !uneCarte)
         {
             uneCarte = true;
             processus = new direCarte( this);
@@ -122,7 +122,7 @@ public class Adversaire extends Joueur {
         {
             uneCarte = false;
             this.processus.plusUneCarte();
-        }
+        }*/
     }
 
 

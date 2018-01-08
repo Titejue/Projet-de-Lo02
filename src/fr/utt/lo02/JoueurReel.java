@@ -43,8 +43,8 @@ public class JoueurReel extends Joueur {
                 this.main.remove(carteChoisie) ;
             }
         }
-
-        if(this.main.size() == 1 && !uneCarte)
+        // On test si le joueur n'a plus qu'une carte
+        /*if(this.main.size() == 1 && !uneCarte)
         {
             uneCarte = true;
             processus = new direCarte( this);
@@ -53,7 +53,7 @@ public class JoueurReel extends Joueur {
         {
             uneCarte = false;
             this.processus.plusUneCarte();
-        }
+        }*/
 
 
         // new Carte (cartesJouable.get(numCarte).getValeur(), cartesJouable.get(numCarte).getCouleur()) ;
@@ -181,7 +181,7 @@ public class JoueurReel extends Joueur {
         j.setMain(mainFictive) ;
 
         //On test si le joueur n'a plus qu'une carte
-        if(this.main.size() == 1 && !uneCarte)
+        /*if(this.main.size() == 1 && !uneCarte)
         {
             uneCarte = true;
             processus = new direCarte( this);
@@ -190,7 +190,7 @@ public class JoueurReel extends Joueur {
         {
             uneCarte = false;
             this.processus.plusUneCarte();
-        }
+        }*/
 
     }
 

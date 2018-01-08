@@ -285,6 +285,8 @@ public class Partie {
         return variante;
     }
 
+    public Pioche getPioche(){return pioche;}
+
     // ------------------------------------- VERIFIER VICTOIRE ---------------------------------------------
 
     // Vérifier les victoires
