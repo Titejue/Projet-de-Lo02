@@ -16,6 +16,7 @@ public class Adversaire extends Joueur {
     public Adversaire(String nom) {
         this.nom = nom;
         this.main =  new LinkedList<Carte>() ;
+        this.uneCarte = false;
     }
 
 
@@ -29,6 +30,18 @@ public class Adversaire extends Joueur {
         this.numCarte = new Random().nextInt(this.cartesJouable.size()) ;
         this.carteChoisie = this.cartesJouable.get(numCarte) ;
         this.main.remove(carteChoisie) ;
+        // ON vérifie si le joueur n'a plus qu'une seule carte
+        if(this.main.size() == 1 && !uneCarte)
+        {
+            uneCarte = true;
+            processus = new direCarte( this);
+        }
+        if(this.main.size() != 1 &&uneCarte)
+        {
+            uneCarte = false;
+            this.processus.plusUneCarte();
+        }
+
     }
 
 
@@ -99,6 +112,17 @@ public class Adversaire extends Joueur {
         mainFictive.remove(carteADonner) ;
         j.setMain(mainFictive) ;
 
+        // On test si le joueur n'a plus qu'une carte
+        if(this.main.size() == 1 && !uneCarte)
+        {
+            uneCarte = true;
+            processus = new direCarte( this);
+        }
+        if(this.main.size() != 1 &&uneCarte)
+        {
+            uneCarte = false;
+            this.processus.plusUneCarte();
+        }
     }
 
 
