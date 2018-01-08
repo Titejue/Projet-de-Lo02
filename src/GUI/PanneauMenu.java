@@ -8,9 +8,7 @@ package GUI;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import com.intellij.uiDesigner.core.*;
-import net.miginfocom.swing.*;
-import java.awt.image.BufferedImage;
+//import net.miginfocom.swing.*;
 
 /**
  * @author unknown
@@ -88,11 +86,9 @@ public class PanneauMenu extends JFrame implements ActionListener, MouseListener
 
     public void actionPerformed(ActionEvent ev) {
         if (ev.getSource() == bouton1)
-            //System.out.println("action bouton 1");
-
-            if (ev.getSource() == bouton2)
+            System.out.println("action bouton 1");
+        if (ev.getSource() == bouton2)
                 System.out.println("action bouton 2");
-
         if (ev.getSource() == bouton3)
             System.out.println("action bouton 3");
     }
@@ -114,46 +110,6 @@ public class PanneauMenu extends JFrame implements ActionListener, MouseListener
     public void mouseExited(MouseEvent ev) {
     }
 
-    private void button1ActionPerformed(ActionEvent ev) {
-        System.out.println("action bouton 1");
-    }
-
-    private void initComponents() {
-        // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        // Generated using JFormDesigner Evaluation license - Juliette Mendras
-        button1 = new JButton();
-        button2 = new JButton();
-        button3 = new JButton();
-
-        //======== this ========
-        Container contentPane = getContentPane();
-        contentPane.setLayout(new MigLayout(
-            "hidemode 3",
-            // columns
-            "[fill]" +
-            "[fill]" +
-            "[fill]",
-            // rows
-            "[]" +
-            "[]" +
-            "[]"));
-
-        //---- button1 ----
-        button1.setText("Param\u00e8tres");
-        button1.addActionListener(e -> button1ActionPerformed(e));
-        contentPane.add(button1, "cell 0 0");
-
-        //---- button2 ----
-        button2.setText("Lancer une Partie");
-        contentPane.add(button2, "cell 0 1");
-
-        //---- button3 ----
-        button3.setText("Quitter le Jeu");
-        contentPane.add(button3, "cell 0 2");
-        pack();
-        setLocationRelativeTo(getOwner());
-        // JFormDesigner - End of component initialization  //GEN-END:initComponents
-    }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - Juliette Mendras
