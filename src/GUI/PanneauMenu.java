@@ -10,6 +10,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import com.intellij.uiDesigner.core.*;
 import net.miginfocom.swing.*;
+import java.awt.image.BufferedImage;
 
 /**
  * @author unknown
@@ -76,7 +77,7 @@ public class PanneauMenu extends JFrame implements ActionListener, MouseListener
         panneauMenu.add(bouton3);
         bouton3.addActionListener(this);
 
-        logoImage = new JLabel(new ImageIcon("src/fr/utt/lo02/Logo.jpg"));
+        logoImage = new JLabel(new ImageIcon("src/Images/Logo.jpg"));
         logoImage.setSize(100, 100);
         logoImage.setOpaque(true);
         logoImage.setBackground(Color.white);
