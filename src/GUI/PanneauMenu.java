@@ -37,7 +37,6 @@ public class PanneauMenu extends JFrame implements ActionListener, MouseListener
 
         // On ajoute les bouton et labels à gauche de la fenêtre
         contenu.add(panneauMenu, BorderLayout.WEST);
-
         //On ajoute l'image à droite
         contenu.add(logoImage);
 
@@ -85,9 +84,7 @@ public class PanneauMenu extends JFrame implements ActionListener, MouseListener
             System.out.println("action bouton 1");
         if (ev.getSource() == bouton2) {
             System.out.println("action bouton 2");
-            contenu.remove(1);
             contenu.remove(0);
-            repaint();
             JPanel choisir = new ChoisirPanel();
             contenu.add(choisir);
             repaint();
