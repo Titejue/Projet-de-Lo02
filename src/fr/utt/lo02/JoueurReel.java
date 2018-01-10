@@ -26,22 +26,19 @@ public class JoueurReel extends Joueur {
         System.out.println("\nVous pouvez jouer : " );
         afficher(this.cartesJouable) ;
 
-        Scanner sc = new Scanner(System.in) ;
+        /*Scanner sc = new Scanner(System.in) ;
         System.out.println("\n");
-        int test = -1 ;
+        int test = -1 ;*/
+        carteChoisie = null;
+        while( !cartesJouable.contains(carteChoisie)){
 
-        while( 0 > test || test > cartesJouable.size()){
 
-            System.out.println("Quelle carte souhaitez-vous jouer ?");
-            test = sc.nextInt() ;
-            if (test < 0 || test > cartesJouable.size()){
-                System.out.println("Vous n'avez pas saisi le bon numéro ! ");
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-            else {
-                this.numCarte = test ;
-                this.carteChoisie = cartesJouable.get(numCarte) ;
-                this.main.remove(carteChoisie) ;
-            }
+
         }
         // On test si le joueur n'a plus qu'une carte
         /*if(this.main.size() == 1 && !uneCarte)
@@ -151,8 +148,9 @@ public class JoueurReel extends Joueur {
             System.out.println("Veuillez choisir une carte à donner à un joueur");
             numCarteAJouer = s.nextInt();
         }
-        Carte carteADonner = new Carte() ;
+        Carte carteADonner;
         carteADonner = main.get(numCarteAJouer);
+        Partie.getInstance().getPlateau().enleverCarte(carteADonner);
 
         // Choisir le joueur à qui la donner
         // joueurs.remove(j) ;
@@ -194,7 +192,10 @@ public class JoueurReel extends Joueur {
 
     }
 
-
+    public void setCarteChoisie(Carte c)
+    {
+        this.carteChoisie = c;
+    }
 
 
 

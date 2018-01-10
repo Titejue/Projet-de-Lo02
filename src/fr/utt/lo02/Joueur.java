@@ -56,7 +56,7 @@ public abstract class Joueur {
     // -------------------------- GETTER ---------------------------
 
 
-    protected LinkedList<Carte> getMain() {
+    public LinkedList<Carte> getMain() {
         return this.main;
     }
 

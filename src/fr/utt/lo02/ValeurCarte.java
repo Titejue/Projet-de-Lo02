@@ -25,5 +25,15 @@ public enum ValeurCarte {
         this.valeur = valeur;
     }
 
+    public int getNumero()
+    {
+        return this.valeur;
+    }
+
+    public String getName()
+    {
+        return this.name;
+    }
+
 }
 

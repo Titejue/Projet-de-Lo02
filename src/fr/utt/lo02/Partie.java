@@ -1,10 +1,14 @@
 package fr.utt.lo02;
 
+import GUI.Controleur;
+import GUI.Menu;
+import GUI.Plateau;
+
 import java.util.* ;
 import java.lang.* ;
+import javax.swing.*;
 
-
-public class Partie {
+public class Partie extends Observable{
 
     // Declaration d'un singleton
 
@@ -14,12 +18,12 @@ public class Partie {
 
     private boolean fini = false;
 
-    private static LinkedList<Joueur> joueurs;
+    private static LinkedList<Joueur> joueurs = new LinkedList<Joueur>();
     private LinkedList<Carte> dernieresCartes;
     private LinkedList<Carte> listePioche;
     private LinkedList<Integer> verif;
 
-
+    private JFrame fenetre;
     private int nbJoueur = 0;
     private int numVar ;
     private int typeDeJeu = 4;
@@ -34,6 +38,8 @@ public class Partie {
     private int nombreCarteDistribuer;
     private int victoire;
     private int paiement;
+    private boolean partiePrete = false;
+    private Plateau plateau;
 
 
     // ------------------------ CONSTRUCTEUR --------------------------------------
@@ -41,7 +47,33 @@ public class Partie {
     /**
      * Il faudrait plutot se demander si le nombre de joueur ne devrait pas etre choisi par le joueur lui meme
      */
+    public Partie(boolean e)
+    {
+        fenetre = new JFrame();
+
+        fenetre.setBounds(100, 100, 600, 430);
+        fenetre.setResizable(false);
+        fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        System.out.println("ON OUVRE LE MENU");
+        fenetre.setContentPane(new Menu(this));
+        fenetre.setVisible(true);
+
+        int go = 0;
+        while(!partiePrete)
+        {
+            System.out.print("");
+        }
+
+
+
+    }
+
+
+
+
     public Partie() {
+
+
 
         //On instancie tout les paramètres : Variante, jeuDeCarte et la liste de Joueurs :
         this.joueurs = new LinkedList<>();
@@ -214,7 +246,89 @@ public class Partie {
         dernieresCartes.add(talon.getTalon().getLast()) ;
     }
 
+    //creation d'une partie en passant par la fenetre graphique
+    public Partie(int nbJoueur, String nom, int numVar, int nbDeck, int typeDeck)
+    {
+        this.nbJoueur = nbJoueur;
+        this.joueurs = new LinkedList<>();
+        joueurs.add(new JoueurReel(nom));
 
+        this.verif = new LinkedList<Integer>();
+        this.verif.add(0);
+
+        for (int j = 1; j < nbJoueur; j++) {
+            joueurs.add(new Adversaire("adversaire" + j));
+            this.verif.add(0);
+        }
+
+
+        //Choix de la variante
+        switch (numVar) {
+            case (0):
+                this.variante = new VarianteClassique() ;
+                break;
+            case(1) :
+                this.variante = new VarianteMonClar() ;
+                break ;
+            /**
+             case(2) :
+             this.variante = new VarianteMinimale();
+             break ;
+             case(3) :
+             this.variante  = new Variante1() ;
+             break ;**/
+            default:
+        }
+
+        //Creation des deck
+        this.jeuCarte = new JeuDeCarte(typeDeck, nbDeck);
+
+        // On choisit le nombre de carte à distribuer
+        if (numVar == 0 || numVar == 1 || numVar == 2 || numVar == 3 || numVar == 4) {
+            if (nbJoueur == 2) {
+                if (nbDeck == 1) {
+                    System.out.println("On distribue 10 cartes par joueurs");
+                    this.nombreCarteDistribuer = 10;
+                } else {
+                    System.out.println("On distribue 15 cartes par joueurs");
+                    this.nombreCarteDistribuer = 15;
+                }
+            } else if (nbJoueur == 3) {
+                if (nbDeck == 1) {
+                    System.out.println("On distribue 18 cartes par joueurs");
+                    this.nombreCarteDistribuer = 8;
+                } else {
+                    System.out.println("On distribue 12 cartes par joueurs");
+                    this.nombreCarteDistribuer = 12;
+                }
+            } else {
+                if (nbDeck == 1) {
+                    System.out.println("On distribue 6 cartes par joueurs");
+                    this.nombreCarteDistribuer = 6;
+                } else {
+                    System.out.println("On distribue 9 cartes par joueurs");
+                    this.nombreCarteDistribuer = 9;
+                }
+            }
+
+            // On crée la pioche une fois par partie
+            this.pioche = new Pioche(this.jeuCarte);
+            // On crée le Talon une fois par partie
+            this.talon = new Talon();
+
+            //On distribue
+            pioche.distribuer(nombreCarteDistribuer, joueurs);
+
+            //On initialise le jeu
+            talon.recevoirCarte(pioche.getPremiereCarte());
+            pioche.supprimer(talon.getDerniereCarte());
+            System.out.println("La carte sur le talon est : " + talon.getDerniereCarte() + "\n");
+            this.dernieresCartes = new LinkedList<Carte>();
+            dernieresCartes.add(talon.getTalon().getLast());
+
+        }
+
+    }
     /**
      * this.listePioche = pioche.getPioche() ;
      * this.nombreDeCarteDeck = listePioche.size() ;
@@ -222,13 +336,20 @@ public class Partie {
 
 
 // ---------------------------------- GETTER ET SETTER ---------------------------------------------------
-    public static LinkedList<Joueur> getJoueurs() {
+    public static LinkedList<Joueur> getJoueurs(){
         return joueurs;
     }
 
     public static Partie getInstance() {
         if (ourInstance == null) {
-            ourInstance = new Partie();
+            ourInstance = new Partie(true);
+        }
+        return ourInstance;
+    }
+
+    public static Partie getInstance(int nbJoueur, String nom, int numVar, int nbDeck, int typeDeck) {
+        if (ourInstance == null) {
+            ourInstance = new Partie(nbJoueur, nom, numVar, nbDeck, typeDeck);
         }
         return ourInstance;
     }
@@ -287,6 +408,13 @@ public class Partie {
 
     public Pioche getPioche(){return pioche;}
 
+    public Plateau getPlateau()
+    {
+        return this.plateau;
+    }
+
+
+
     // ------------------------------------- VERIFIER VICTOIRE ---------------------------------------------
 
     // Vérifier les victoires
@@ -307,6 +435,17 @@ public class Partie {
     private Joueur joueurTour ;
 
     public void lancerPartie() {
+
+        Controleur controleur = new Controleur(joueurs, pioche, talon, fenetre);
+        fenetre.setBounds(200, 50, 1000, 600);
+        //fenetre.setContentPane(new Plateau(joueurs, pioche, talon));
+        plateau = new Plateau(joueurs, pioche, talon);
+       // Plateau2 plateau = new Plateau2();
+        addObserver(plateau);
+        fenetre.setContentPane(plateau);
+        fenetre.validate();
+        fenetre.repaint();
+
         int compteur = 0;
         setSens(1);
         this.prochainTour = new Random().nextInt(joueurs.size());
@@ -314,7 +453,8 @@ public class Partie {
 
 
         while (!verif.contains(1)) {
-
+            plateau.mAJ();
+            fenetre.repaint();
             // Vérifier l'action de la dernière carte jouée
             // Déterminer l'action du joueur en fonction de l'effet
             // Fin du tour : incrémenter le compteur et déterminer la valeur de la variable sens.
@@ -337,7 +477,15 @@ public class Partie {
             if (compteur == 0) {
                 this.paiement = 0 ;
                 variante.carteJouableDebut(joueurTour, joueurTour.getMain(), dernieresCartes) ;
+                if(joueurTour instanceof JoueurReel)
+                {
+                    plateau.mAJ(variante.getCartePourJouer());
+                }
 
+                else
+                {
+                    plateau.mAJ();
+                }
 
                 // CAS 1 : on ne peut rien joueur
                 if (variante.getCartePourJouer().size() == 0) {
@@ -401,7 +549,14 @@ public class Partie {
 
             } else {
                 variante.carteJouable(joueurTour.getMain(), dernieresCartes, paiement);
-
+                if(joueurTour instanceof JoueurReel)
+                {
+                    plateau.mAJ(variante.getCartePourJouer());
+                }
+                else
+                {
+                    plateau.mAJ();
+                }
                 // on fixe le paiementTotal
                 this.paiementTotal = paiementTotal + paiement;
 
@@ -460,8 +615,8 @@ public class Partie {
                     talon.recevoirCarte(carteChoisie) ;
 
                     // On enregistre la carte choisie dans les dernières cartes
-                    Carte derniereCarte = new Carte (carteChoisie.getValeur(), carteChoisie.getCouleur()) ;
-                    dernieresCartes.add(derniereCarte) ;
+                    //Carte derniereCarte = new Carte (carteChoisie.getValeur(), carteChoisie.getCouleur()) ;
+                    dernieresCartes.add(carteChoisie) ;
 
                     // On vérifie les effets de la carte choisie
                     variante.effetCarte(carteChoisie) ;
@@ -508,6 +663,8 @@ public class Partie {
                 variante.viderCartePourJouer() ;
             }
 
+            plateau.retourJeu();
+
             if (pioche.getPioche().size() < 10) {
                 System.out.println("Il y a moins de 10 cartes dans la pioche ! ");
                 Carte carteTalon = talon.getDerniereCarte();
@@ -545,6 +702,94 @@ public class Partie {
         }
         System.out.println("La partie est terminée.") ;
     }
+
+    //Initialisation des paramètres
+    public void creerPartie(int nbJoueur, String nom, int numVar, int nbDeck, int typeDeck)
+    {
+        this.nbJoueur = nbJoueur;
+        this.joueurs = new LinkedList<>();
+        joueurs.add(new JoueurReel(nom));
+
+        this.verif = new LinkedList<Integer>();
+        this.verif.add(0);
+
+        for (int j = 1; j < nbJoueur; j++) {
+            joueurs.add(new Adversaire("adversaire" + j));
+            this.verif.add(0);
+        }
+
+
+        //Choix de la variante
+        switch (numVar) {
+            case (0):
+                this.variante = new VarianteClassique() ;
+                break;
+            case(1) :
+                this.variante = new VarianteMonClar() ;
+                break ;
+            /**
+             case(2) :
+             this.variante = new VarianteMinimale();
+             break ;
+             case(3) :
+             this.variante  = new Variante1() ;
+             break ;**/
+            default:
+        }
+
+        //Creation des deck
+        this.jeuCarte = new JeuDeCarte(typeDeck, nbDeck);
+
+        // On choisit le nombre de carte à distribuer
+        if (numVar == 0 || numVar == 1 || numVar == 2 || numVar == 3 || numVar == 4) {
+            if (nbJoueur == 2) {
+                if (nbDeck == 1) {
+                    System.out.println("On distribue 10 cartes par joueurs");
+                    this.nombreCarteDistribuer = 10;
+                } else {
+                    System.out.println("On distribue 15 cartes par joueurs");
+                    this.nombreCarteDistribuer = 15;
+                }
+            } else if (nbJoueur == 3) {
+                if (nbDeck == 1) {
+                    System.out.println("On distribue 18 cartes par joueurs");
+                    this.nombreCarteDistribuer = 8;
+                } else {
+                    System.out.println("On distribue 12 cartes par joueurs");
+                    this.nombreCarteDistribuer = 12;
+                }
+            } else {
+                if (nbDeck == 1) {
+                    System.out.println("On distribue 6 cartes par joueurs");
+                    this.nombreCarteDistribuer = 6;
+                } else {
+                    System.out.println("On distribue 9 cartes par joueurs");
+                    this.nombreCarteDistribuer = 9;
+                }
+            }
+
+            // On crée la pioche une fois par partie
+            this.pioche = new Pioche(this.jeuCarte);
+            // On crée le Talon une fois par partie
+            this.talon = new Talon();
+
+            //On distribue
+            pioche.distribuer(nombreCarteDistribuer, joueurs);
+
+            //On initialise le jeu
+            talon.recevoirCarte(pioche.getPremiereCarte());
+            pioche.supprimer(talon.getDerniereCarte());
+            System.out.println("La carte sur le talon est : " + talon.getDerniereCarte() + "\n");
+            this.dernieresCartes = new LinkedList<Carte>();
+            dernieresCartes.add(talon.getTalon().getLast());
+
+
+            this.partiePrete = true;
+        }
+
+
+    }
+
 }
 
 

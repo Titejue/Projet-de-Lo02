@@ -1,19 +1,30 @@
 package fr.utt.lo02;
 
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+
 public class Carte {
 
     private ValeurCarte valeur ;
     private CouleurCarte couleur ;
+    private JLabel image;
 
 
-    // ------------------------------- CONSTRUCTEUR -------------------------------------------------------------
+// ------------------------------- CONSTRUCTEUR -------------------------------------------------------------
 
     public Carte(ValeurCarte num, CouleurCarte type) {
         this.valeur = num ;
         this.couleur = type ;
+        //System.out.println("src/Images/" + this.getValeur().getNumero() + "_" + this.couleur.getName() + ".png");
+        this.image = new JLabel(new ImageIcon(new ImageIcon("src/Images/" + this.getValeur().getNumero() + "_" + this.couleur.getName() + ".png").getImage().getScaledInstance(75, 100, Image.SCALE_DEFAULT)));
+        this.image.setOpaque(true);
     }
     public Carte(ValeurCarte num) {
         this.valeur = num ;
+        this.image = new JLabel(new ImageIcon(new ImageIcon("src/Images/joker_1.png").getImage().getScaledInstance(75, 100, Image.SCALE_DEFAULT)));
+
+
     }
     public Carte(CouleurCarte coul){
         this.couleur = coul ;
@@ -27,6 +38,10 @@ public class Carte {
         return this.valeur;
     }
 
+
+    public JLabel getImage() {
+        return image;
+    }
 
     void setValeur(ValeurCarte numero) {
         this.valeur = numero;
