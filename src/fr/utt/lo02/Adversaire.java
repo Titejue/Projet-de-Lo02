@@ -24,6 +24,11 @@ public class Adversaire extends Joueur {
 
     // ---------------------------------------- JOUER ---------------------------------------------------
     public void jouer(LinkedList<Carte> main, LinkedList<Carte> cartesJouable, Joueur j){
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         j.setMain(main) ;
         this.cartesJouable = cartesJouable ;
 

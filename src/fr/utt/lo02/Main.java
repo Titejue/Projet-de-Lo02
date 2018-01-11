@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import GUI.* ;
+import vuetexte.VueTexte;
 
 public class Main {
 
@@ -28,7 +29,7 @@ public class Main {
         t.pack();
         t.setVisible(true);*/
 
-
+        VueTexte vt = new VueTexte();
         Partie partie = Partie.getInstance();
 
         Partie.getInstance().lancerPartie();

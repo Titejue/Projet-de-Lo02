@@ -18,7 +18,6 @@ public class BoutonAdversaire extends JButton{
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
                 Controleur.joueurClic(joueur);
-                System.out.println("CLICCESEFESZF");
                 fenetre.dispose();
             }
             public void mouseEntered(MouseEvent mouseEvent) {

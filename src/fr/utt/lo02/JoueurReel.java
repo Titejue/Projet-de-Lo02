@@ -72,6 +72,8 @@ public class JoueurReel extends Joueur {
         System.out.println("\n");
         Carte carte = new Carte();
         couleurCarte = null;
+        System.out.println("Veuillez choisir la Couleur pour les prochains tours :\n 1 : COEUR \n 2 : CARREAU \n 3 : TREFLE \n 4 : PIQUE");
+
         while(couleurCarte == null)
         {
             try {

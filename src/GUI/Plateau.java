@@ -22,6 +22,10 @@ public class Plateau extends JPanel {
     private JLabel pique;
     private JLabel titre;
     private LinkedList<JLabel> nbCarteAdversaire;
+    private Carte talonActuel;
+    private static final int X_TALON = 500;
+    private static final int Y_TALON = 250;
+
 
         public Plateau(LinkedList<Joueur> j, Pioche p, Talon t)
         {
@@ -34,13 +38,14 @@ public class Plateau extends JPanel {
             carreau = new CouleurClic("src/Images/1_carreau.png", CouleurCarte.Carreau);
             coeur = new CouleurClic("src/Images/1_coeur.png", CouleurCarte.Coeur);
             pique = new CouleurClic("src/Images/1_pique.png", CouleurCarte.Pique);
-            titre = new JLabel("Choisissez une couleur");
+            titre = new JLabel("");
 
             trefle.setBounds(50, 100, 150, 200);
             carreau.setBounds(300, 100, 150, 200);
             coeur.setBounds(550, 100, 150, 200);
             pique.setBounds(800, 100, 150, 200);
-            titre.setBounds(200, 50, 600,40);
+            titre.setBounds(300, 150, 600,40);
+            titre.setFont(new Font(" TimesRoman ",Font.BOLD,30));
 
 
 
@@ -48,6 +53,8 @@ public class Plateau extends JPanel {
             carreau.setVisible(true);
             coeur.setVisible(true);
             pique.setVisible(true);
+            titre.setVisible(true);
+            this.add(titre);
             //Afficher la pioche
             this.setBackground(new Color(18, 100, 6));
             dos.setBounds(400, 250, 75, 100);
@@ -77,7 +84,9 @@ public class Plateau extends JPanel {
                     nbCarteAdversaire.add(new JLabel("" + ja.getMain().size() + " cartes"));
                     nbCarteAdversaire.get(i-1).setBounds(i * 1000 / joueurs.size(), 30, 100, 30);
                     labelJoueurs.add(new JLabel(ja.getNom()));
-                    labelJoueurs.get(i-1).setBounds(i * 1000 / joueurs.size(), 10, 100, 30);
+                    ja.setX(i * 1000 / joueurs.size());
+                    ja.setY(10);
+                    labelJoueurs.get(i-1).setBounds(ja.getX(), ja.getY(), 100, 30);
                     this.add(labelJoueurs.get(i-1));
                     this.add(nbCarteAdversaire.get(i-1));
                 }
@@ -87,8 +96,9 @@ public class Plateau extends JPanel {
             this.afficherMainJoueur();
 
             //Afficher la carte du talon
-            carteTalon = talon.getDerniereCarte().getImage();
-            carteTalon.setBounds(500, 250, 75, 100);
+            talonActuel = talon.getDerniereCarte();
+            carteTalon = talonActuel.getImage();
+            carteTalon.setBounds(X_TALON, Y_TALON, 75, 100);
             carteTalon.setVisible(true);
             this.add(carteTalon);
 
@@ -113,10 +123,21 @@ public class Plateau extends JPanel {
                 }
             }
             //Afficher la carte du talon
+            /*if(carteTalon != talonActuel.getImage())
+            {
+                if(Partie.getInstance().getJoueurTour() == jReal)
+                {
+                    this.animationVersTalon(carteTalon);
+
+                }
+                else
+                {
+                    this.animationVersTalon(Partie.getInstance().getJoueurTour(), carteTalon);
+                }
+            }*/
             this.remove(carteTalon);
             carteTalon = talon.getDerniereCarte().getImage();
             carteTalon.setBounds(500, 250, 75, 100);
-            //System.out.println("GRAPH TEST : talon " + talon.getDerniereCarte().toString());
 
             this.add(carteTalon);
         }
@@ -130,7 +151,6 @@ public class Plateau extends JPanel {
         this.remove(carteTalon);
         carteTalon = talon.getDerniereCarte().getImage();
         carteTalon.setBounds(500, 250, 75, 100);
-        System.out.println("GRAPH TEST : talon " + talon.getDerniereCarte().toString());
 
         this.add(carteTalon);
     }
@@ -181,7 +201,6 @@ public class Plateau extends JPanel {
 
     public void choixCouleur()
     {
-        System.out.println("Tout va bien");
         this.add(trefle);
         this.add(carreau);
         this.add(coeur);
@@ -194,10 +213,6 @@ public class Plateau extends JPanel {
         this.repaint();
     }
 
-    public void choixJoueur()
-    {
-        this.titre.setText("Choisissez un joueur en cliquant dessus");
-    }
 
     public void retourJeu()
     {
@@ -205,11 +220,47 @@ public class Plateau extends JPanel {
         this.remove(carreau);
         this.remove(coeur);
         this.remove(pique);
-        this.remove(titre);
+
         carteTalon.setVisible(true);
         dos.setVisible(true);
 
         this.repaint();
+    }
+
+    public void animationVersTalon(Joueur j, JLabel c)
+    {
+        c.setBounds(j.getX(), j.getY(), 75, 100);
+        this.add(c);
+        for(int x = 0; x <= 60; x++)
+        {
+            c.setBounds(j.getX() + x * (X_TALON - j.getX()), j.getY() + x * (Y_TALON - j.getY()), 75, 100);
+            try {
+                Thread.sleep(16);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        this.repaint();
+    }
+
+    public void animationVersTalon(JLabel c)
+    {
+        int origineX = c.getX();
+        int origineY = c.getY();
+
+        for(int x = 0; x <= 60; x++)
+        {
+            c.setBounds(origineX - x * (origineX - X_TALON), origineY - x * (origineY - X_TALON), 75, 100);
+            try {
+                Thread.sleep(16);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public void setTitre(String s)
+    {
+        this.titre.setText(s);
     }
 
     public void enleverCarte(Carte c)

@@ -80,6 +80,31 @@ public class Controleur {
 
     }
 
+    public void choixTexte(int i)
+    {
+
+        Partie.getInstance().getJoueurReel().setChoix(Partie.getInstance().getJoueurReel().getMain().get(i));
+        Partie.getInstance().getJoueurReel().setJoueurChoix(joueurs.get(i));
+        switch(i)
+        {
+            case (1):
+                Partie.getInstance().getJoueurReel().setCouleurChoisie(CouleurCarte.Coeur);
+                break;
+            case (2):
+                Partie.getInstance().getJoueurReel().setCouleurChoisie(CouleurCarte.Carreau);
+                break;
+            case (3):
+                Partie.getInstance().getJoueurReel().setCouleurChoisie(CouleurCarte.Trefle);
+                break;
+            case (4):
+                Partie.getInstance().getJoueurReel().setCouleurChoisie(CouleurCarte.Pique);
+                break;
+            default:
+                System.out.println("Vous n'avez pas saisie la bonne référence");
+
+        }
+    }
+
 
 
 }

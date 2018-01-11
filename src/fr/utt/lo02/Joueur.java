@@ -17,6 +17,10 @@ public abstract class Joueur {
     protected direCarte processus;
     protected Joueur joueurChoisi;
 
+    //Coordonnées auxquel sera affiché le joueurs sur l'écran
+    protected int x;
+    protected int y;
+
 
     // --------------------------------------- REMPLIR MAIN ------------------------------------------------
     protected void recevoirCarte(Carte carte) { }
@@ -76,7 +80,21 @@ public abstract class Joueur {
         return nom;
     }
 
+    public int getX() {
+        return x;
+    }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
 
     public void afficher(LinkedList<Carte> listeCarte) {  }
 

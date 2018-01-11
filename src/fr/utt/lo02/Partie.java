@@ -420,6 +420,11 @@ public class Partie{
         return jReal;
     }
 
+    public Joueur getJoueurTour()
+    {
+        return this.joueurTour;
+    }
+
     // ------------------------------------- VERIFIER VICTOIRE ---------------------------------------------
 
     // Vérifier les victoires
@@ -465,6 +470,8 @@ public class Partie{
 
             this.tour = prochainTour ;
             this.joueurTour = joueurs.get(tour) ;
+
+            plateau.setTitre("Tour de " + this.joueurTour.getNom());
 
             System.out.println("\n----------------------------------------------- ") ;
             System.out.println("\nC'est au tour du joueur " + joueurTour.getNom() ) ;
