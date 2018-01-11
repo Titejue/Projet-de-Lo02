@@ -1,21 +1,24 @@
 package GUI;
 
+import java.awt.*;
 import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.*;
 import fr.utt.lo02.*;
 import java.awt.event.*;
+import fr.utt.lo02.JoueurReel;
 
 public class Controleur {
-    private LinkedList<Joueur> joueurs;
+    private static LinkedList<Joueur> joueurs;
     private Pioche pioche;
     private Talon talon;
     private JFrame fenetre;
     private Joueur JReal;
-    public Controleur(LinkedList<Joueur> j, Pioche p, Talon t, JFrame f)
+    private static Controleur ourInstance = null;
+    private Controleur(LinkedList<Joueur> j, Pioche p, Talon t, JFrame f)
     {
-        this.joueurs = j;
+        joueurs = j;
         this.pioche = p;
         this.talon = t;
         this.fenetre = f;
@@ -23,18 +26,60 @@ public class Controleur {
 
 
 
-    }
-    /*public void genererClic()
-    {
-        for(Carte c:JReal.getMain())
-        {
-            c.getImage().addMouseListener(new MouseAdapter () {
 
-                public void mouseLiberalClick(MouseEvent e) {
-                    JReal.setCarteChoisie(c);
-                }
-            });
+
+    }
+    //getter et createur du singleton
+    public static Controleur getInstance()
+    {
+        return ourInstance;
+    }
+    public static Controleur getInstance(LinkedList<Joueur> j, Pioche p, Talon t, JFrame f)
+    {
+        if(ourInstance ==null)
+        {
+            ourInstance = new Controleur(j, p, t, f);
         }
-    }*/
+        return ourInstance;
+    }
+
+    public static void carteClic(Carte c)
+    {
+        Partie.getInstance().getJoueurReel().setChoix(c);
+    }
+
+    public static void couleurClic(CouleurCarte cc)
+    {
+        Partie.getInstance().getJoueurReel().setCouleurChoisie(cc);
+    }
+
+    public static void joueurClic(Joueur j)
+    {
+        Partie.getInstance().getJoueurReel().setJoueurChoix(j);
+    }
+
+    //---------------------------------Choisir un adversaire------------------
+
+    public static void fenetreChoixJoueur()
+    {
+        JFrame fenChoix = new JFrame();
+        fenChoix.setVisible(true);
+        fenChoix.setBounds(150, 150, 200, 500);
+        fenChoix.setLayout(new GridLayout((joueurs.size() - 1), 1));
+        fenChoix.setResizable(false);
+        fenChoix.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        fenChoix.setTitle("Choisissez un joueur pour lui donner la carte");
+
+
+        for(Joueur j:joueurs)
+        {
+            if(! (j instanceof JoueurReel))
+            fenChoix.getContentPane().add(new BoutonAdversaire(j.getNom(), j, fenChoix));
+        }
+
+
+    }
+
+
 
 }

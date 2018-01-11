@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
 
-public class Plateau extends JPanel implements Observer {
+public class Plateau extends JPanel {
 
     private LinkedList<Joueur> joueurs;
     private Pioche pioche;
@@ -30,10 +30,10 @@ public class Plateau extends JPanel implements Observer {
             dos = new JLabel(new ImageIcon(new ImageIcon("src/Images/dos_carte.jpeg").getImage().getScaledInstance(75, 100, Image.SCALE_DEFAULT)));
 
             //Creation des label utile de temps en temps
-            trefle = new JLabel(new ImageIcon(new ImageIcon("src/Images/1_trefle.png").getImage().getScaledInstance(150, 200, Image.SCALE_DEFAULT)));
-            carreau = new JLabel(new ImageIcon(new ImageIcon("src/Images/1_carreau.png").getImage().getScaledInstance(150, 200, Image.SCALE_DEFAULT)));
-            coeur = new JLabel(new ImageIcon(new ImageIcon("src/Images/1_coeur.png").getImage().getScaledInstance(150, 200, Image.SCALE_DEFAULT)));
-            pique = new JLabel(new ImageIcon(new ImageIcon("src/Images/1_pique.png").getImage().getScaledInstance(150, 200, Image.SCALE_DEFAULT)));
+            trefle = new CouleurClic("src/Images/1_trefle.png", CouleurCarte.Trefle);
+            carreau = new CouleurClic("src/Images/1_carreau.png", CouleurCarte.Carreau);
+            coeur = new CouleurClic("src/Images/1_coeur.png", CouleurCarte.Coeur);
+            pique = new CouleurClic("src/Images/1_pique.png", CouleurCarte.Pique);
             titre = new JLabel("Choisissez une couleur");
 
             trefle.setBounds(50, 100, 150, 200);
@@ -137,19 +137,7 @@ public class Plateau extends JPanel implements Observer {
 
 
 
-    public void update(Observable o, Object arg0)
-    {
-        this.afficherMainJoueur();
 
-        //Afficher la carte du talon
-        talon.getDerniereCarte().getImage().setBounds(500, 250, 75, 100);
-        talon.getDerniereCarte().getImage().setVisible(true);
-        this.add(talon.getDerniereCarte().getImage());
-
-
-
-        this.repaint();
-    }
 
     public void afficherMainJoueur() {
         int i;

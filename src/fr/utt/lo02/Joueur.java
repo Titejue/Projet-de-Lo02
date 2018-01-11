@@ -15,7 +15,7 @@ public abstract class Joueur {
     protected Carte carteAJouer ;
     protected boolean uneCarte;
     protected direCarte processus;
-
+    protected Joueur joueurChoisi;
 
 
     // --------------------------------------- REMPLIR MAIN ------------------------------------------------
@@ -77,11 +77,15 @@ public abstract class Joueur {
     }
 
 
+
     public void afficher(LinkedList<Carte> listeCarte) {  }
 
 
+    public void setChoix(Carte c) { }
 
+    public void setCouleurChoisie(CouleurCarte cc){  }
 
+    public void setJoueurChoix(Joueur j) {   }
 }
 
 

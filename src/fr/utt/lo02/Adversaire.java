@@ -17,6 +17,7 @@ public class Adversaire extends Joueur {
         this.nom = nom;
         this.main =  new LinkedList<Carte>() ;
         this.uneCarte = false;
+
     }
 
 

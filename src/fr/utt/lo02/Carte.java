@@ -2,6 +2,8 @@ package fr.utt.lo02;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 
 public class Carte {
@@ -17,12 +19,14 @@ public class Carte {
         this.valeur = num ;
         this.couleur = type ;
         //System.out.println("src/Images/" + this.getValeur().getNumero() + "_" + this.couleur.getName() + ".png");
-        this.image = new JLabel(new ImageIcon(new ImageIcon("src/Images/" + this.getValeur().getNumero() + "_" + this.couleur.getName() + ".png").getImage().getScaledInstance(75, 100, Image.SCALE_DEFAULT)));
+        //this.image = new JLabel(new ImageIcon(new ImageIcon("src/Images/" + this.getValeur().getNumero() + "_" + this.couleur.getName() + ".png").getImage().getScaledInstance(75, 100, Image.SCALE_DEFAULT)));
+        this.image = new ImageCarte("src/Images/" + this.getValeur().getNumero() + "_" + this.couleur.getName() + ".png", this);
         this.image.setOpaque(true);
+
     }
     public Carte(ValeurCarte num) {
         this.valeur = num ;
-        this.image = new JLabel(new ImageIcon(new ImageIcon("src/Images/joker_1.png").getImage().getScaledInstance(75, 100, Image.SCALE_DEFAULT)));
+        this.image = new ImageCarte("src/Images/joker_1.png", this);
 
 
     }

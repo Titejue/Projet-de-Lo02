@@ -8,7 +8,7 @@ import java.util.* ;
 import java.lang.* ;
 import javax.swing.*;
 
-public class Partie extends Observable{
+public class Partie{
 
     // Declaration d'un singleton
 
@@ -40,6 +40,7 @@ public class Partie extends Observable{
     private int paiement;
     private boolean partiePrete = false;
     private Plateau plateau;
+    private Joueur jReal;
 
 
     // ------------------------ CONSTRUCTEUR --------------------------------------
@@ -54,7 +55,8 @@ public class Partie extends Observable{
         fenetre.setBounds(100, 100, 600, 430);
         fenetre.setResizable(false);
         fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        System.out.println("ON OUVRE LE MENU");
+        fenetre.setTitle("8 AMERICAIN");
+
         fenetre.setContentPane(new Menu(this));
         fenetre.setVisible(true);
 
@@ -413,7 +415,10 @@ public class Partie extends Observable{
         return this.plateau;
     }
 
-
+    public Joueur getJoueurReel()
+    {
+        return jReal;
+    }
 
     // ------------------------------------- VERIFIER VICTOIRE ---------------------------------------------
 
@@ -436,12 +441,11 @@ public class Partie extends Observable{
 
     public void lancerPartie() {
 
-        Controleur controleur = new Controleur(joueurs, pioche, talon, fenetre);
+        Controleur controleur = Controleur.getInstance(joueurs, pioche, talon, fenetre);
         fenetre.setBounds(200, 50, 1000, 600);
         //fenetre.setContentPane(new Plateau(joueurs, pioche, talon));
         plateau = new Plateau(joueurs, pioche, talon);
        // Plateau2 plateau = new Plateau2();
-        addObserver(plateau);
         fenetre.setContentPane(plateau);
         fenetre.validate();
         fenetre.repaint();
@@ -516,7 +520,7 @@ public class Partie extends Observable{
                     // on enregistre la carte choisie dans les dernières cartes
                     Carte derniereCarte = new Carte (carteChoisie.getValeur(), carteChoisie.getCouleur()) ;
                     dernieresCartes.add(derniereCarte) ;
-
+                    plateau.mAJ();
                     // On vérifie les effets de la carte choisie
                     variante.effetCarte(carteChoisie) ;
                     setPaiement(variante.getPaiement()) ;
@@ -708,7 +712,8 @@ public class Partie extends Observable{
     {
         this.nbJoueur = nbJoueur;
         this.joueurs = new LinkedList<>();
-        joueurs.add(new JoueurReel(nom));
+        this.jReal = new JoueurReel(nom);
+        joueurs.add(jReal);
 
         this.verif = new LinkedList<Integer>();
         this.verif.add(0);
