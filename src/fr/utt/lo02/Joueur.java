@@ -15,7 +15,11 @@ public abstract class Joueur {
     protected Carte carteAJouer ;
     protected boolean uneCarte;
     protected direCarte processus;
+    protected Joueur joueurChoisi;
 
+    //Coordonnées auxquel sera affiché le joueurs sur l'écran
+    protected int x;
+    protected int y;
 
 
     // --------------------------------------- REMPLIR MAIN ------------------------------------------------
@@ -56,7 +60,7 @@ public abstract class Joueur {
     // -------------------------- GETTER ---------------------------
 
 
-    protected LinkedList<Carte> getMain() {
+    public LinkedList<Carte> getMain() {
         return this.main;
     }
 
@@ -76,12 +80,30 @@ public abstract class Joueur {
         return nom;
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
 
     public void afficher(LinkedList<Carte> listeCarte) {  }
 
 
+    public void setChoix(Carte c) { }
 
+    public void setCouleurChoisie(CouleurCarte cc){  }
 
+    public void setJoueurChoix(Joueur j) {   }
 }
 
 

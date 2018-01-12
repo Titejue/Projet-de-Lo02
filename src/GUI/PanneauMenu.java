@@ -8,11 +8,12 @@ package GUI;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-
+import java.util.Observable;
+import java.util.Observer;
 /**
  * @author unknown
  */
-public class PanneauMenu extends JFrame implements ActionListener, MouseListener {
+public class PanneauMenu extends JFrame implements ActionListener, MouseListener, Observer {
 
     private JPanel panneauMenu;
 
@@ -25,23 +26,25 @@ public class PanneauMenu extends JFrame implements ActionListener, MouseListener
     private Container contenu;
 
 
-
     public PanneauMenu() {
 
         setTitle("Jeu du 8 Américain ");
 
         contenu = getContentPane();
 
-        panneauMenu = new JPanel(new GridLayout(3, 1));
+        panneauMenu = new JPanel(new GridLayout(4, 1));
         setUpLabels(); // set up the labels, see the method below
 
         // On ajoute les bouton et labels à gauche de la fenêtre
         contenu.add(panneauMenu, BorderLayout.WEST);
+
         //On ajoute l'image à droite
         contenu.add(logoImage);
 
         addMouseListener(this);
+
         repaint();
+
         setVisible(true);
 
     }
@@ -73,22 +76,19 @@ public class PanneauMenu extends JFrame implements ActionListener, MouseListener
         bouton3.addActionListener(this);
 
         logoImage = new JLabel(new ImageIcon("src/Images/Logo.jpg"));
-        logoImage.setSize(400, 400);
+        logoImage.setSize(100, 100);
         logoImage.setOpaque(true);
         logoImage.setBackground(Color.white);
+
+
     }
 
 
     public void actionPerformed(ActionEvent ev) {
         if (ev.getSource() == bouton1)
             System.out.println("action bouton 1");
-        if (ev.getSource() == bouton2) {
-            System.out.println("action bouton 2");
-            contenu.remove(0);
-            JPanel choisir = new ChoisirPanel();
-            contenu.add(choisir);
-            repaint();
-        }
+        if (ev.getSource() == bouton2)
+                System.out.println("action bouton 2");
         if (ev.getSource() == bouton3)
             System.out.println("action bouton 3");
     }
@@ -110,7 +110,14 @@ public class PanneauMenu extends JFrame implements ActionListener, MouseListener
     public void mouseExited(MouseEvent ev) {
     }
 
+    public void update(Observable instanceObservable, Object arg1)
+    {
 
-
-
+    }
+    // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
+    // Generated using JFormDesigner Evaluation license - Juliette Mendras
+    private JButton button1;
+    private JButton button2;
+    private JButton button3;
+    // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

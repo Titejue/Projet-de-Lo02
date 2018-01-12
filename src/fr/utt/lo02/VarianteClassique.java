@@ -266,11 +266,14 @@ public class VarianteClassique implements Variante {
         }
         else if (carte.getValeur() == ValeurCarte.CINQ) {
             // Le joueur peut donner une carte à n'importe quel joueur
+            Partie.getInstance().getPlateau().afficherMainJoueur(j.getMain());
+            Partie.getInstance().getPlateau().enleverCarte(carte);
             j.choisirCarte(joueurs, j) ;
             this.sens = sens ;
             this.prochainTour = (((tour + this.sens)%  nbJoueur + nbJoueur ) % nbJoueur);
         }
         else if (carte.getValeur() == ValeurCarte.HUIT) {
+            Partie.getInstance().getPlateau().choixCouleur();
             // Le joueur peut choisir la couleur
             j.choisirCouleur() ;
             this.couleur = j.getCouleurCarte() ;

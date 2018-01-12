@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import GUI.* ;
+import vuetexte.VueTexte;
 
 public class Main {
 
@@ -22,16 +23,25 @@ public class Main {
          * et la modifier pour que ce qui s'affiche en println soit affiché en interface sur un JPanel par exemple.
          */
 
-        PanneauMenu t = new PanneauMenu();
+        /*PanneauMenu t = new PanneauMenu();
+
         t.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         t.pack();
-        t.setVisible(true);
+        t.setVisible(true);*/
+
+        VueTexte vt = new VueTexte();
+        Partie partie = Partie.getInstance();
+
+        Partie.getInstance().lancerPartie();
 
 
 
 
-        //Partie partie = Partie.getInstance();
-        //partie.lancerPartie() ;
+
+        //Test t = new Test();
+//        System.out.println("Une partie va se démarrer");
+
+
 
 
     }

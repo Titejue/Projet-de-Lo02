@@ -50,7 +50,8 @@ public class direCarte implements Runnable{
             {
                 System.out.println("Quelqu'un a dit CONTRE CARTE au joueur " + jConcerne.getNom());
                 //Faire piocher deux cartes à jConcerné
-                //à rajouter
+                Partie.getInstance().getPioche().donnerCarte(this.jConcerne, 2);
+
                 disCarte = true;
             }
         }
@@ -66,7 +67,7 @@ public class direCarte implements Runnable{
                 System.out.println("Quelqu'un a dit CONTRE CARTE au joueur " + jConcerne.getNom());
 
                 //FAIRE piocher 2 cartes à jConcerné
-                //a rajouter
+                Partie.getInstance().getPioche().donnerCarte(this.jConcerne, 2);
 
                 disCarte = true;
             }
@@ -101,7 +102,7 @@ public class direCarte implements Runnable{
                 {
                     System.out.println("Quelqu'un a dit CONTRE CARTE au joueur " + jConcerne.getNom());
                     //Faire piocher deux cartes à jConcerné
-                    //à rajouter
+                    Partie.getInstance().getPioche().donnerCarte(this.jConcerne, 2);
                     disCarte = true;
                 }
 
@@ -118,7 +119,7 @@ public class direCarte implements Runnable{
                     System.out.println("Quelqu'un a dit CONTRE CARTE au joueur " + jConcerne.getNom());
 
                     //FAIRE piocher 2 cartes à jConcerné
-                    //a rajouter
+                    Partie.getInstance().getPioche().donnerCarte(this.jConcerne, 2);
 
                     disCarte = true;
                 }

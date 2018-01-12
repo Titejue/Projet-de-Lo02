@@ -1,5 +1,8 @@
 package fr.utt.lo02;
 
+import GUI.Controleur;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -26,25 +29,27 @@ public class JoueurReel extends Joueur {
         System.out.println("\nVous pouvez jouer : " );
         afficher(this.cartesJouable) ;
 
-        Scanner sc = new Scanner(System.in) ;
+        /*Scanner sc = new Scanner(System.in) ;
         System.out.println("\n");
-        int test = -1 ;
+        int test = -1 ;*/
+        carteChoisie = null;
+        while( !cartesJouable.contains(carteChoisie)){
 
-        while( 0 > test || test > cartesJouable.size()){
 
-            System.out.println("Quelle carte souhaitez-vous jouer ?");
-            test = sc.nextInt() ;
-            if (test < 0 || test > cartesJouable.size()){
-                System.out.println("Vous n'avez pas saisi le bon numéro ! ");
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-            else {
-                this.numCarte = test ;
-                this.carteChoisie = cartesJouable.get(numCarte) ;
-                this.main.remove(carteChoisie) ;
+            if(carteChoisie != null && !cartesJouable.contains(carteChoisie))
+            {
+                System.out.println("Vous ne pouvez pas jouer cette carte");
+                carteChoisie = null;
             }
         }
-
-        if(this.main.size() == 1 && !uneCarte)
+        this.main.remove(carteChoisie);
+        // On test si le joueur n'a plus qu'une carte
+        /*if(this.main.size() == 1 && !uneCarte)
         {
             uneCarte = true;
             processus = new direCarte( this);
@@ -53,7 +58,7 @@ public class JoueurReel extends Joueur {
         {
             uneCarte = false;
             this.processus.plusUneCarte();
-        }
+        }*/
 
 
         // new Carte (cartesJouable.get(numCarte).getValeur(), cartesJouable.get(numCarte).getCouleur()) ;
@@ -63,14 +68,25 @@ public class JoueurReel extends Joueur {
     // ------------------------------------- CHOISIR LA COULEUR DE LA CARTE --------------------------------
 
     public void choisirCouleur(){
-        Scanner sc = new Scanner(System.in) ;
+        //Scanner sc = new Scanner(System.in) ;
         System.out.println("\n");
         Carte carte = new Carte();
+        couleurCarte = null;
+        System.out.println("Veuillez choisir la Couleur pour les prochains tours :\n 1 : COEUR \n 2 : CARREAU \n 3 : TREFLE \n 4 : PIQUE");
 
-        int c = 5 ;
+        while(couleurCarte == null)
+        {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        carte.setCouleur(couleurCarte);
+        /*int c = 5 ;
         while (c>4 || c<1){
             System.out.println("Veuillez choisir la Couleur pour les prochains tours :\n 1 : COEUR \n 2 : CARREAU \n 3 : TREFLE \n 4 : PIQUE");
-            c = sc.nextInt();
+            //c = sc.nextInt();
             switch (c) {
                 case (1):
                     carte.setCouleur(CouleurCarte.Coeur);
@@ -91,9 +107,12 @@ public class JoueurReel extends Joueur {
                 default:
                     System.out.println("Vous n'avez pas saisie la bonne référence");
             }
-        }
+        }*/
 
     }
+
+
+
 
 
 
@@ -133,8 +152,16 @@ public class JoueurReel extends Joueur {
         return this.main ;
     }
 
+    //Setter
 
+    public void setChoix(Carte c)
+    {
+        this.carteChoisie = c;
+    }
 
+    public void setCouleurChoisie(CouleurCarte cc){ this.couleurCarte = cc; }
+
+    public void setJoueurChoix(Joueur j){this.joueurChoisi = j; }
 
 
 
@@ -143,16 +170,26 @@ public class JoueurReel extends Joueur {
 
         int numCarteAJouer = -1;
 
-        Scanner s = new Scanner(System.in);
+        //Scanner s = new Scanner(System.in);
         afficher(getMain());
 
         //choisir la carte
-        while (numCarteAJouer < 0 || numCarteAJouer > getMain().size()) {
+        /*while (numCarteAJouer < 0 || numCarteAJouer > getMain().size()) {
             System.out.println("Veuillez choisir une carte à donner à un joueur");
             numCarteAJouer = s.nextInt();
+        }*/
+        carteChoisie = null;
+        while(carteChoisie == null)
+        {
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-        Carte carteADonner = new Carte() ;
-        carteADonner = main.get(numCarteAJouer);
+        Carte carteADonner;
+        carteADonner = carteChoisie;
+        Partie.getInstance().getPlateau().enleverCarte(carteADonner);
 
         // Choisir le joueur à qui la donner
         // joueurs.remove(j) ;
@@ -164,10 +201,19 @@ public class JoueurReel extends Joueur {
         }
 
         System.out.println("Veuillez choisir le joueur à qui donner cette carte") ;
-        int numjoueur = s.nextInt() ;
-
+        this.joueurChoisi = null;
+        Controleur.fenetreChoixJoueur();
+        while(joueurChoisi == null)
+        {
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("Joueur choisie : " + joueurChoisi.getNom());
         // Donner la carte au joueur séléctionné
-        joueurs.get(numjoueur).recevoirCarte(carteADonner) ;
+        joueurChoisi.recevoirCarte(carteADonner) ;
 
 
         // j.afficher(j.getMain()) ;
@@ -181,7 +227,7 @@ public class JoueurReel extends Joueur {
         j.setMain(mainFictive) ;
 
         //On test si le joueur n'a plus qu'une carte
-        if(this.main.size() == 1 && !uneCarte)
+        /*if(this.main.size() == 1 && !uneCarte)
         {
             uneCarte = true;
             processus = new direCarte( this);
@@ -190,7 +236,7 @@ public class JoueurReel extends Joueur {
         {
             uneCarte = false;
             this.processus.plusUneCarte();
-        }
+        }*/
 
     }
 
