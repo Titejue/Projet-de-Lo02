@@ -461,6 +461,8 @@ public class Partie{
         setPaiementTotal(0);
 
 
+        // Tant que la partie n'est pas terminée
+
         while (!verif.contains(1)) {
             plateau.mAJ();
             fenetre.repaint();
@@ -676,6 +678,9 @@ public class Partie{
 
             plateau.retourJeu();
 
+
+            // Si la pioche contient moins de 10 cartes
+
             if (pioche.getPioche().size() < 10) {
                 System.out.println("Il y a moins de 10 cartes dans la pioche ! ");
                 Carte carteTalon = talon.getDerniereCarte();
@@ -684,6 +689,7 @@ public class Partie{
                     pioche.getPioche().add(talon.getTalon().get(i)) ;
                     talon.getTalon().remove(talon.getTalon().get(i)) ;
                 }
+
                 // A présent, la pioche contient toute les cartes du talons ainsi que celles qui restaient dans la pioche
                 // On supprime la dernière carte du talon de la pioche
                 pioche.getPioche().remove(carteTalon);
@@ -695,13 +701,10 @@ public class Partie{
 
             }
 
-            /**
-            // On vérifie une seconde fois la liste vérif si besoin
+            // On vérifie si un joueur a gagné
+            // On parcourt la liste des joueurs
             for (int k = 0; k < joueurs.size() ; k++) {
-                System.out.println("On affiche k " + k) ;
-                System.out.println("On affiche joueurs size : " + joueurs.size()) ;
-
-                System.out.println("On affiche le joueur " + joueurs.get(k).getNom() ) ;
+                // Si un joueur n'a plus de cartes en main
                 if (joueurs.get(k).getMain().size() == 0) {
                     System.out.println("Le joueur " + joueurs.get(k).getNom() + " a gagné ! ") ;
                     verif.set(k, 1);
@@ -709,7 +712,6 @@ public class Partie{
                     verif.set(k, 0);
                 }
             }
-             */
         }
         System.out.println("La partie est terminée.") ;
     }
