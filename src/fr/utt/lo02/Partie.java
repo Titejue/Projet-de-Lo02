@@ -707,6 +707,7 @@ public class Partie{
                 // Si un joueur n'a plus de cartes en main
                 if (joueurs.get(k).getMain().size() == 0) {
                     System.out.println("Le joueur " + joueurs.get(k).getNom() + " a gagné ! ") ;
+                    plateau.setTitre("Le joueur " + joueurs.get(k).getNom() + " a gagné ! ");
                     verif.set(k, 1);
                 } else {
                     verif.set(k, 0);

@@ -76,6 +76,7 @@ public class Controleur {
             if(! (j instanceof JoueurReel))
             fenChoix.getContentPane().add(new BoutonAdversaire(j.getNom(), j, fenChoix));
         }
+        fenChoix.repaint();
 
 
     }
