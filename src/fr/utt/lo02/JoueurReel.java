@@ -1,25 +1,62 @@
 package fr.utt.lo02;
 
 import GUI.Controleur;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+
 
 import java.util.LinkedList;
-import java.util.Scanner;
 
+
+/**
+ * {@inheritDoc}
+ * <b>JoueurReel est la classe représentant le Joueur physique</b>
+ * <p>JoueurReel hérite de la classe Joueur</p>
+ * <p>
+ * Un JoueurReel est donc caractérisé par les informations suivantes :
+ * <ul>
+ * <li>Un nom unique choisi au début de la partie</li>
+ * <li>Une main suceptible de changer au cours de la partie</li>
+ * <li>Un booléen qui suit le contenu de la main du joueur
+ *      True : il reste une carte dans la main de "Adversaire"
+ *      False : il ne lui reste pas qu'une carte
+ * </li>
+ * </ul>
+ * </p>
+ * @see Joueur
+ * @author Titejue, PYBurosse
+
+ */
 public class JoueurReel extends Joueur {
 
-    // ajouter méthode supprimer carte de la main
-
-
-    // ----------------------------- CONSTRUCTEUR -------------------------------------------------------
+    /**
+     * Constructeur JoueurReel
+     * @param nom
+     *            Le nom de "JoueurReel", choisi dès le début
+     * <ul>
+     * L'objet JoueurReel possède, à sa création, une main composée d'une
+     *      liste de Cartes et d'un "marqueur" qui observe si la liste ne
+     *      se compose que d'une carte
+     * </ul>
+     * @see JoueurReel#main
+     * @see JoueurReel#uneCarte
+     */
     public JoueurReel(String nom) {
-       this.nom = nom ;
-       this.main = new LinkedList<Carte>() ;
-       this.uneCarte = false;
+        this.nom = nom ;
+        this.main = new LinkedList<Carte>() ;
+        this.uneCarte = false;
     }
 
 
-    // ---------------------------------------- JOUER ---------------------------------------------------
+    /**
+     * Permet à un "JoueurReel" de jouer à son tour     *
+     * @param main
+     *          La liste des cartes qui composent la mains de "JoueurReel"
+     * @param cartesJouable
+     *          La liste des cartes jouables
+     * @param j
+     *          Le moyen d'identifier le joueur dont on parle
+     *          (JoueurReel en l'occurence)
+     * @see Joueur#jouer(LinkedList, LinkedList, Joueur)
+     */
 
     public void jouer(LinkedList<Carte> main, LinkedList<Carte> cartesJouable, Joueur j ){
         j.setMain(main) ;
@@ -29,12 +66,8 @@ public class JoueurReel extends Joueur {
         System.out.println("\nVous pouvez jouer : " );
         afficher(this.cartesJouable) ;
 
-        /*Scanner sc = new Scanner(System.in) ;
-        System.out.println("\n");
-        int test = -1 ;*/
         carteChoisie = null;
         while( !cartesJouable.contains(carteChoisie)){
-
 
             try {
                 Thread.sleep(500);
@@ -48,27 +81,24 @@ public class JoueurReel extends Joueur {
             }
         }
         this.main.remove(carteChoisie);
-        // On test si le joueur n'a plus qu'une carte
-        /*if(this.main.size() == 1 && !uneCarte)
-        {
-            uneCarte = true;
-            processus = new direCarte( this);
-        }
-        if(this.main.size() != 1 &&uneCarte)
-        {
-            uneCarte = false;
-            this.processus.plusUneCarte();
-        }*/
-
-
-        // new Carte (cartesJouable.get(numCarte).getValeur(), cartesJouable.get(numCarte).getCouleur()) ;
     }
 
 
-    // ------------------------------------- CHOISIR LA COULEUR DE LA CARTE --------------------------------
-
+    /**
+     * Permet à un "JoueurReel" de choisir la couleur du prochain tour après
+     * qu'il aie posé une carte à action spéciale : changement de couleur
+     * <ul>
+     *     Le JoueurReel va choisir une couleur parmis les quatres possible
+     *     On enregistre les couleurs par nombre : 1 à 4
+     * </ul>
+     * <p> La Carte qui est joué va changer "fictivement" de couleur.
+     * Aux yeux des autres joueurs, la carte initiale sera la même, au yeux du
+     * jeu, la carte jouée aura la valeur initiale mais la couleur choisie par
+     * le "Joueur"
+     * </p>
+     * @see Joueur#choisirCouleur()
+     */
     public void choisirCouleur(){
-        //Scanner sc = new Scanner(System.in) ;
         System.out.println("\n");
         Carte carte = new Carte();
         couleurCarte = null;
@@ -83,101 +113,104 @@ public class JoueurReel extends Joueur {
             }
         }
         carte.setCouleur(couleurCarte);
-        /*int c = 5 ;
-        while (c>4 || c<1){
-            System.out.println("Veuillez choisir la Couleur pour les prochains tours :\n 1 : COEUR \n 2 : CARREAU \n 3 : TREFLE \n 4 : PIQUE");
-            //c = sc.nextInt();
-            switch (c) {
-                case (1):
-                    carte.setCouleur(CouleurCarte.Coeur);
-                    this.couleurCarte = CouleurCarte.Coeur ;
-                    break;
-                case (2):
-                    carte.setCouleur(CouleurCarte.Carreau);
-                    this.couleurCarte = CouleurCarte.Carreau ;
-                    break;
-                case (3):
-                    carte.setCouleur(CouleurCarte.Trefle);
-                    this.couleurCarte = CouleurCarte.Trefle ;
-                    break;
-                case (4):
-                    carte.setCouleur(CouleurCarte.Pique);
-                    this.couleurCarte = CouleurCarte.Pique ;
-                    break;
-                default:
-                    System.out.println("Vous n'avez pas saisie la bonne référence");
-            }
-        }*/
-
     }
 
-
-
-
-
-
-    // ---------------------------------------- AFFICHER LA MAIN -------------------------------------------
-
+    /**
+     * Affiche la main du joueur avec un println
+     * <ul>
+     *     Il choisit une carte au hasard
+     * </ul>
+     * @param listeCarte
+     * 	la liste des "Carte" qui composent la main du JoueurReel
+     * @see Joueur#afficher(LinkedList<Carte>)
+     */
     public void afficher(LinkedList<Carte> listeCarte) {
         for (int i=0 ; i<listeCarte.size() ; i++){
             System.out.println(i + " : " + listeCarte.get(i).toString());
         }
     }
 
-
-
-    // --------------------------------------- REMPLIR MAIN ------------------------------------------------
+    /**
+     * Permet à un "JoueurReel" de recevoir une carte et l'ajouter à sa main
+     * @param carte
+     * 		la Carte que va recevoir le JoueurReel
+     * @see Joueur#recevoirCarte(Carte)
+     */
     protected void recevoirCarte(Carte carte) {
         this.main.add(carte) ;
     }
 
-
-
-    // -------------------------------------- GETTER  ------------------------------------------------------
-
-
+    /**
+     * Met à jour la main de JoueurReel
+     * @param main
+     *      Le nouvelle main de l'Adversaire
+     */
     public void setMain(LinkedList<Carte> main) {
         this.main = main;
     }
 
+    /**
+     * Retourne la couleur d'une Carte
+     * @return couleurCarte
+     */
     public CouleurCarte getCouleurCarte() {
         return this.couleurCarte ;
     }
 
+    /**
+     * Retourne le nom d'un JoueurReel sous forme d'une chaîne de caractères
+     * @return nom
+     */
     public String getNom() {
         return this.nom ;
     }
 
+    /**
+     * Retourne la main du joueur sous la forme d'une LinkedList de "Carte"
+     * @return main
+     */
     public LinkedList<Carte> getMain() {
         return this.main ;
     }
 
-    //Setter
-
+    /**
+     * Met à jour la carte qu'a choisi le JoueurReel
+     * @param c
+     *      La Carte que choisit le JoueurReel
+     */
     public void setChoix(Carte c)
     {
         this.carteChoisie = c;
     }
 
+    /**
+     * Met à jour la couleur d'une "Carte"
+     * @param cc
+     *      La Couleur que l'on choisit
+     */
     public void setCouleurChoisie(CouleurCarte cc){ this.couleurCarte = cc; }
 
+    /**
+     * Met à jour le "Joueur" choisi par JoueurReel
+     * @param j
+     *      Le "Joueur" qui est choisi
+     */
     public void setJoueurChoix(Joueur j){this.joueurChoisi = j; }
 
 
-
-    // ------------------------------------ CHOISIR CARTE --------------------------------------------------
+    /**
+     * Permet à un "JoueurReel" de choisir une carte à donner à quelqu'un d'autre
+     * @param joueurs
+     *      La liste des joueurs à qui on peut donner une carte
+     * @param j
+     *      Le "Joueur" qui va choisir à qui donner la carte
+     */
     public void choisirCarte(LinkedList<Joueur> joueurs, Joueur j) {
 
         int numCarteAJouer = -1;
-
-        //Scanner s = new Scanner(System.in);
         afficher(getMain());
 
         //choisir la carte
-        /*while (numCarteAJouer < 0 || numCarteAJouer > getMain().size()) {
-            System.out.println("Veuillez choisir une carte à donner à un joueur");
-            numCarteAJouer = s.nextInt();
-        }*/
         carteChoisie = null;
         while(carteChoisie == null)
         {
@@ -192,9 +225,6 @@ public class JoueurReel extends Joueur {
         Partie.getInstance().getPlateau().enleverCarte(carteADonner);
 
         // Choisir le joueur à qui la donner
-        // joueurs.remove(j) ;
-
-
         System.out.println("Voici la liste des joueurs : \n") ;
         for (int i = 1; i < joueurs.size(); i++) {
             System.out.println(i + " : " + joueurs.get(i).getNom() + " : " + joueurs.get(i).getMain().size() + " cartes en main." );
@@ -212,40 +242,16 @@ public class JoueurReel extends Joueur {
             }
         }
         System.out.println("Joueur choisie : " + joueurChoisi.getNom());
+
         // Donner la carte au joueur séléctionné
         joueurChoisi.recevoirCarte(carteADonner) ;
-
-
-        // j.afficher(j.getMain()) ;
 
         System.out.println("Le joueur a bien reçu la carte") ;
 
         // On supprime cette carte de la main du joueur
-        // on pourrait peut-être utiliser
         LinkedList<Carte> mainFictive = j.getMain() ;
         mainFictive.remove(carteADonner) ;
         j.setMain(mainFictive) ;
 
-        //On test si le joueur n'a plus qu'une carte
-        /*if(this.main.size() == 1 && !uneCarte)
-        {
-            uneCarte = true;
-            processus = new direCarte( this);
-        }
-        if(this.main.size() != 1 &&uneCarte)
-        {
-            uneCarte = false;
-            this.processus.plusUneCarte();
-        }*/
-
     }
-
-
-
-
-
-
-
-
-
 }

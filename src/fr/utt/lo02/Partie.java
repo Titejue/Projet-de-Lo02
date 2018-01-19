@@ -8,6 +8,61 @@ import java.util.* ;
 import java.lang.* ;
 import javax.swing.*;
 
+
+/**
+ * <b>Partie est la classe représentant le déroulement du jeu</b>
+ * <p>
+ * Une partie est caractérisée par les informations suivantes :
+ * </p>
+ *
+ * <p>
+ * <ul>
+ * <li>Une instance de partie qui sera définie statiquement, on se basera sur la structure du
+ * Pattern Singleton </li>
+ * <li>Un attribut static qui est une liste de "Joueur"</li>
+ * <li>Une liste de "Carte" qui permet de suivre les dernières "Carte" jouées</li>
+ * <li>Une liste de nombres (0 ou 1) qui permet de voir quel Joueur a gagné</li>
+ * <li>La fenêtre de l'interface graphique de type JFrame</li>
+ * <li>Le nombre de "Joueurs" dans la partie</li>
+ * <li>Le numéro de la variante que l'on a choisi en début de partie</li>
+ * <li>Le numéro du type de Jeu de Carte</li>
+ * <li>Le nombre de jeu Deck de Jeu de cartes</li>
+ * <li>La varitante choisie</li>
+ * <li>Le jeu de cartes</li>
+ * <li>La "Carte" choisie par un "Joueur"</li>
+ * <li>Un objet "Pioche"</li>
+ * <li>Un objet "Talon"</li>
+ * <li>Le nombre de cartes à distribuer</li>
+ * <li>Le nombre qui va référencer l'action de la Carte</li>
+ * <li>Un booléen qui permet de vérifier si la Partie est bien parametrée</li>
+ * <li>Un plateau de jeu en interface graphique </li>
+ * <li>Le Joueu qui va lancer la partie</li>
+ * </ul>
+ * </p>
+
+ * <p>
+ * Numéro de la variante
+ * <ul>
+ * <li>0 : Variante Classique</li>
+ * <li>1 : Version de MonClar</li>
+ * <li>2 : Version Minimale</li>
+ * <li>3 : Variante 1</li>
+ * <li>4 : Variante Carte et Maou</li>
+ * </ul>
+ * </p>
+ * <p>
+ * La référence du jeu correspond au type de jeu :
+ * <ul>
+ * <li>0 : Jeu classique 54 cartes (52 cartes + 2 Jokers)</li>
+ * <li>1 : Jeu de 52 cartes</li>
+ * <li>2 : Jeu de 34 cartes (32 cartes + 2 Jokers)</li>
+ * <li>3 : Jeu de 32 cartes</li>
+ * </ul>
+ * </p>
+ * @see Joueur
+ * @see Variante
+ * @author Titejue, PYBurosse
+ */
 public class Partie{
 
     // Declaration d'un singleton
@@ -15,12 +70,8 @@ public class Partie{
     private static Partie ourInstance = null;
 
     // Attributs de la classe
-
-    private boolean fini = false;
-
     private static LinkedList<Joueur> joueurs = new LinkedList<Joueur>();
     private LinkedList<Carte> dernieresCartes;
-    private LinkedList<Carte> listePioche;
     private LinkedList<Integer> verif;
 
     private JFrame fenetre;
@@ -30,13 +81,10 @@ public class Partie{
     private int nbDeck;
     private static Variante variante;
     private JeuDeCarte jeuCarte;
-    private Carte derniereCarte;
     private Carte carteChoisie;
     private Pioche pioche;
     private Talon talon;
-    private int nombreDeCarteDeck;
     private int nombreCarteDistribuer;
-    private int victoire;
     private int paiement;
     private boolean partiePrete = false;
     private Plateau plateau;
@@ -46,7 +94,8 @@ public class Partie{
     // ------------------------ CONSTRUCTEUR --------------------------------------
 
     /**
-     * Il faudrait plutot se demander si le nombre de joueur ne devrait pas etre choisi par le joueur lui meme
+     * Constructeur de Partie
+     * Ouvre la nouvelle fenêtre de jeu avec le menu, puis attend que la partie soit paramétré
      */
     public Partie(boolean e)
     {
@@ -60,7 +109,6 @@ public class Partie{
         fenetre.setContentPane(new Menu(this));
         fenetre.setVisible(true);
 
-        int go = 0;
         while(!partiePrete)
         {
             System.out.print("");
@@ -70,7 +118,9 @@ public class Partie{
 
     }
 
-
+    /**
+     *
+     */
 
 
     public Partie() {
@@ -167,13 +217,7 @@ public class Partie{
             }
         }
 
-        /** Numéro de Variante
-         * 0 : Variante Classique
-         * 1 : Version de MonClar
-         * 2 : Version Minimale
-         * 3 : Variante 1
-         * 4 : Variante Carte et Maou
-         */
+
 
 
         switch (numVar) {
@@ -183,7 +227,7 @@ public class Partie{
             case(1) :
                 this.variante = new VarianteMonClar() ;
                 break ;
-             /**
+            /**
              case(2) :
              this.variante = new VarianteMinimale();
              break ;
@@ -234,8 +278,8 @@ public class Partie{
         /**  PROCESSUS DE VERIFICATION QUE LES MAINS ONT BIEN ETE IMPLEMENTEES
 
          for (int j=0 ; j<nbJoueur ; j++){
-            System.out.println("On retourne la main de " + joueurs.get(j).getNom()) ;
-            joueurs.get(j).afficher(joueurs.get(j).getMain()) ;
+         System.out.println("On retourne la main de " + joueurs.get(j).getNom()) ;
+         joueurs.get(j).afficher(joueurs.get(j).getMain()) ;
 
          }
          */
@@ -248,6 +292,20 @@ public class Partie{
         dernieresCartes.add(talon.getTalon().getLast()) ;
     }
 
+    /**
+     * Constructeur de partie avec des paramètre prédéterminés
+     * @param nbJoueur
+     *          Le nombre de joueurs dans la partie
+     * @param nom
+     *          Le nom de l'utilisateur dans la partie
+     * @param numVar
+     *          Le numéro de la variante choisie
+     *
+     * @param nbDeck
+     *          Le nombre de paquets de cartes dans la partie
+     * @param typeDeck
+     *          Le type de paquets de carte choisi pour jouer
+     */
     //creation d'une partie en passant par la fenetre graphique
     public Partie(int nbJoueur, String nom, int numVar, int nbDeck, int typeDeck)
     {
@@ -331,17 +389,25 @@ public class Partie{
         }
 
     }
-    /**
-     * this.listePioche = pioche.getPioche() ;
-     * this.nombreDeCarteDeck = listePioche.size() ;
-     */
+
 
 
 // ---------------------------------- GETTER ET SETTER ---------------------------------------------------
+
+    /**
+     * Permet de récupérer la liste des joueurs de la partie
+     * @return La liste des joueurs de la partie
+     *
+     */
     public static LinkedList<Joueur> getJoueurs(){
         return joueurs;
     }
 
+    /**
+     * Permet de récupérer l'instance de l'objet partie utilisé
+     * @return La référence du singleton Partie
+     *
+     */
     public static Partie getInstance() {
         if (ourInstance == null) {
             ourInstance = new Partie(true);
@@ -349,85 +415,64 @@ public class Partie{
         return ourInstance;
     }
 
-    public static Partie getInstance(int nbJoueur, String nom, int numVar, int nbDeck, int typeDeck) {
-        if (ourInstance == null) {
-            ourInstance = new Partie(nbJoueur, nom, numVar, nbDeck, typeDeck);
-        }
-        return ourInstance;
-    }
-
-    public LinkedList<Carte> getDernieresCartes() {
-        return dernieresCartes;
-    }
-
-    public int getSens() {
-        return sens;
-    }
+    /**
+     * Permet de définir le sens de la partie
+     * @param sens
+     *          Le nouveau sens du jeu
+     */
 
     public void setSens(int sens) {
         this.sens = sens;
     }
+    /**
+     * Permet de définir le paiement pour le prochain joueur
+     * @param paiement
+     *          Le nombre de carte que devra piocher le prochain joueur
 
+     */
     public void setPaiement(int paiement) {
         this.paiement = paiement;
     }
 
-    public void setProchainTour(int prochainTour) {
-        this.prochainTour = prochainTour;
-    }
-
-    public int getProchainTour() {
-        return prochainTour;
-    }
-
-    public int getTour() {
-        return tour;
-    }
-
-    public void setTour(int tour) {
-        this.tour = tour;
-    }
-
-    public int getNbJoueur() {
-        return nbJoueur;
-    }
-
-    public void setTourPrecedent(int tourPrecedent) {
-        this.tourPrecedent = tourPrecedent;
-    }
-
-    public int getTourPrecedent() {
-        return tourPrecedent;
-    }
-
+    /**
+     * Permet de définir le paiement pour le prochain joueur, quand plusieurs joueurs ont incrémenté le paiement
+     * @see Partie#setPaiement(int)
+     * @param a
+     *          Le nombre de carte total que devra piocher le prochain joueur
+     */
     public void setPaiementTotal(int a) {
         this.paiementTotal = a;
     }
 
-    public static Variante getVariante() {
-        return variante;
-    }
-
+    /**
+     * Permet de récupérer la référence vers l'objet Pioche associé à la partie
+     * @return
+     *          La référence à l'objet Pioche
+     * @see Pioche
+     */
     public Pioche getPioche(){return pioche;}
 
+    /**
+     * Permet de récupérer la référence vers le panneau de la fenêtre de jeu
+     * @return
+     *          La référence du panneau de la fenêtre du jeu
+     */
     public Plateau getPlateau()
     {
         return this.plateau;
     }
 
+    /**
+     * Permet de récupérer la référence vers le joueur réel, représentant l'utilisateur
+     * @return
+     *          La référence de l'objet Joueur représentant l'utilisateur
+     * @see Joueur
+     * @see JoueurReel
+     */
     public Joueur getJoueurReel()
     {
         return jReal;
     }
-
-    public Joueur getJoueurTour()
-    {
-        return this.joueurTour;
-    }
-
-    // ------------------------------------- VERIFIER VICTOIRE ---------------------------------------------
-
-    // Vérifier les victoires
 
 
     // -------------------------------- GERER UN TOUR ---------------------------------
@@ -440,17 +485,21 @@ public class Partie{
     private int sens;
     private int prochainTour;
     private int tour;
-    private int tourPrecedent;
     private int paiementTotal;
     private Joueur joueurTour ;
 
+    /**
+     * Permet de lancer la partie, une fois que tout les paramètres sont établie
+     * Gère les tours de jeu et les actions de chaques joueur jusqu'à ce que l'un d'entre eux termine
+     * @see Joueur
+     */
     public void lancerPartie() {
 
         Controleur controleur = Controleur.getInstance(joueurs, pioche, talon, fenetre);
         fenetre.setBounds(200, 50, 1000, 600);
         //fenetre.setContentPane(new Plateau(joueurs, pioche, talon));
         plateau = new Plateau(joueurs, pioche, talon);
-       // Plateau2 plateau = new Plateau2();
+        // Plateau2 plateau = new Plateau2();
         fenetre.setContentPane(plateau);
         fenetre.validate();
         fenetre.repaint();
@@ -558,7 +607,7 @@ public class Partie{
 
 
 
-            // TOUR > 1
+                // TOUR > 1
 
             } else {
                 variante.carteJouable(joueurTour.getMain(), dernieresCartes, paiement);
@@ -643,20 +692,7 @@ public class Partie{
 
 
                     // On vérifie une première fois la liste vérif si besoin
-                    /**
-                    for (int k = 0; k < joueurs.size() ; k++) {
-                        System.out.println("On affiche k " + k) ;
-                        System.out.println("On affiche joueurs size : " + joueurs.size()) ;
 
-                        System.out.println("On affiche le joueur " + joueurs.get(k).getNom() ) ;
-                        if (joueurs.get(k).getMain().size() == 0) {
-                            System.out.println("Le joueur " + joueurs.get(k).getNom() + " a gagné ! ") ;
-                            verif.set(k, 1);
-                        } else {
-                            verif.set(k, 0);
-                        }
-                    }
-                     */
 
 
                     variante.actionCarte(dernieresCartes.getLast(), sens, tour, nbJoueur, joueurs.get(tour), joueurs);
@@ -717,6 +753,19 @@ public class Partie{
         System.out.println("La partie est terminée.") ;
     }
 
+    /**
+     * Permet d'initialiser les paramètres de la partie quand ceux-ci ont été déterminé via le menu graphique
+     ** @param nbJoueur
+     *          Le nombre de joueurs dans la partie
+     * @param nom
+     *          Le nom de l'utilisateur dans la partie
+     * @param numVar
+     *          Le numéro de la variante choisie
+     * @param nbDeck
+     *          Le nombre de paquets de cartes dans la partie
+     * @param typeDeck
+     *          Le type de paquets de carte choisi pour jouer
+     */
     //Initialisation des paramètres
     public void creerPartie(int nbJoueur, String nom, int numVar, int nbDeck, int typeDeck)
     {
@@ -742,13 +791,13 @@ public class Partie{
             case(1) :
                 this.variante = new VarianteMonClar() ;
                 break ;
-            /**
+            /*
              case(2) :
              this.variante = new VarianteMinimale();
              break ;
              case(3) :
              this.variante  = new Variante1() ;
-             break ;**/
+             break */
             default:
         }
 
@@ -806,22 +855,3 @@ public class Partie{
     }
 
 }
-
-
-                    /** VALEUR DE PAIEMENT
-                     *
-                     * Changement de sens
-                     *
-                     * OK -5 : donner une carte à joueur
-                     * OK -4 : saute le tour d'un joueur
-                     * OK -3 : le joueur rejoue
-                     * OK -2 : changer le sens
-                     * OK -1 : changer de couleur
-                     * 0 : ne fait rien
-                     * 1 : +1 à un joueur
-                     * 2 : +2 à un joueur
-                     * 4 : +4 à un joueur
-                     */
-
-
-

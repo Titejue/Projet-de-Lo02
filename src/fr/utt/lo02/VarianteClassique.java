@@ -5,7 +5,7 @@ import java.util.LinkedList;
 public class VarianteClassique implements Variante {
 
     int paiement;
-    int numCarteJouable;
+
     LinkedList<Carte> cartePourJouer ;
 
     Carte carteJouable;
@@ -306,9 +306,6 @@ public class VarianteClassique implements Variante {
     public LinkedList<Carte> getCartePourJouer() {
         return cartePourJouer;
     }
-    public void setCartePourJouer(LinkedList<Carte> cartePourJouer){
-        this.cartePourJouer = cartePourJouer ;
-    }
     public int getPaiement(){
         return paiement;
     }
@@ -317,9 +314,6 @@ public class VarianteClassique implements Variante {
     }
     public int getProchainTour() {
         return prochainTour;
-    }
-    public void setCarteADonner(Carte carte){
-        this.carteADonner = carte ;
     }
     public CouleurCarte getCouleur(){
         return couleur ;

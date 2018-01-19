@@ -4,17 +4,40 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
-public class direCarte implements Runnable{
+/**
+ * {@inheritDoc}
+ * <b>Dire carte est la classe qui permet aux joueurs d'annoncer "Carte" ou "Contre-Carte" lorsque quelqu'un n'a plus qu'une carte</b>
+ * <p>DireCarte implémente l'interface Runnable car il fonctionne dans un Thread parallèle au jeu</p>
+ *
+ *
+ * @author Titejue, PYBurosse
+ * @version 1.3
+ */
+public class DireCarte implements Runnable{
 
     private boolean disCarte;
     private Joueur jConcerne;
 
-    public direCarte( Joueur jC)
+    /**
+     * Contructeur de DireCarte
+     *
+     * Créer et démarre le Thread attendant que le joueur concerné dise "Carte" ou qu'un de ses adversaires dise "Contre-Carte"
+     * @param jC
+     *          Le joueur n'ayant plus qu'une seul carte en main
+     *
+     * @see Joueur
+     */
+    public DireCarte( Joueur jC)
     {
         this.jConcerne = jC;
         Thread t = new Thread(this);
         t.start();
     }
+
+    /**
+     * La méthode run issue de l'interface Runnable
+     * Fonctionne jusqu'à ce que le joueur réel dis Carte ou Contre-Carte, ou qu'un adversaire le dise, selon une probabilité
+     */
     public void run()
     {
         BufferedReader br = new BufferedReader( new InputStreamReader(System.in));
@@ -128,6 +151,9 @@ public class direCarte implements Runnable{
 
     }
 
+    /**
+     * Permet d'arrêter le Thread si le joueur concerné n'a plus une seule carte en main
+     */
     public void plusUneCarte()
     {
         this.disCarte = true;
