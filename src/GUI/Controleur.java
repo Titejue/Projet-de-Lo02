@@ -2,13 +2,28 @@ package GUI;
 
 import java.awt.*;
 import java.util.LinkedList;
-import java.util.Observable;
-import java.util.Observer;
+
 import javax.swing.*;
 import fr.utt.lo02.*;
-import java.awt.event.*;
-import fr.utt.lo02.JoueurReel;
 
+import fr.utt.lo02.JoueurReel;
+/**
+ *
+ * <b>Contrôleur est la classe qui permet de faire le lien entre l'interface graphique et le modèle</b>
+ * <p>Celui ci est unique, c'est donc un singleton</p>
+ * <p>
+ * Le contrôleur effectue les actions suivantes
+ *
+ * <ul>
+ * <li>Indiquer au modèle que le joueur à cliqué sur une carte à joueur</li>
+ * <li>Indiquer au modèle quelle couleur le joueur à choisi</li>
+ * <li>Indiquer au modèle quel adversaire à été choisi </li>
+ * </ul>
+ * </p>
+ *
+ * @author Titejue, PYBurosse
+ * @version 1.3
+ */
 public class Controleur {
     private static LinkedList<Joueur> joueurs;
     private Pioche pioche;
@@ -16,6 +31,13 @@ public class Controleur {
     private JFrame fenetre;
     private Joueur JReal;
     private static Controleur ourInstance = null;
+
+    /**
+     * Constructeur du controleur
+     * @param j,p,t,f
+                Initialisation des références à la liste des joueurs, aux objets pioche et talon, ainsi qu'à la fenêtre graphique.
+     *
+     */
     private Controleur(LinkedList<Joueur> j, Pioche p, Talon t, JFrame f)
     {
         joueurs = j;
@@ -43,16 +65,30 @@ public class Controleur {
         return ourInstance;
     }
 
+    /**
+     * Permet d'indiquer au modèle que le joueur a cliqué sur une carte
+     * @param c
+     *          La carte choisi par le joueur
+     */
     public static void carteClic(Carte c)
     {
         Partie.getInstance().getJoueurReel().setChoix(c);
     }
 
+    /**
+     * Permet d'indiquer au modèle que le joueur a choisi une nouvelle couleur
+     * @param cc
+     *          La couleur choisi par le joueur
+     */
     public static void couleurClic(CouleurCarte cc)
     {
         Partie.getInstance().getJoueurReel().setCouleurChoisie(cc);
     }
-
+    /**
+     * Permet d'indiquer au modèle que le joueur a choisi un adversaire
+     * @param j
+     *          L'adversaire choisi par le joueur
+     */
     public static void joueurClic(Joueur j)
     {
         Partie.getInstance().getJoueurReel().setJoueurChoix(j);
@@ -60,6 +96,9 @@ public class Controleur {
 
     //---------------------------------Choisir un adversaire------------------
 
+    /**
+     * Permet d'ouvrir une fenêtre contenant la liste des joueurs de la partie, afin que l'utilisateur puisse choisi un des autres joueurs
+     */
     public static void fenetreChoixJoueur()
     {
         JFrame fenChoix = new JFrame();
@@ -81,6 +120,11 @@ public class Controleur {
 
     }
 
+    /**
+     * Permet d'indiquer au modèle qu'un choix a été fait par le biais de l'interface console
+     * @param i
+     *          Le numéro du choix entré dans la console
+     */
     public void choixTexte(int i)
     {
 

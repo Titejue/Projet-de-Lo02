@@ -12,7 +12,23 @@ import javax.swing.*;
 import javax.swing.JButton;
 import fr.utt.lo02.*;
 // Un test de fenêtre que j'avais fait sur eclipse
+/**
 
+ * <b>Menu est la classe qui créer et gère le panneau qui permet de régler les paramètres de la partie</b>
+ *
+ * <p>
+ * Elle initialise et créer une fenêtre contenant :
+ * <ul>
+ * <li>Un champs de texte pour le nom du joueur</li>
+ * <li>Deux JSpinner, un pour le nombre de joueur, et un pour le nombre de paquets de cartes</li>
+ * <li>Des boutons radio afin de choisir la variante, ainsi que le type de paquet de carte désiré</li>
+ * <li>Des labels afin d'indiquer où se trouvent les informations</li>
+ * <li>Un bouton valider pour confirmer les réglages et lancer la partie</li>
+ * </ul>
+ * </p>
+ * @author Titejue, PYBurosse
+ * @version 1.3
+ */
 public class Menu extends JPanel{
 
 
@@ -23,11 +39,13 @@ public class Menu extends JPanel{
     private static Menu ourInstance;
     private Partie partie;
 
+    /**
+     * Constructeur du panneau
+     * @param p
+     *      Recupération d'une référence à l'objet Partie qui l'a appelé
+     * Initialisation du panneau
+     */
 
-	/**
-	 * Create the application.
-	 * @wbp.parser.entryPoint
-	 */
 	public Menu(Partie p) {
 	    this.partie = p;
 		initialize();
@@ -35,7 +53,8 @@ public class Menu extends JPanel{
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialisation du panneau, en créant et ajoutant les éléments necessaires
+     *
 	 */
 	private void initialize() {
 
@@ -121,6 +140,11 @@ public class Menu extends JPanel{
 
         btnValider.addActionListener(new ActionListener() {
             @Override
+            /**
+             * Validation des paramètres de la partie
+             * @see Partie#creerPartie
+             * Envoie des paramètres sélectionnés lors de l'appuie sur le boutton "Valider"
+             */
             public void actionPerformed(ActionEvent actionEvent) {
 
                 int numVar = 0;
@@ -161,12 +185,5 @@ public class Menu extends JPanel{
         });
 	}
 
-
-
-
-    /*public void fermerFenetre()
-    {
-        ourInstance.dispose();
-    }*/
 
 }

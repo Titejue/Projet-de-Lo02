@@ -5,8 +5,22 @@ import fr.utt.lo02.*;
 import javax.swing.*;
 import java.awt.*;
 import java.util.LinkedList;
-import java.util.Observable;
-import java.util.Observer;
+/**
+ * {@inheritDoc}
+ * <b>Plateau est le panneau visible dans la fenêtre de jeu durant la partie</b>
+ * <p>Plateau hérite de la classe JPanel</p>
+ * <p>
+ * Le plateau contient la liste des éléments visible fixe durant la partie :
+ * <ul>
+ * <li>Le dos de carte représentant la pioche</li>
+ * <li>Les labels représentant les adversaires et leur nombre de carte</li>
+ * <li>La carte visible sur le dessus du talon</li>
+ * <li>Les cartes permettant de choisir la couleur</li>
+ * </ul>
+ * </p>
+ * @author Titejue, PYBurosse
+ * @version 1.3
+ */
 
 public class Plateau extends JPanel {
 
@@ -26,11 +40,20 @@ public class Plateau extends JPanel {
     private static final int X_TALON = 500;
     private static final int Y_TALON = 250;
 
-
+    /**
+     * Constructeur du plateau
+     * @param j
+     *          La liste des joueurs de la partie
+     * @param p
+     *          Une réference à la pioche
+     * @param t
+     *          Une réference au talon
+     *
+     * Création et mise en place des éléments statiques de l'image
+     */
         public Plateau(LinkedList<Joueur> j, Pioche p, Talon t)
         {
 
-           // dos = new JLabel(new ImageIcon("src/Images/dos_carte.jpeg"));
             dos = new JLabel(new ImageIcon(new ImageIcon("src/Images/dos_carte.jpeg").getImage().getScaledInstance(75, 100, Image.SCALE_DEFAULT)));
 
             //Creation des label utile de temps en temps
@@ -105,6 +128,16 @@ public class Plateau extends JPanel {
 
         }
 
+    /**
+     * Mise à jour des informations visible à l'écran
+     * <ul>
+     *     <li>La main du joueur
+     *     @see Plateau#afficherMainJoueur()
+     *     </li>
+     *     <li>Le nombre de carte dans les mains de chaque adversaires</li>
+     *     <li>La carte sur le dessus du talon</li>
+     * </ul>
+     */
 
 
         public void mAJ()
@@ -122,25 +155,24 @@ public class Plateau extends JPanel {
                     nbCarteAdversaire.get(i-1).setText("" + ja.getMain().size() + " cartes");
                 }
             }
-            //Afficher la carte du talon
-            /*if(carteTalon != talonActuel.getImage())
-            {
-                if(Partie.getInstance().getJoueurTour() == jReal)
-                {
-                    this.animationVersTalon(carteTalon);
 
-                }
-                else
-                {
-                    this.animationVersTalon(Partie.getInstance().getJoueurTour(), carteTalon);
-                }
-            }*/
             this.remove(carteTalon);
             carteTalon = talon.getDerniereCarte().getImage();
             carteTalon.setBounds(500, 250, 75, 100);
 
             this.add(carteTalon);
         }
+
+    /**
+     * Mise à jour des informations visible à l'écran, selon les cartes jouables par le joueur
+     * <ul>
+     *     <li>La main du joueur, selon les cartes qu'il peut jouer
+     *     @see Plateau#afficherMainJoueur(LinkedList)
+     *     </li>
+     *     <li>Le nombre de carte dans les mains de chaque adversaires</li>
+     *     <li>La carte sur le dessus du talon</li>
+     * </ul>
+     */
 
     public void mAJ(LinkedList<Carte> carteJouables)
     {
@@ -156,9 +188,10 @@ public class Plateau extends JPanel {
     }
 
 
-
-
-
+    /**
+     * Reaffichage de la main du joueur à l'écran
+     * Pour chaque carte de la main du joueur, on affiche son label associé, réparti selon le nombre de carte
+     */
     public void afficherMainJoueur() {
         int i;
 
@@ -172,6 +205,13 @@ public class Plateau extends JPanel {
             this.add(c.getImage());
         }
     }
+
+    /**
+     * Reaffichage de la main du joueur à l'écran, selon la disponibilité des cartes
+     * Les cartes sont affiché en sur-élevant les cartes actuellement jouables selon la situation
+     * @param carteJouables
+     *          La liste des cartes jouables, donc à sur-élevé à l'écran
+     */
         public void afficherMainJoueur(LinkedList<Carte> carteJouables)
         {
             int i;
@@ -199,6 +239,9 @@ public class Plateau extends JPanel {
 
         }
 
+        /**
+            Rend visible à l'écran les labels des cartes permettant de choisir une nouvelle couleur
+         */
     public void choixCouleur()
     {
         this.add(trefle);
@@ -213,7 +256,13 @@ public class Plateau extends JPanel {
         this.repaint();
     }
 
-
+    /**
+     * Permet de revenir au jeu après les actions spéciales telles que
+     * <ul>
+     *     <li>Choix d'une nouvelle couleur</li>
+     *     <li>Choix d'une carte à donner à un joueur</li>
+     * </ul>
+     */
     public void retourJeu()
     {
         this.remove(trefle);
@@ -227,42 +276,22 @@ public class Plateau extends JPanel {
         this.repaint();
     }
 
-    public void animationVersTalon(Joueur j, JLabel c)
-    {
-        c.setBounds(j.getX(), j.getY(), 75, 100);
-        this.add(c);
-        for(int x = 0; x <= 60; x++)
-        {
-            c.setBounds(j.getX() + x * (X_TALON - j.getX()), j.getY() + x * (Y_TALON - j.getY()), 75, 100);
-            try {
-                Thread.sleep(16);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        this.repaint();
-    }
 
-    public void animationVersTalon(JLabel c)
-    {
-        int origineX = c.getX();
-        int origineY = c.getY();
-
-        for(int x = 0; x <= 60; x++)
-        {
-            c.setBounds(origineX - x * (origineX - X_TALON), origineY - x * (origineY - X_TALON), 75, 100);
-            try {
-                Thread.sleep(16);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+    /**
+     * Permet de changer le titre du jeu affichant les actions en train d'être effectuées, ou le joueur en train de jouer
+     * @param s
+     *          Le nouveau titre à afficher
+     */
     public void setTitre(String s)
     {
         this.titre.setText(s);
     }
 
+    /**
+     * Permet d'enlever une carte du plateau lorsqu'elle ne doit plus être visible
+     * @param c
+     *          La carte à enlever
+     */
     public void enleverCarte(Carte c)
     {
         this.remove(c.getImage());
